@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SCAT Math Practice — 10 Tests + Study Guide</title>
+<style>
+:root{--bl:#1a4fa0;--bll:#e8f0fe;--gr:#1a7a4a;--grl:#e6f4ed;--rd:#c0392b;--rdl:#fdecea;--yl:#e67e22;--yll:#fef3e2;--gy:#6b7280;--gyl:#f3f4f6;--bd:#d1d5db;--tx:#111827;--wh:#fff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:var(--tx);font-size:15px;}
+.hdr{background:var(--bl);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.hdr h1{font-size:1.1rem;font-weight:700;}
+.hdr small{font-size:.75rem;opacity:.8;display:block;margin-top:2px;}
+.tabs{background:#fff;border-bottom:2px solid var(--bd);display:flex;overflow-x:auto;padding:0 16px;gap:2px;}
+.tab{padding:12px 14px;cursor:pointer;font-weight:600;font-size:.78rem;border-bottom:3px solid transparent;color:var(--gy);white-space:nowrap;transition:all .15s;}
+.tab:hover{color:var(--bl);}
+.tab.on{color:var(--bl);border-bottom-color:var(--bl);}
+.tab.sg{color:#7c3aed;}
+.tab.sg.on{border-bottom-color:#7c3aed;}
+.main{display:flex;min-height:calc(100vh - 108px);}
+/* Sidebar */
+.sb{width:188px;background:#fff;border-right:1px solid var(--bd);padding:14px;flex-shrink:0;overflow-y:auto;}
+.sb h3{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--gy);margin-bottom:10px;}
+.tmr{background:var(--bll);border-radius:8px;padding:10px;text-align:center;margin-bottom:12px;}
+.tmr-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--bl);font-weight:700;}
+.tmr-val{font-size:1.5rem;font-weight:700;color:var(--bl);font-variant-numeric:tabular-nums;}
+.tmr.warn .tmr-val{color:var(--yl);}
+.tmr.dng .tmr-val{color:var(--rd);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.pgbar{height:4px;background:var(--bd);border-radius:2px;margin-bottom:4px;overflow:hidden;}
+.pgfill{height:100%;background:var(--bl);border-radius:2px;transition:width .3s;}
+.pglbl{font-size:.68rem;color:var(--gy);margin-bottom:12px;}
+.qgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
+.qb{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;border:1.5px solid var(--bd);border-radius:4px;cursor:pointer;background:#fff;transition:all .12s;}
+.qb:hover{border-color:var(--bl);color:var(--bl);}
+.qb.cur{background:var(--bl);color:#fff;border-color:var(--bl);}
+.qb.ans{background:var(--bll);color:var(--bl);border-color:#93b4ef;}
+.qb.ans.cur{background:var(--bl);color:#fff;}
+.qb.ok{background:var(--grl);color:var(--gr);border-color:#6fcf97;}
+.qb.ng{background:var(--rdl);color:var(--rd);border-color:#e57373;}
+/* Q area */
+.qa{flex:1;padding:20px;max-width:780px;}
+.qcard{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);padding:24px;margin-bottom:16px;}
+.qnum{font-size:.72rem;color:var(--gy);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.qcond{background:var(--yll);border-left:3px solid var(--yl);padding:9px 13px;border-radius:4px;margin-bottom:14px;font-size:.88rem;font-style:italic;color:#7c4700;}
+.ctbl{width:100%;border-collapse:collapse;margin:6px 0 20px;}
+.ctbl th{background:var(--gyl);padding:9px 18px;font-size:.8rem;font-weight:700;text-align:center;border:1px solid var(--bd);color:var(--gy);}
+.ctbl td{padding:18px 20px;text-align:center;border:1px solid var(--bd);font-size:1.05rem;font-weight:500;vertical-align:middle;min-width:160px;}
+.ca{background:#fffbeb;}
+.cb{background:#f0f7ff;}
+.vs{font-size:.75rem;font-weight:700;color:var(--gy);padding:0 6px;border:none;background:transparent;}
+.choices{display:grid;gap:9px;}
+.ch{padding:12px 17px;border:2px solid var(--bd);border-radius:8px;cursor:pointer;font-size:.88rem;text-align:left;background:#fff;transition:all .12s;display:flex;align-items:flex-start;gap:10px;}
+.ch:hover{border-color:var(--bl);background:var(--bll);}
+.ch.sel{border-color:var(--bl);background:var(--bll);}
+.ch.ok{border-color:var(--gr);background:var(--grl);}
+.ch.ng{border-color:var(--rd);background:var(--rdl);}
+.chl{width:26px;height:26px;border-radius:50%;background:var(--gyl);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;}
+.ch.sel .chl{background:var(--bl);color:#fff;}
+.ch.ok .chl{background:var(--gr);color:#fff;}
+.ch.ng .chl{background:var(--rd);color:#fff;}
+.navrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
+.btn{padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .12s;}
+.btn-o{background:#fff;border:2px solid var(--bd);color:var(--tx);}
+.btn-o:hover{border-color:var(--bl);color:var(--bl);}
+.btn-p{background:var(--bl);color:#fff;}
+.btn-p:hover{background:#153d80;}
+.btn-d{background:var(--rd);color:#fff;}
+.btn-d:hover{background:#a93226;}
+.sp{flex:1;}
+/* Start screen */
+.start{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 108px);}
+.startcard{background:#fff;border-radius:16px;padding:36px;max-width:520px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.1);}
+.startcard h2{font-size:1.35rem;margin-bottom:6px;color:var(--bl);}
+.startcard p{color:var(--gy);font-size:.88rem;line-height:1.6;margin-bottom:6px;}
+.rules{text-align:left;background:var(--gyl);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:.83rem;line-height:1.8;}
+/* Results */
+.results{padding:20px;max-width:860px;margin:0 auto;}
+.scorecard{background:#fff;border-radius:12px;padding:28px;text-align:center;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.circle{width:110px;height:110px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 14px;font-weight:700;}
+.pct{font-size:1.9rem;}
+.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+.stat{background:var(--gyl);border-radius:8px;padding:10px 18px;text-align:center;}
+.stn{font-size:1.3rem;font-weight:700;}
+.stl{font-size:.7rem;color:var(--gy);}
+.rlist{display:grid;gap:10px;}
+.ri{background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.07);border-left:4px solid var(--bd);}
+.ri.ok{border-left-color:var(--gr);}
+.ri.ng{border-left-color:var(--rd);}
+.ri.sk{border-left-color:var(--yl);}
+.rihdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.riqn{font-size:.72rem;font-weight:700;text-transform:uppercase;color:var(--gy);}
+.badge{font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:99px;}
+.bok{background:var(--grl);color:var(--gr);}
+.bng{background:var(--rdl);color:var(--rd);}
+.bsk{background:var(--yll);color:#7c4700;}
+.ricmp{display:flex;gap:10px;font-size:.85rem;margin-bottom:8px;}
+.rcol{flex:1;padding:7px 11px;border-radius:6px;}
+.rca{background:#fffbeb;}
+.rcb{background:#f0f7ff;}
+.rclbl{font-size:.65rem;font-weight:700;color:var(--gy);text-transform:uppercase;}
+.rexp{font-size:.82rem;color:#374151;line-height:1.5;background:var(--gyl);padding:9px 13px;border-radius:6px;}
+
+/* ─── Study Guide ─── */
+.sg-wrap{display:flex;min-height:calc(100vh - 108px);}
+.sg-nav{width:230px;background:#fff;border-right:1px solid var(--bd);padding:16px;overflow-y:auto;flex-shrink:0;}
+.sg-nav h3{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--gy);margin-bottom:10px;}
+.lbtn{width:100%;text-align:left;padding:9px 12px;border:none;background:none;cursor:pointer;border-radius:7px;font-size:.82rem;color:var(--tx);margin-bottom:2px;transition:all .12s;display:flex;align-items:center;gap:8px;}
+.lbtn:hover{background:var(--bll);color:var(--bl);}
+.lbtn.on{background:var(--bll);color:var(--bl);font-weight:700;}
+.lbtn .icon{font-size:.95rem;}
+.sg-content{flex:1;padding:24px;overflow-y:auto;max-width:860px;}
+.lesson-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);padding:28px;}
+.lesson-card h2{font-size:1.2rem;color:var(--bl);margin-bottom:8px;}
+.lesson-intro{font-size:.9rem;line-height:1.7;color:#374151;margin-bottom:20px;}
+.tip-box{background:#7c3aed11;border-left:4px solid #7c3aed;padding:14px 18px;border-radius:6px;margin-bottom:20px;}
+.tip-box .tip-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7c3aed;margin-bottom:6px;}
+.tip-box p{font-size:.9rem;line-height:1.6;color:#2d1b69;}
+.tip-box ul{margin-left:18px;font-size:.88rem;line-height:1.8;color:#2d1b69;}
+.examples-grid{display:grid;gap:12px;margin-bottom:20px;}
+.ex-card{border:1.5px solid var(--bd);border-radius:9px;padding:14px;background:#fafafa;}
+.ex-card .ex-head{font-size:.72rem;font-weight:700;text-transform:uppercase;color:var(--gy);margin-bottom:10px;}
+.ex-cols{display:flex;gap:8px;margin-bottom:10px;}
+.ex-col{flex:1;padding:8px 12px;border-radius:6px;font-size:.9rem;text-align:center;}
+.ex-cola{background:#fffbeb;}
+.ex-colb{background:#f0f7ff;}
+.ex-col-lbl{font-size:.6rem;font-weight:700;color:var(--gy);text-transform:uppercase;margin-bottom:3px;}
+.ex-ans{font-size:.82rem;color:var(--gr);font-weight:600;margin-bottom:4px;}
+.ex-why{font-size:.82rem;color:#374151;line-height:1.5;}
+.mistake-box{background:var(--rdl);border-left:4px solid var(--rd);padding:13px 17px;border-radius:6px;margin-bottom:20px;}
+.mistake-box .ml{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--rd);margin-bottom:5px;}
+.mistake-box p{font-size:.88rem;line-height:1.6;color:#7f1d1d;}
+.ref-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:16px;}
+.ref-table th{background:var(--bll);padding:8px 12px;text-align:left;font-weight:700;border:1px solid var(--bd);color:var(--bl);}
+.ref-table td{padding:8px 12px;border:1px solid var(--bd);}
+.ref-table tr:nth-child(even) td{background:#fafafa;}
+.sg-home{padding:24px;}
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.lg-card{background:#fff;border-radius:11px;padding:18px;cursor:pointer;border:2px solid var(--bd);transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.lg-card:hover{border-color:#7c3aed;box-shadow:0 3px 12px rgba(124,58,237,.15);}
+.lg-card .lc-icon{font-size:1.6rem;margin-bottom:8px;}
+.lg-card h3{font-size:.9rem;font-weight:700;margin-bottom:4px;}
+.lg-card p{font-size:.78rem;color:var(--gy);line-height:1.4;}
+.sg-welcome{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:12px;padding:24px;margin-bottom:20px;}
+.sg-welcome h2{font-size:1.25rem;margin-bottom:6px;}
+.sg-welcome p{font-size:.88rem;opacity:.9;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div><h1>SCAT Math Practice</h1><small>Intermediate Level · Quantitative Comparison · 4th Grade CTY Prep</small></div>
+  <div style="font-size:.75rem;color:rgba(255,255,255,.8);text-align:right">10 Tests · Study Guide<br>55 Questions · 22 Min each</div>
+</div>
+<div class="tabs" id="tabs"></div>
+<div id="app"></div>
+
+<script>
+// ── ANSWER CHOICES ──────────────────────────────────────────────────────────
+const CH=[
+  {l:'A',t:'Column A is greater'},
+  {l:'B',t:'Column B is greater'},
+  {l:'C',t:'The two quantities are equal'},
+  {l:'D',t:'The relationship cannot be determined from the information given'}
+];
+
+// ── QUESTION HELPER (condition, colA, colB, answer, explanation) ─────────────
+const Q=(a,b,ans,exp)=>({c:'',a,b,ans,exp});
+const QC=(c,a,b,ans,exp)=>({c,a,b,ans,exp});
+
+// ── TESTS DATA ───────────────────────────────────────────────────────────────
+const tests=[
+
+/* ═══ TEST 1 ════════════════════════════════════════════════════════════════*/
+[
+Q('3 × 4 + 2','4 × 3 + 2','C','Both = 12+2 = 14. Multiplication is commutative.'),
+Q('2³','3²','B','2³=8, 3²=9. Column B is greater.'),
+Q('1/2 + 1/3','5/6','C','3/6+2/6=5/6.'),
+QC('n is a positive integer','n²','2n','D','n=1: 1<2 (B); n=2: 4=4 (C); n=3: 9>6 (A). Changes — cannot determine.'),
+Q('25% of 80','20% of 100','C','0.25×80=20, 0.20×100=20.'),
+Q('Perimeter of a square, side 5','Perimeter of rectangle, length 6, width 4','C','4×5=20, 2(6+4)=20.'),
+Q('0.75','3/4','C','3/4=0.75.'),
+QC('x = 3','4x − 1','x² + 2','C','4(3)−1=11, 3²+2=11.'),
+Q('Primes between 1 and 20','8','C','2,3,5,7,11,13,17,19 = 8 primes.'),
+Q('√64','2³','C','√64=8, 2³=8.'),
+Q('100 ÷ 4 × 5','125','C','Left to right: 25×5=125.'),
+QC('a > b > 0','a / b','1','A','a>b>0 means a/b>1 always.'),
+Q('Area of triangle, base 10, height 6','30','C','½×10×6=30.'),
+Q('4²','2⁴','C','16=16.'),
+Q('0.2 × 0.5','0.1','C','0.10=0.1.'),
+Q('7/8','8/9','B','Cross-multiply: 7×9=63 < 8×8=64.'),
+QC('x + y = 10','x','5','D','x could be anything from 1–9 or beyond.'),
+Q('3⁵','5³','A','243 > 125.'),
+Q('(Degrees in right angle) × 2','Degrees in a straight angle','C','90×2=180°.'),
+Q('15% of 200','30','C','0.15×200=30.'),
+Q('5² + 12²','13²','C','25+144=169=13². Pythagorean triple!'),
+Q('n² + n','n(n + 1)','C','Factor: n²+n=n(n+1). Always equal.'),
+Q('3/5 of 75','45','C','3/5×75=45.'),
+Q('LCM of 4 and 6','GCF of 24 and 36','C','LCM(4,6)=12, GCF(24,36)=12.'),
+Q('(2.5)²','6.25','C','2.5×2.5=6.25.'),
+QC('Boys:girls = 3:2, 30 students total','Number of boys','18','C','3/5×30=18.'),
+Q('(−3)²','−(3²)','A','9 > −9.'),
+Q('Average of 10, 20, 30, 40','25','C','100÷4=25.'),
+Q('1+2+3+4+5+6+7+8+9+10','55','C','n(n+1)/2=10×11/2=55.'),
+Q('4/7','5/9','A','4×9=36 > 5×7=35.'),
+QC('Set A = {1, 2, 3, 4, 5}','Median of A','Mean of A','C','Median=3, Mean=15/5=3.'),
+Q('1/3','33/100','A','0.3333 > 0.33.'),
+Q('Sides of a hexagon','Faces of a cube','C','Both = 6.'),
+QC('x > 0','x + 1/x','2','D','x=1: equal; x=2: 2.5>2. Cannot determine.'),
+Q('7 × 8','9 × 6','A','56 > 54.'),
+Q('Area of circle with radius 3','9π','C','π×3²=9π.'),
+Q('Smallest prime number','Only even prime number','C','Both = 2.'),
+Q('100 − 36','8²','C','64 = 64.'),
+Q('3/4 ÷ 1/2','1.5','C','3/4×2=3/2=1.5.'),
+QC('x is negative','x²','x','A','x²>0>x always.'),
+Q('Minutes in 2.5 hours','150','C','2.5×60=150.'),
+Q('2/3 + 3/4','1 + 5/12','C','8/12+9/12=17/12=1 5/12.'),
+QC('Sum of three consecutive integers = 18','Largest integer','7','C','5+6+7=18, largest=7.'),
+Q('5! (5 factorial)','120','C','5×4×3×2×1=120.'),
+Q('(0.01)²','0.0001','C','0.01²=0.0001.'),
+QC('A rectangle has perimeter 24','Its area','36','D','A 1×11 has area 11; a 6×6 has area 36. Cannot determine.'),
+Q('(1/2)³','1/8','C','1/8=1/8.'),
+Q('Each angle of an equilateral triangle','60°','C','180°÷3=60°.'),
+Q('4 × (3 + 5)','4×3 + 4×5','C','Distributive property: 32=32.'),
+Q('Remainder when 17 ÷ 5','2','C','17=5×3+2.'),
+Q('√(16 × 9)','√16 × √9','C','√144=12, 4×3=12.'),
+QC('n > 1','n³','n²','A','Divide by n²: n>1 is given, so n³>n².'),
+Q('40% of 150','60% of 100','C','60=60.'),
+QC('3 red, 5 blue marbles','P(picking red)','3/8','C','3/8=3/8.'),
+Q('Sum of interior angles of a quadrilateral','360°','C','(4−2)×180°=360°.'),
+],
+
+/* ═══ TEST 2 ════════════════════════════════════════════════════════════════*/
+[
+Q('6 × 7','7 × 6','C','Commutative: 42=42.'),
+Q('5³','15²','B','125 < 225.'),
+Q('2/5 + 3/10','7/10','C','4/10+3/10=7/10.'),
+QC('y = 4','3y + 1','y² − 3','C','13=16−3=13.'),
+Q('30% of 90','27','C','0.3×90=27.'),
+Q('Perimeter of equilateral triangle, side 8','24','C','3×8=24.'),
+Q('0.4','2/5','C','2/5=0.4.'),
+Q('Number of edges of a cube','12','C','4+4+4=12.'),
+Q('3 + 4²','(3 + 4)²','B','3+16=19 < 49.'),
+Q('√100 + √49','√(100 + 49)','A','17 > √149≈12.2. Note: √a+√b ≠ √(a+b).'),
+Q('1/3 of 1/3','1/6','B','1/9 < 1/6.'),
+QC('m < 0','m²','m³','A','m²>0 and m³<0.'),
+Q('Area of square with side 7','49','C','7²=49.'),
+Q('2⁵','5²','A','32 > 25.'),
+Q('0.3 × 0.03','0.009','C','0.009=0.009.'),
+Q('5/6','6/7','B','5×7=35 < 6×6=36.'),
+QC('x + y = 20 and x − y = 4','x','12','C','Add equations: 2x=24, x=12.'),
+Q('2⁶','4³','C','64=64. Note: 4=(2²), so 4³=2⁶.'),
+Q('Sum of angles in a triangle','180°','C','Always 180°.'),
+Q('75% of 80','60','C','0.75×80=60.'),
+Q('8² + 15²','17²','C','64+225=289=17². 8-15-17 triple!'),
+Q('k² + k','k(k + 1)','C','Same expression always.'),
+Q('2/3 of 90','60','C','2/3×90=60.'),
+Q('LCM of 6 and 8','GCF of 48 and 72','C','LCM(6,8)=24=GCF(48,72).'),
+Q('(1.5)²','2.25','C','1.5×1.5=2.25.'),
+QC('Average of 5 numbers = 12','Sum of the 5 numbers','60','C','5×12=60.'),
+Q('|−15|','|15|','C','Both = 15.'),
+Q('Average of 5, 10, 15, 20, 25','15','C','75÷5=15.'),
+Q('1² + 2² + 3² + 4²','30','C','1+4+9+16=30.'),
+Q('3/8','4/11','A','3×11=33 > 4×8=32.'),
+QC('Set B = {2, 4, 6, 8, 10}','Median of B','Mean of B','C','Both = 6.'),
+Q('2/3','66/100','A','0.6667 > 0.66.'),
+Q('Number of vertices of a pentagon','Number of diagonals of a rectangle','A','5 > 2.'),
+QC('0 < x < 1','x²','x','B','Squaring a fraction less than 1 makes it smaller.'),
+Q('13 × 7','10 × 9 + 1 + 5','B','91 < 96.'),
+Q('Circumference of circle with radius 5','10π','C','2π×5=10π.'),
+Q('The only number that is both prime and even','2','C','Both = 2.'),
+Q('169 − 25','12²','C','144=144.'),
+Q('5/6 ÷ 5/3','0.5','C','5/6×3/5=1/2=0.5.'),
+QC('x < −1','x²','−x','A','If x=−2: x²=4 > −x=2. x²>|x|>−x.'),
+Q('Seconds in 3 minutes','180','C','3×60=180.'),
+Q('3/4 − 1/6','7/12','C','9/12−2/12=7/12.'),
+QC('Product of two consecutive even integers = 48','The larger integer','8','C','6×8=48.'),
+Q('6! ÷ 5!','6','C','6×5!/5!=6.'),
+Q('(0.1)³','0.001','C','0.001=0.001.'),
+QC('Right triangle has legs 3 and 4','Its hypotenuse','5','C','3-4-5 triple: √(9+16)=5.'),
+Q('(2/3)²','4/9','C','4/9=4/9.'),
+Q('Sum of interior angles of a pentagon','540°','C','(5−2)×180=540.'),
+Q('3×(8−2)+4','3×8−3×2+4','C','Distributive: 22=22.'),
+Q('Remainder when 23 ÷ 7','2','C','23=7×3+2.'),
+Q('√(25 × 36)','30','C','√900=30.'),
+QC('0 < n < 1','n⁴','n²','B','n⁴=n²×n²<n² since n<1.'),
+Q('60% of 75','45% of 100','C','45=45.'),
+QC('Fair coin flipped twice','P(exactly one head)','1/2','C','HT,TH: 2/4=1/2.'),
+Q('Primes between 20 and 40','4','C','23,29,31,37 = 4.'),
+],
+
+/* ═══ TEST 3 ════════════════════════════════════════════════════════════════*/
+[
+Q('9 × 8','6 × 12','C','72=72.'),
+Q('2⁸','4⁴','C','256=256. 4=(2²), so 4⁴=2⁸.'),
+Q('3/8 + 1/4','5/8','C','3/8+2/8=5/8.'),
+QC('z = −2','z³ − z','−6','C','(−2)³−(−2)=−8+2=−6.'),
+Q('45% of 60','27','C','0.45×60=27.'),
+Q('Area of rectangle, length 9, width 4','Area of square, side 6','C','36=36.'),
+Q('0.625','5/8','C','5÷8=0.625.'),
+Q('Diagonals of a hexagon','9','C','n(n−3)/2=6×3/2=9.'),
+Q('2 + 3² × 4','38','C','PEMDAS: 2+9×4=2+36=38.'),
+Q('√0.25','0.5','C','0.5×0.5=0.25.'),
+Q('2/7 + 3/7','5/7','C','5/7=5/7.'),
+QC('p > 2','p² − 4','(p − 2)(p + 2)','C','Difference of squares: same expression.'),
+Q('Perimeter of regular hexagon, side 4','24','C','6×4=24.'),
+Q('3⁴','4³','A','81 > 64.'),
+Q('0.06 × 0.6','0.036','C','0.036=0.036.'),
+Q('7/9','4/5','B','7×5=35 < 9×4=36.'),
+QC('2x − 3 = 11','x','7','C','2x=14, x=7.'),
+Q('2² × 3²','6²','C','4×9=36=36. (ab)²=a²b².'),
+Q('Each angle of a regular hexagon','120°','C','(6−2)×180÷6=120.'),
+Q('80% of 120','96','C','0.8×120=96.'),
+Q('6² + 8²','10²','C','36+64=100. 6-8-10 triple!'),
+Q('GCF of 18, 24, and 36','6','C','GCF=6.'),
+Q('5/6 × 3/5','1/2','C','15/30=1/2.'),
+Q('LCM of 3, 4, and 6','12','C','LCM=12.'),
+Q('(1.2)²','1.44','C','1.44=1.44.'),
+QC('Train travels 60 mph for 2.5 hours','Distance traveled','150 miles','C','60×2.5=150.'),
+Q('|−8 + 3|','|3 − 8|','C','|−5|=|−5|=5.'),
+QC('Set: {3, 7, 7, 9, 14}','Median','Mode','C','Median=7, Mode=7.'),
+Q('2 + 4 + 6 + 8 + 10','30','C','Sum=30.'),
+Q('5/12','7/17','A','5×17=85 > 7×12=84.'),
+QC('Set: {4, 8, 12, 16, 20}','Range','16','C','20−4=16.'),
+Q('3/7','43/100','B','3×100=300 < 43×7=301.'),
+Q('Sum of interior angles of a triangle','Minutes in 3 hours','C','Both = 180.'),
+QC('0 < x < 0.5','2x','1','B','2×(anything<0.5)<1.'),
+Q('12 × 13','150 + 6','C','156=156.'),
+Q('Area of circle with diameter 6','9π','C','r=3, π×9=9π.'),
+Q('LCM of 5 and 7','35','C','5×7=35 (both prime).'),
+Q('225 − 81','12²','C','144=144.'),
+Q('7/8 ÷ 7/4','1/2','C','7/8×4/7=4/8=1/2.'),
+QC('0 < n < 1','n²','n³','A','n³=n²×n<n² since n<1.'),
+Q('Hours in 5 days','120','C','5×24=120.'),
+Q('5/8 + 3/4','1 + 3/8','C','5/8+6/8=11/8=1 3/8.'),
+QC('Sum of two numbers=30, difference=6','Larger number','18','C','x=(30+6)/2=18.'),
+Q('4! + 3!','30','C','24+6=30.'),
+Q('(0.2)³','0.008','C','0.008=0.008.'),
+QC('Rectangle has area 48, one side = 6','Its perimeter','28','C','Other side=8, 2(6+8)=28.'),
+Q('(3/4)³','27/64','C','27/64=27/64.'),
+Q('Sum of interior angles of a hexagon','720°','C','(6−2)×180=720.'),
+Q('5×(2+8)−10','5×2+5×8−10','C','Distributive: 40=40.'),
+Q('Remainder when 50 ÷ 8','2','C','50=8×6+2.'),
+Q('√(49 × 81)','63','C','7×9=63.'),
+QC('n > 2','2ⁿ','n²','D','n=3:8<9(B); n=4:16=16(C); n=5:32>25(A).'),
+Q('35% of 200','25% of 280','C','70=70.'),
+QC('Rolling a standard die','P(rolling > 4)','1/3','C','P(5 or 6)=2/6=1/3.'),
+Q('Primes less than 30','10','C','2,3,5,7,11,13,17,19,23,29=10.'),
+],
+
+/* ═══ TEST 4 ════════════════════════════════════════════════════════════════*/
+[
+Q('2(3 + 4)','2×3 + 4','A','2×7=14 > 10. Distributive applies to A, not B.'),
+Q('(−2)⁴','2⁴','C','16=16. Even power makes it positive.'),
+Q('5/8 − 1/4','3/8','C','5/8−2/8=3/8.'),
+QC('k = 5','k² − 2k + 1','(k − 1)²','C','Same expression: (k−1)²=16.'),
+Q('35% of 140','50% of 98','C','49=49.'),
+Q('Area of right triangle, legs 6 and 8','24','C','½×6×8=24.'),
+Q('0.125','1/8','C','1÷8=0.125.'),
+Q('Vertices of a cube','Edges of a triangle','A','8 > 3.'),
+Q('4² − 3²','(4 − 3)(4 + 3)','C','Difference of squares: 7=7.'),
+Q('√(144/36)','2','C','√4=2.'),
+Q('7/12 − 1/4','1/3','C','7/12−3/12=4/12=1/3.'),
+QC('x < 0 < y','x + y','0','D','Depends on magnitudes: could be negative, zero, or positive.'),
+Q('Volume of cube with side 3','27','C','3³=27.'),
+Q('6³','216','C','216=216.'),
+Q('0.04 × 25','1','C','0.04×25=1.'),
+Q('9/11','10/12','B','9×12=108 < 11×10=110.'),
+QC('3x + 5 = 20','x','5','C','3x=15, x=5.'),
+Q('4⁰ + 4¹ + 4²','21','C','1+4+16=21.'),
+Q('Sum of interior angles of a heptagon','900°','C','(7−2)×180=900.'),
+Q('120% of 50','60','C','1.2×50=60.'),
+Q('3² + 4² + 5²','50','C','9+16+25=50.'),
+Q('Number of factors of 36','9','C','1,2,3,4,6,9,12,18,36=9 factors.'),
+Q('7/10 × 5/7','1/2','C','35/70=1/2.'),
+Q('LCM of 8 and 12','24','C','LCM=24.'),
+Q('(√5)²','5','C','Squaring a square root returns the original.'),
+QC('Car travels 45 mph for 4 hours','Distance','180 miles','C','45×4=180.'),
+Q('|−7 + 2|','|2 − 7|','C','|−5|=|−5|=5.'),
+Q('Median of {2, 5, 8, 11, 14}','Mean of {2, 5, 8, 11, 14}','C','Both = 8.'),
+Q('3 + 6 + 9 + 12 + 15','45','C','Sum=45.'),
+Q('6/13','7/15','B','6×15=90 < 13×7=91.'),
+Q('Range of {5, 10, 15, 20, 25, 30}','25','C','30−5=25.'),
+Q('4/9','44/99','C','44/99 simplifies to 4/9.'),
+Q('Sum of digits of 999','Sum of digits of 729','A','27 > 18.'),
+QC('x > 1','x + 2','2x','D','x=1.5: 3.5>3 (A); x=2: 4=4 (C); x=3: 5<6 (B).'),
+Q('11 × 9','10² − 1','C','99=99. (10−1)(10+1)=100−1.'),
+Q('Area of circle with radius 2','4π','C','π×4=4π.'),
+Q('Number of factors of 12','6','C','1,2,3,4,6,12=6.'),
+Q('256 − 196','(16 − 14)(16 + 14)','C','60=2×30=60.'),
+Q('4/5 ÷ 2/5','2','C','4/5×5/2=2.'),
+QC('−1 < x < 0','x²','x³','A','x²>0 and x³<0.'),
+Q('Days in 4 weeks','28','C','4×7=28.'),
+Q('7/9 + 2/9','1','C','9/9=1.'),
+QC('Sum of four consecutive integers = 22','Largest integer','7','C','4+5+6+7=22, largest=7.'),
+Q('3! × 2!','12','C','6×2=12.'),
+Q('(0.5)⁴','1/16','C','1/16=0.0625=0.0625.'),
+QC('Square has diagonal 10','Side length','5√2','C','d=s√2, so s=10/√2=5√2.'),
+Q('(4/5)²','16/25','C','16/25=16/25.'),
+Q('Sum of interior angles of an octagon','1080°','C','(8−2)×180=1080.'),
+Q('6×(7+3) − 2×(7+3)','4 × 10','C','Factor: (6−2)×10=40=40.'),
+Q('Remainder when 100 ÷ 9','1','C','100=9×11+1.'),
+Q('√(16 + 9)','√16 + √9','B','√25=5 < 4+3=7. √(a+b)≠√a+√b!'),
+QC('n is a positive even integer','n/2','n − 1','D','n=2: 1=1 (C); n=4: 2<3 (B).'),
+Q('80% of 80% of 100','64','C','0.8×0.8×100=64.'),
+QC('Bag: 4 red, 3 blue, 2 green marbles','P(not red)','5/9','C','5/9=5/9.'),
+Q('Number of sides of regular polygon with exterior angle = 45°','8','C','360÷45=8.'),
+],
+
+/* ═══ TEST 5 ════════════════════════════════════════════════════════════════*/
+[
+QC('Ratio of a to b is 2:3','3a','2b','C','a=2k,b=3k: 3(2k)=6k=2(3k).'),
+Q('3⁰','0³','A','1 > 0.'),
+Q('2/3 − 1/6','1/2','C','4/6−1/6=3/6=1/2.'),
+QC('m = −3','m² + 2m + 1','(m + 1)²','C','(−3+1)²=4=4.'),
+Q('55% of 200','110','C','0.55×200=110.'),
+Q('Area of square with diagonal 10','50','C','Area=d²/2=100/2=50.'),
+Q('0.008','8/1000','C','8/1000=0.008.'),
+Q('Faces of a triangular prism','5','C','2 triangles + 3 rectangles = 5.'),
+Q('(2 × 3)²','2² × 3²','C','36=36. (ab)²=a²b².'),
+Q('√121','11','C','11²=121.'),
+Q('5/6 − 2/3','1/6','C','5/6−4/6=1/6.'),
+QC('x > 0 and y < 0','xy','0','B','Positive × negative < 0.'),
+Q('Surface area of cube with side 2','24','C','6×2²=24.'),
+Q('7³','343','C','343=343.'),
+Q('(0.25)²','0.0625','C','0.0625=0.0625.'),
+Q('11/13','12/14','B','11×14=154 < 13×12=156.'),
+QC('5x − 2 = 3x + 8','x','5','C','2x=10, x=5.'),
+Q('2⁰+2¹+2²+2³+2⁴','31','C','1+2+4+8+16=31.'),
+Q('Sum of interior angles of a nonagon','1260°','C','(9−2)×180=1260.'),
+Q('150% of 40','60','C','1.5×40=60.'),
+Q('Legs 9 and 40, hypotenuse','41','C','9²+40²=1681=41². 9-40-41 triple!'),
+Q('Number of factors of 24','8','C','1,2,3,4,6,8,12,24=8.'),
+Q('(3/4) × (8/9)','2/3','C','24/36=2/3.'),
+Q('GCF of 42 and 70','14','C','42=2×3×7, 70=2×5×7, GCF=14.'),
+Q('(√3)⁴','9','C','(3^½)⁴=3²=9.'),
+QC('Price: markup 25%, then discount 20%','Final price as % of original','100%','C','1.25×0.80=1.00=100%.'),
+Q('|3 − 8| + |8 − 3|','10','C','5+5=10.'),
+Q('Median of {1, 3, 5, 7, 9, 11}','Mean of {1, 3, 5, 7, 9, 11}','C','Both = 6.'),
+Q('5 + 10 + 15 + 20 + 25 + 30','105','C','Sum=105.'),
+Q('8/15','9/17','A','8×17=136 > 15×9=135.'),
+Q('Integers from −3 to 3, inclusive','7','C','−3,−2,−1,0,1,2,3=7.'),
+Q('5/6','84/100','B','0.833 < 0.84.'),
+Q('Prime factors of 60, counting repeats','4','C','60=2×2×3×5 → four prime factors.'),
+QC('x² = 25','x','5','D','x=5 or x=−5.'),
+Q('23 × 17','24 × 16','A','391 > 384. Tip: (20+3)(20−3)=391 vs (20+4)(20−4)=384.'),
+QC('Circle has circumference 2π','Its area','π','C','C=2πr=2π → r=1, A=π.'),
+Q('Primes between 40 and 60','5','C','41,43,47,53,59=5.'),
+Q('2 + 5 × 10','(2 + 5) × 10 − 18','C','52=70−18=52.'),
+Q('9/10 ÷ 3/5','1.5','C','9/10×5/3=3/2=1.5.'),
+QC('|x| < 1','x²','|x|','D','x=0: 0=0 (C); x=0.5: 0.25<0.5 (B).'),
+Q('Centimeters in 2 meters','200','C','2×100=200.'),
+Q('3/7 + 4/7 + 5/7','12/7','C','12/7=12/7.'),
+QC('6 consecutive integers, average = 8.5','Largest integer','11','C','6,7,8,9,10,11: avg=8.5.'),
+Q('4! × 0!','24','C','24×1=24. Note: 0!=1.'),
+Q('(0.25)²','1/16','C','0.0625=1/16.'),
+QC('Circle has area 25π','Its circumference','10π','C','r=5, C=2π×5=10π.'),
+Q('(5/6)²','25/36','C','25/36=25/36.'),
+Q('Sum of exterior angles of any convex polygon','360°','C','Always 360°.'),
+QC('(a+b)²−2ab, where a=3, b=4','a²+b²','C','Identity: (a+b)²−2ab=a²+b². Both=25.'),
+Q('Remainder when 1000 ÷ 7','6','C','1000=142×7+6.'),
+Q('√(a²) where a = −4','4','C','√16=4=|a|.'),
+QC('n is prime','n + 1','A composite number','D','n=2: 3 is prime (not composite); n=3: 4 is composite.'),
+Q('25% of 25% of 400','25','C','0.25×0.25×400=25.'),
+QC('Bag has equal red and blue marbles','P(red)','P(blue)','C','Equal by symmetry.'),
+Q('Sides of regular polygon with interior angle 150°','12','C','(n−2)×180/n=150 → n=12.'),
+],
+
+/* ═══ TEST 6 ════════════════════════════════════════════════════════════════*/
+[
+Q('(2+3)² − 2² − 3²','2×2×3','C','25−4−9=12=2ab where a=2,b=3. From (a+b)²=a²+2ab+b².'),
+Q('(−1)¹⁰⁰','1','C','Even power of −1 = +1.'),
+Q('7/12 + 5/18','1','B','21/36+10/36=31/36 < 1.'),
+QC('a = 2, b = 4','aᵇ','bᵃ','C','2⁴=16=4²=16.'),
+Q('66.7% of 300','200','C','2/3×300=200.'),
+Q('Trapezoid: parallel sides 6 & 10, height 4 — Area','32','C','½(6+10)×4=32.'),
+Q('7/8','0.875','C','7÷8=0.875.'),
+Q('Edges of a triangular pyramid (tetrahedron)','6','C','4 faces, 4 vertices, 6 edges.'),
+Q('(3 + 4)²','3² + 2(3)(4) + 4²','C','Both=49. This is (a+b)²=a²+2ab+b².'),
+Q('√(100/25)','2','C','√4=2.'),
+Q('11/12 − 5/6','1/12','C','11/12−10/12=1/12.'),
+QC('xy > 0','x','0','D','Both positive (x>0) or both negative (x<0). Cannot determine.'),
+Q('Volume of box 3 × 4 × 5','60','C','60=60.'),
+Q('9⁴','3⁸','C','9⁴=(3²)⁴=3⁸.'),
+Q('1.5³','3.375','C','1.5×1.5×1.5=3.375.'),
+Q('13/15','14/16','B','13×16=208 < 15×14=210.'),
+QC('4(x − 1) = 2x + 6','x','5','C','4x−4=2x+6, 2x=10, x=5.'),
+Q('3¹ + 3² + 3³','39','C','3+9+27=39.'),
+Q('Diagonals of a pentagon','5','C','5(5−3)/2=5.'),
+Q('200% of 60','120','C','2.0×60=120.'),
+QC('Right triangle: hypotenuse 26, one leg 10','Other leg','24','C','10²+b²=26², b=24. This is 2×(5-12-13).'),
+Q('Number of factors of 48','10','C','48=2⁴×3, factors=(4+1)(1+1)=10.'),
+Q('(2/3) ÷ (4/9)','3/2','C','2/3×9/4=6/4=3/2.'),
+Q('LCM of 9 and 15','45','C','3²×5=45.'),
+Q('(√7)²','7','C','Squaring a square root returns the original.'),
+QC('Item sold at 40% off','Sale price as % of original','60%','C','100−40=60%.'),
+Q('|4² − 3²|','|4 − 3| × |4 + 3|','C','|7|=7=1×7. Difference of squares.'),
+Q('Mean of {10,20,30,40,50,60}','Median of {10,20,30,40,50,60}','C','Both = 35.'),
+Q('1 + 3 + 5 + 7 + 9','25','C','Sum of first 5 odd numbers = 5²=25.'),
+Q('10/19','11/21','A','10×21=210 > 19×11=209.'),
+Q('Integers from 10 to 20, inclusive','11','C','10,11,...,20=11 numbers.'),
+Q('7/8','87/100','A','0.875 > 0.87.'),
+Q('Sum of digits of 2^10 = 1024','7','C','1+0+2+4=7.'),
+QC('x is an integer and x² < 10','x','3','D','x can be −3,−2,...,3. If x=3: equal; if x=2: B.'),
+Q('25²','(25−1)(25+1)+1','C','625=(24)(26)+1=624+1=625.'),
+Q('Area of circle with radius r','Area of square with side r','A','πr² > r² since π > 1.'),
+Q('Primes between 50 and 70','4','C','53,59,61,67=4.'),
+Q('7(8 + 9)','7×8 + 7×9','C','Distributive: 119=119.'),
+Q('5/8 ÷ 10/16','1','C','5/8×16/10=80/80=1.'),
+QC('x = −4','x³ + x','−68','C','(−4)³+(−4)=−64−4=−68.'),
+Q('Weeks in one year','52','C','365÷7=52 remainder 1. Conventionally 52.'),
+Q('5/11 + 6/11','1','C','11/11=1.'),
+QC('Product of two numbers = 36, sum = 13','Larger number','9','C','4×9=36, 4+9=13, larger=9.'),
+Q('(3!)²','36','C','6²=36.'),
+Q('(0.4)³','0.064','C','0.4³=0.064.'),
+QC('Right triangle has a 30° angle','The other non-right angle','60°','C','90+30+x=180, x=60.'),
+QC('a = 6, b = 4','(a/b)²','9/4','C','(6/4)²=(3/2)²=9/4.'),
+Q('Sum of interior angles of a decagon','1440°','C','(10−2)×180=1440.'),
+QC('x=3, y=2','(x+y)² − (x−y)²','4xy','C','Identity: always equal. 25−1=24=4×6.'),
+Q('Remainder when 5⁴ = 625 ÷ 4','1','C','624=4×156, remainder 1.'),
+Q('√(x²+y²) where x=3, y=4','x + y where x=3, y=4','B','√25=5 < 7.'),
+Q('(1/2 + 1/3 + 1/6) × 60','60','C','Fractions sum to 1; 1×60=60.'),
+QC('Spinner: 8 equal sections (1–8)','P(landing on prime)','1/2','C','Primes: 2,3,5,7=4/8=1/2.'),
+Q('11² − 9²','40','C','(2)(20)=40.'),
+Q('Smallest positive multiple of both 5 and 8','40','C','LCM(5,8)=40.'),
+],
+
+/* ═══ TEST 7 ════════════════════════════════════════════════════════════════*/
+[
+Q('4(6 − 2) + 3','4×6 − 4×2 + 3','C','Distributive: 19=19.'),
+Q('(−3)³','−27','C','−27=−27.'),
+Q('5/6 + 1/3','7/6','C','5/6+2/6=7/6.'),
+QC('t = 10','t²/4','(t/2)²','C','100/4=25=(5)²=25. Identity: t²/4=(t/2)².'),
+Q('45% of 80','80% of 45','C','36=36. Percentages commute!'),
+Q('10th term of sequence 2, 5, 8, 11 …','29','C','a_n=2+(n−1)×3; a₁₀=2+27=29.'),
+Q('0.333…','1/3','C','1/3=0.3333….'),
+Q('Faces of a triangular prism','5','C','2 triangles + 3 rectangles = 5.'),
+Q('10² − 9 × 11','1','C','100−99=1. (a−b)(a+b) related.'),
+Q('√(9/16)','3/4','C','3/4 squared = 9/16.'),
+Q('3/4 − 5/12','1/3','C','9/12−5/12=4/12=1/3.'),
+QC('a > 0, b < 0','a − b','a + b','A','a−b=a+|b| > a−|b|=a+b.'),
+Q('Volume of cylinder, radius 3, height 1','9π','C','π×3²×1=9π.'),
+Q('2¹⁰','1024','C','1024=1024.'),
+Q('0.125 × 0.8','0.1','C','1/8×4/5=1/10=0.1.'),
+Q('15/17','16/18','B','15×18=270 < 17×16=272.'),
+QC('x/3 + 5 = 9','x','12','C','x/3=4, x=12.'),
+Q('Sum of first 6 terms: 1, 2, 4, 8, 16, 32','63','C','1+2+4+8+16+32=63.'),
+Q('Exterior angle of a regular pentagon','72°','C','360÷5=72.'),
+Q('250% of 16','40','C','2.5×16=40.'),
+Q('3⁷ + 3⁸','3⁷ × 4','C','3⁷(1+3)=3⁷×4. Factor!'),
+Q('Number of factors of 100','9','C','100=2²×5²; (2+1)(2+1)=9.'),
+Q('(7/8) × (16/21)','2/3','C','112/168=2/3.'),
+Q('LCM of 4, 6, and 10','60','C','2²×3×5=60.'),
+Q('(√11)²','11','C','Squaring a square root returns the original.'),
+QC('Simple interest: $200 at 5% for 2 years','Interest earned','$20','C','I=P×r×t=200×0.05×2=20.'),
+Q('|−6| × |7|','|−6 × 7|','C','42=42. |a|×|b|=|ab|.'),
+Q('Median of {12,15,18,21,24,27}','Mean of {12,15,18,21,24,27}','C','Both=19.5 (evenly spaced).'),
+Q('Sum of first 7 odd numbers','49','C','Sum of first n odds = n²=49.'),
+Q('11/20','12/22','A','11×22=242 > 20×12=240.'),
+Q('Multiples of 3 from 1 to 30','10','C','3,6,…,30=10.'),
+Q('5/9','56/100','B','0.556 < 0.56.'),
+Q('Odd numbers from 1 to 20','Even numbers from 1 to 20','C','Both = 10.'),
+QC('x > y > 0','x/y','(x+1)/(y+1)','A','Cross-multiply: x(y+1) vs y(x+1) → x > y, so A.'),
+Q('99 × 101','100² − 1','C','(100−1)(100+1)=100²−1=9999.'),
+QC('Right triangle: hypotenuse 13, one leg 5','Area','30','C','Other leg=12; ½×5×12=30.'),
+Q('Primes from 1 to 50','15','C','2,3,5,7,11,13,17,19,23,29,31,37,41,43,47=15.'),
+QC('x = 2','3(x + 4)','3x + 12','C','18=18. Distributive.'),
+Q('8/9 ÷ 4/3','2/3','C','8/9×3/4=24/36=2/3.'),
+QC('x is a negative integer','|x|','−x','C','For negative x: |x|=−x by definition.'),
+Q('Minutes in one day','1440','C','24×60=1440.'),
+Q('2/3 + 1/6 + 1/6','1','C','4/6+1/6+1/6=6/6=1.'),
+QC('3x − 8 = 22','x','10','C','3x=30, x=10.'),
+Q('5! / 3!','20','C','120÷6=20.'),
+Q('(0.3)⁴','0.0081','C','0.0081=0.0081.'),
+QC('Circle inscribed in square with side 6','Area of circle','9π','C','r=3, area=9π.'),
+Q('(3/8)²','9/64','C','9/64=9/64.'),
+Q('Sides of regular polygon with interior angle = 108°','5','C','(n−2)×180/n=108 → n=5.'),
+Q('(a²−b²)/(a+b) where a=7, b=3','a − b','C','Simplify: (a+b)(a−b)/(a+b)=a−b=4.'),
+Q('Remainder when 3⁴ = 81 ÷ 5','1','C','80=5×16, remainder 1.'),
+Q('√(a²+b²) where a=5, b=12','a + b','B','√169=13 < 17.'),
+QC('Sum of digits of n = 9','Remainder when n ÷ 9','0','C','Digit-sum divisibility rule: digit sum 9 → divisible by 9.'),
+Q('12.5% of 96','12','C','1/8×96=12.'),
+QC('Two dice rolled','P(sum = 7)','1/6','C','(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)=6/36=1/6.'),
+Q('17² − 13²','120','C','(4)(30)=120.'),
+],
+
+/* ═══ TEST 8 ════════════════════════════════════════════════════════════════*/
+[
+Q('(5 − 3)³','5³ − 3³','B','8 < 98. Note: (a−b)³ ≠ a³−b³.'),
+Q('(−4)²','−(4²)','A','16 > −16.'),
+Q('7/8 + 1/8','1','C','8/8=1.'),
+QC('p = 7','p² − p','p(p − 1)','C','Same expression: p(p−1).'),
+Q('12.5% of 160','20','C','1/8×160=20.'),
+Q('Perimeter of regular pentagon, side 8','40','C','5×8=40.'),
+Q('0.16','4/25','C','4÷25=0.16.'),
+Q('Vertices of a regular octahedron','6','C','6 vertices, 8 faces, 12 edges.'),
+Q('4 × (3² + 2)','4×3² + 4×2','C','Distributive: 4×11=44=36+8.'),
+Q('√256','16','C','16²=256.'),
+Q('7/10 − 2/5','3/10','C','7/10−4/10=3/10.'),
+QC('x² = y² and x ≠ y','x','−y','C','x²=y² and x≠y means x=−y.'),
+Q('Volume of cube with side 4','64','C','4³=64.'),
+Q('(1/2)⁸','1/256','C','1/256=1/256.'),
+Q('0.7 × 0.07','0.049','C','0.049=0.049.'),
+Q('17/20','18/21','B','17×21=357 < 20×18=360.'),
+QC('(x−3)(x+5) = 0','x + 1','±4','D','x=3: x+1=4; x=−5: x+1=−4. Cannot determine.'),
+Q('4² + 5² + 6²','77','C','16+25+36=77.'),
+Q('Each interior angle of a regular octagon','135°','C','(8−2)×180÷8=135.'),
+Q('175% of 48','84','C','1.75×48=84.'),
+Q('7² + 24²','25²','C','49+576=625. 7-24-25 triple!'),
+Q('Number of factors of 72','12','C','72=2³×3², (3+1)(2+1)=12.'),
+Q('(5/6) ÷ (25/36)','6/5','C','5/6×36/25=180/150=6/5.'),
+Q('LCM of 12 and 18','36','C','LCM=36.'),
+Q('(√13)² + (√7)²','20','C','13+7=20.'),
+QC('Rectangle: length = 3×width, perimeter = 48','Its area','108','C','2(4w)=48→w=6,l=18,A=108.'),
+Q('|−3 + (−4)|','|−3| + |−4|','C','|−7|=7, 3+4=7. Same sign so equality holds.'),
+Q('Median of {2, 6, 8, 10, 14}','Mean of {2, 6, 8, 10, 14}','C','Median=8, Mean=40/5=8.'),
+Q('2+4+8+16+32+64','126','C','Geometric series: 2(2⁶−1)=126.'),
+Q('7/13','8/15','A','7×15=105 > 13×8=104.'),
+Q('Multiples of 7 from 1 to 70','10','C','7,14,…,70=10.'),
+Q('8/9','89/100','B','0.888 < 0.89.'),
+Q('Sum of first 10 positive even integers','110','C','2(1+2+…+10)=2×55=110.'),
+QC('n is a 2-digit number','n','50','D','n could be 10–99.'),
+Q('49 × 51','50² − 1','C','(50−1)(50+1)=2499=2499.'),
+Q('Area of equilateral triangle with side 6','9√3','C','(√3/4)×36=9√3.'),
+Q('Primes between 70 and 90','5','C','71,73,79,83,89=5.'),
+Q('5 × (4 + 6)','5×4 + 5×6','C','50=50.'),
+Q('9/10 ÷ 3/4','1.2','C','9/10×4/3=12/10=1.2.'),
+QC('x = 0','xⁿ (n is any positive integer)','0','C','0 to any positive power = 0.'),
+Q('Seconds in one hour','3600','C','60×60=3600.'),
+Q('4/5 − 3/10 + 1/2','1','C','8/10−3/10+5/10=10/10=1.'),
+QC('Average of 7 numbers = 9','Their sum','63','C','7×9=63.'),
+Q('8! / 7!','8','C','8×7!/7!=8.'),
+Q('(0.6)⁴','0.1296','C','0.6⁴=0.1296.'),
+QC('Isosceles triangle, vertex angle = 40°','Each base angle','70°','C','(180−40)/2=70.'),
+Q('(7/9)²','49/81','C','49/81=49/81.'),
+Q('Sum of interior angles of a 12-sided polygon','1800°','C','(12−2)×180=1800.'),
+QC('x=8, y=5','(x−y)²','x² − 2xy + y²','C','Identity: always equal. Both=9.'),
+Q('Remainder when 2⁸ = 256 ÷ 5','1','C','255=5×51, remainder 1.'),
+Q('Diagonal of a square with side 5','5√2','C','d=s√2=5√2.'),
+QC('p/q = 3, p > 0, q > 0','p','3q','C','p=3q.'),
+Q('37.5% of 64','24','C','3/8×64=24.'),
+QC('Regular hexagon divided into equilateral triangles','Number of triangles','6','C','6 equilateral triangles tile a regular hexagon.'),
+Q('21² − 19²','80','C','(2)(40)=80.'),
+],
+
+/* ═══ TEST 9 ════════════════════════════════════════════════════════════════*/
+[
+Q('3(4×5 + 2)','3×4×5 + 3×2','C','3×22=66=60+6. Distributive.'),
+Q('(−5)³ × (−1)','5³','C','−125×−1=125=5³.'),
+Q('11/12 − 7/12','1/3','C','4/12=1/3.'),
+QC('s = 6','s²/3','2s','C','36/3=12=2×6.'),
+Q('66% of 150','100','B','0.66×150=99 < 100.'),
+Q('Perimeter of square with side 6','Perimeter of regular hexagon with side 4','C','24=24.'),
+Q('0.0625','1/16','C','1÷16=0.0625.'),
+Q('Edges of a rectangular prism','12','C','4+4+4=12.'),
+Q('6 − 2² × 3','−6','C','6−4×3=6−12=−6. PEMDAS: exponent first.'),
+Q('√0.01','0.1','C','0.1²=0.01.'),
+Q('4/9 + 5/9','1','C','9/9=1.'),
+QC('0 < a < 1','a²','a³','A','a³=a²×a < a² since a < 1.'),
+Q('Volume of box 2 × 3 × 10','60','C','60=60.'),
+Q('3³ × 3³','3⁶','C','aᵐ×aⁿ=aᵐ⁺ⁿ: 3⁶=3⁶.'),
+Q('0.2 × 0.02 × 5','0.02','C','0.004×5=0.02.'),
+Q('19/21','20/22','B','19×22=418 < 21×20=420.'),
+QC('3(2x + 1) = 21','x','3','C','6x+3=21, 6x=18, x=3.'),
+Q('1²+2²+3²+4²+5²','55','C','1+4+9+16+25=55.'),
+Q('Exterior angle of a regular octagon','45°','C','360÷8=45.'),
+Q('0.5% of 2000','10','C','0.005×2000=10.'),
+QC('Right triangle: hypotenuse 17, one leg 8','Other leg','15','C','17²−8²=225=15². 8-15-17 triple!'),
+Q('Number of factors of 90','12','C','90=2×3²×5; (1+1)(2+1)(1+1)=12.'),
+Q('(3/4)×(8/15)×(5/4)','1/2','C','120/240=1/2.'),
+Q('GCF of 84 and 126','42','C','84=2²×3×7, 126=2×3²×7, GCF=2×3×7=42.'),
+Q('(√6)⁴','36','C','(6^½)⁴=6²=36.'),
+QC('Markup 25%, then discount 20%','Final price % of original','100%','C','1.25×0.80=1.00.'),
+Q('|3−7| × |7−3|','(7−3)²','C','4×4=16=4².'),
+Q('Median of {1, 2, 3, …, 99}','Mean of {1, 2, 3, …, 99}','C','Both = 50.'),
+Q('n(n+1)/2 when n = 12','78','C','12×13/2=78.'),
+Q('12/25','13/27','B','12×27=324 < 25×13=325.'),
+Q('Two-digit primes less than 30','6','C','11,13,17,19,23,29=6.'),
+Q('2/3 × 3/4 × 4/5 × 5/6','1/3','C','Telescoping product: 2/6=1/3.'),
+Q('Sum of digits of 2024','8','C','2+0+2+4=8.'),
+QC('x is a positive perfect square less than 50','x','25','D','x could be 1,4,9,16,25,36,49.'),
+Q('48 × 52','50² − 4','C','(50−2)(50+2)=2500−4=2496.'),
+Q('Area of circle with diameter d','π(d/2)²','C','Same formula.'),
+Q('Largest prime less than 100','97','C','97 is prime; 98=2×49, 99=9×11.'),
+Q('4 × 3 × 2 × 1','4!','C','Both = 24.'),
+Q('3/7 ÷ 9/14','2/3','C','3/7×14/9=42/63=2/3.'),
+QC('x is a positive integer and x² < 16','Largest possible x','4','B','x can be 1,2,3; largest=3 < 4.'),
+Q('Years in 4 decades','40','C','4×10=40.'),
+Q('1/2 + 1/4 + 1/8','7/8','C','4/8+2/8+1/8=7/8.'),
+QC('A number is 4 more than twice another; their sum is 22','The larger number','16','C','x=2y+4, x+y=22 → y=6, x=16.'),
+Q('10! / 8!','90','C','10×9=90.'),
+Q('(0.9)⁵','0.59049','C','0.9⁵=0.59049.'),
+QC('45-45-90 triangle','Ratio: leg to hypotenuse','1/√2','C','Leg=h/√2, ratio=1/√2≈0.707.'),
+QC('a=10, b=7','(a+b)(a−b)','a²−b²','C','Identity: difference of squares. Both=51.'),
+Q('Diagonals of a decagon','35','C','10×7/2=35.'),
+QC('x=5, y=3','2(x+y)−2(x−y)','4y','C','2x+2y−2x+2y=4y=12.'),
+Q('Remainder when 5⁴ = 625 ÷ 4','1','C','624=4×156, remainder 1.'),
+Q('√(1² + 2² + 2²)','3','C','√(1+4+4)=√9=3.'),
+QC('n > 0','n + 1/n','2','D','n=1: equal; n=2: 2.5>2. By AM-GM, ≥2 but can equal 2.'),
+Q('1/8 of 400','12.5% of 400','C','Both = 50. 1/8=12.5%.'),
+QC('Standard 52-card deck','P(drawing an ace)','1/13','C','4/52=1/13.'),
+Q('23² − 22²','45','C','(1)(45)=45.'),
+],
+
+/* ═══ TEST 10 ═══════════════════════════════════════════════════════════════*/
+[
+QC('a = 5, b = −3','(a+b)²','(a−b)²','B','(2)²=4 < (8)²=64.'),
+Q('1 ÷ (1/4)','4','C','1÷(1/4)=1×4=4.'),
+Q('5/6 + 7/12','1 + 5/12','C','10/12+7/12=17/12=1 5/12.'),
+QC('x² − 9 = 0','x','3','D','x=3 or x=−3.'),
+Q('87.5% of 48','42','C','7/8×48=42.'),
+Q('Area of rhombus with diagonals 10 and 8','40','C','d₁×d₂/2=80/2=40.'),
+Q('0.363636…','4/11','C','4/11=0.3636….'),
+Q('Faces + Vertices of a cube','Edges of a cube','A','6+8=14 > 12.'),
+Q('2³×3 − (2+3)²','−1','C','24−25=−1.'),
+Q('√0.0009','0.03','C','0.03²=0.0009.'),
+Q('1/2 × 2/3 × 3/4 × 4/5','1/5','C','Telescoping: 1/5.'),
+QC('x/y = 2','x','2y','C','x=2y.'),
+Q('Volume of sphere with radius 3','36π','C','4/3×π×27=36π.'),
+Q('2¹⁵','2⁵ × 2¹⁰','C','2^(5+10)=2¹⁵.'),
+Q('0.8 × 1.25','1','C','4/5×5/4=1.'),
+Q('21/23','22/24','B','21×24=504 < 23×22=506.'),
+QC('|2x − 6| = 4','x','5','D','2x−6=4→x=5 or 2x−6=−4→x=1.'),
+Q('Sum of even integers 2 to 20','Sum of odd integers 1 to 19','A','110 > 100.'),
+Q('Exterior angle of a regular decagon','36°','C','360÷10=36.'),
+Q('333.3…% of 60','200','C','10/3×60=200.'),
+Q('Diagonal of rectangle, length 12, width 5','13','C','5-12-13 triple: √(144+25)=13.'),
+Q('Number of factors of 360','24','C','360=2³×3²×5; (3+1)(2+1)(1+1)=24.'),
+Q('(2/5 + 3/10) ÷ (7/10)','1','C','7/10÷7/10=1.'),
+Q('LCM of 15, 20, and 25','300','C','2²×3×5²=300.'),
+Q('(√2)⁸','16','C','2⁴=16.'),
+QC('$500 at 10% compound interest for 2 years','Final amount','$605','C','500×1.1²=500×1.21=605.'),
+Q('|−7 + (−8)|','|−7| + |−8|','C','|−15|=15=7+8. Same sign: equality holds.'),
+Q('Median of {n, n+2, n+4, n+6, n+8}','Mean of same set','C','Both = n+4 for any n.'),
+Q('Sum of all integers from −10 to 10','0','C','Each negative cancels its positive.'),
+Q('15/28','16/30','A','15×30=450 > 28×16=448.'),
+Q('Perfect squares from 1 to 100','10','C','1,4,9,16,25,36,49,64,81,100=10.'),
+Q('7/8 − 1/3','13/24','C','21/24−8/24=13/24.'),
+QC('a=7, b=3','(a+b)(a−b)','a²−b²','C','40=40. Difference of squares.'),
+QC('n is a positive multiple of both 5 and 8','n','40','D','Could be 40,80,120…'),
+Q('101 × 99','100² − 1','C','(100+1)(100−1)=9999=9999.'),
+Q('Area of triangle with vertices (0,0), (4,0), (0,3)','6','C','½×4×3=6.'),
+Q('Primes between 90 and 110','5','C','97,101,103,107,109=5.'),
+Q('5! + 5!','2 × 5!','C','Both = 240.'),
+Q('(6/7) ÷ (3/14)','4','C','6/7×14/3=84/21=4.'),
+QC('x²+y²=25 and x=3','y','4','D','y²=16, y=4 or y=−4.'),
+Q('Months in 7 years','84','C','7×12=84.'),
+Q('1/2 + 1/4 + 1/8 + 1/16','15/16','C','8/16+4/16+2/16+1/16=15/16.'),
+QC('3 workers complete a job in 4 hours','Time for 1 worker alone','12 hours','C','3×4=12.'),
+Q('7! / (4! × 3!)','35','C','C(7,3)=35.'),
+Q('(0.7)⁵','0.16807','C','0.7⁵=0.16807.'),
+QC('30-60-90 triangle with hypotenuse 10','Shorter leg','5','C','Shorter leg = hypotenuse/2 = 5.'),
+QC('a=4, b=3','a²b / (ab²)','a/b','C','Simplifies to a/b=4/3.'),
+Q('Diagonals of a 12-sided polygon','54','C','12×9/2=54.'),
+QC('x=3, y=2','(x+y)² + (x−y)²','2(x² + y²)','C','Identity: always equal. 26=26.'),
+Q('Remainder when 7⁴ = 2401 ÷ 10','1','C','Units digits of powers of 7 cycle: 7,9,3,1. 7⁴ ends in 1.'),
+Q('√(5²+12²+0²)','13','C','√169=13.'),
+QC('x > y > 0','(x+y)/(x−y)','1','A','x+y > x−y since y > 0, so ratio > 1.'),
+Q('62.5% of 64','40','C','5/8×64=40.'),
+QC('Two dice rolled','P(both show 6)','1/36','C','1/6×1/6=1/36.'),
+Q('29² − 21²','400','C','(8)(50)=400.'),
+]
+];
+
+// ── STUDY GUIDE DATA ─────────────────────────────────────────────────────────
+const lessons=[
+{id:'overview',icon:'🎯',title:'How SCAT Math Works',tag:'Strategy',
+ intro:'The SCAT Quantitative section compares two columns. You never need to find an exact answer — just decide which side is bigger, or whether it\'s impossible to tell. The four choices are always identical on every question.',
+ tip:'Key insight: Questions where you can\'t determine the answer because the result <em>changes</em> depending on unknown values → answer is <strong>D</strong>. Questions where you can work out a definite comparison → A, B, or C.',
+ tipList:['A: Column A is greater','B: Column B is greater','C: The two quantities are equal','D: The relationship cannot be determined'],
+ examples:[
+  {cond:'',a:'3 × 4 + 2',b:'4 × 3 + 2',ans:'C',why:'Both = 14. Multiplication is commutative, so 3×4=4×3. You can see this without calculating.'},
+  {cond:'x + y = 10',a:'x',b:'5',ans:'D',why:'x could be 3 (B wins), 5 (equal), or 8 (A wins). The condition doesn\'t pin down x, so the relationship cannot be determined.'},
+ ],
+ mistake:'Don\'t rush to D just because there\'s a variable. If the condition fully determines the variable (e.g., "x = 3"), you can compute exactly.'},
+{id:'manipulate',icon:'⚖️',title:'The Manipulation Rules',tag:'Strategy',
+ intro:'You can do math to BOTH columns equally without changing which side is bigger — as long as you follow the rules. This often simplifies the comparison dramatically.',
+ tip:'You may: (1) Add or subtract the same value to both sides. (2) Multiply or divide both sides by the same <em>positive</em> number. You may NOT: multiply or divide by a negative (flips the sign!), or multiply by a variable unless you know its sign.',
+ tipList:null,
+ examples:[
+  {cond:'',a:'2x + 7',b:'x + 10 (given x = 2)',ans:'B',why:'Subtract x from both sides: x+7 vs 10. Subtract 7: x vs 3. With x=2, Column B wins.'},
+  {cond:'',a:'a² + a',b:'a(a+1)',ans:'C',why:'Factor Column A: a²+a = a(a+1). Now both columns are identical — always equal.'},
+ ],
+ mistake:'Never multiply both columns by an expression that could be positive or negative (like a variable) unless you\'ve confirmed its sign. That would change which answer is correct.'},
+{id:'pluggin',icon:'🔢',title:'The "D" Strategy — Plug In Numbers',tag:'Strategy',
+ intro:'Answer D means the relationship changes depending on the value of an unknown. The fastest way to check is to test two numbers that might give different results.',
+ tip:'Magic test numbers: try 0, 1, 2, −1, and 1/2. If you get TWO DIFFERENT outcomes (A wins sometimes, B wins other times, or equal vs not equal), the answer is D.',
+ tipList:['Test 1: a simple positive integer like n=1 or n=2','Test 2: a different case like n=0 or a fraction','If outcomes differ → D. If always the same → A, B, or C.'],
+ examples:[
+  {cond:'n is a positive integer',a:'n²',b:'2n',ans:'D',why:'n=1: 1<2 (B). n=2: 4=4 (C). n=3: 9>6 (A). Three different outcomes → D.'},
+  {cond:'x > 1',a:'x + 2',b:'2x',ans:'D',why:'x=1.5: 3.5>3 (A). x=2: 4=4 (C). x=3: 5<6 (B). Changes → D.'},
+ ],
+ mistake:'A common mistake: seeing a variable and immediately guessing D without testing. Many variable questions have a definite answer — always test first!'},
+{id:'estimation',icon:'💡',title:'Don\'t Calculate — Estimate & Compare',tag:'Strategy',
+ intro:'Many SCAT questions are designed so you can compare without fully computing. Look for shortcuts before reaching for pencil and paper.',
+ tip:'Shortcuts that often work without full calculation: (1) Pythagorean triples — spot a triple and you know the third side instantly. (2) Difference of squares: (a+b)(a−b) = a²−b². (3) Percentage tricks — convert to fractions first.',
+ tipList:['3-4-5, 5-12-13, 8-15-17, 7-24-25, 9-40-41 are triples to memorize','(n−1)(n+1) = n²−1 is always slightly less than n²','ab% of c = ac% of b (percentages commute!)'],
+ examples:[
+  {cond:'',a:'23×17',b:'24×16',ans:'A',why:'Think of it as (20+3)(20−3) vs (20+4)(20−4) = 400−9 vs 400−16. No multiplication needed!'},
+  {cond:'',a:'45% of 80',b:'80% of 45',ans:'C',why:'Percentages commute! a% of b always equals b% of a. Both = 36.'},
+ ],
+ mistake:'Don\'t blindly compute large multiplications. First ask: is there a pattern, a shortcut, or a factoring trick that makes this obvious?'},
+{id:'pemdas',icon:'📐',title:'Order of Operations (PEMDAS)',tag:'Concept',
+ intro:'SCAT often tests whether you apply the order of operations correctly. Many wrong answers come from adding before multiplying, or ignoring parentheses.',
+ tip:'PEMDAS: Parentheses → Exponents → Multiply/Divide (left to right) → Add/Subtract (left to right). Exponents come BEFORE multiplication!',
+ tipList:['3+4² = 3+16 = 19 (NOT 7²=49)','(3+4)² = 7² = 49','2×3² = 2×9 = 18 (NOT 6²=36)'],
+ examples:[
+  {cond:'',a:'3 + 4²',b:'(3 + 4)²',ans:'B',why:'Left: 3+16=19. Right: 7²=49. Always do exponents before adding.'},
+  {cond:'',a:'6 − 2² × 3',b:'−6',why:'Left: 6−4×3=6−12=−6. Right: −6. Equal! Order: exponent first, then multiply, then subtract.',ans:'C'},
+ ],
+ mistake:'The most common PEMDAS trap: forgetting that 3+4² ≠ 7². The exponent only applies to the base (4), not to the sum.'},
+{id:'fractions',icon:'½',title:'Comparing Fractions Fast',tag:'Concept',
+ intro:'Fraction comparison questions appear throughout the SCAT. Having a fast comparison method is essential when the fractions don\'t share an obvious relationship.',
+ tip:'Cross-multiply to compare: for a/b vs c/d, compare a×d with b×c. If a×d > b×c, then a/b > c/d. Only works when b and d are positive!',
+ tipList:['Benchmark fractions: 1/4=0.25, 1/3≈0.33, 1/2=0.5, 2/3≈0.67, 3/4=0.75','If numerators are equal, the smaller denominator makes the bigger fraction','If denominators are equal, the bigger numerator makes the bigger fraction'],
+ examples:[
+  {cond:'',a:'7/8',b:'8/9',ans:'B',why:'Cross-multiply: 7×9=63 vs 8×8=64. 63<64 so 7/8 < 8/9.'},
+  {cond:'',a:'4/7',b:'5/9',ans:'A',why:'Cross-multiply: 4×9=36 vs 7×5=35. 36>35 so 4/7 > 5/9.'},
+ ],
+ mistake:'When cross-multiplying, be careful: the product a×d goes with fraction a/b (multiply across the diagonal). A mnematch means a wrong answer.'},
+{id:'exponents',icon:'🔋',title:'Exponents & Powers',tag:'Concept',
+ intro:'Exponent questions test both your memorized values and your ability to apply the rules of exponents to simplify before comparing.',
+ tip:'Key rules: aᵐ×aⁿ = aᵐ⁺ⁿ · (aᵐ)ⁿ = aᵐⁿ · (ab)ⁿ = aⁿbⁿ · a⁰ = 1 · (√a)² = a · a^(1/2) = √a',
+ tipList:['Powers of 2: 2,4,8,16,32,64,128,256,512,1024','Powers of 3: 3,9,27,81,243','Squares: 1,4,9,16,25,36,49,64,81,100,121,144,169,196,225','(−x)² is always positive; (−x)³ is always negative'],
+ examples:[
+  {cond:'',a:'9⁴',b:'3⁸',ans:'C',why:'9=(3²), so 9⁴=(3²)⁴=3⁸. They\'re the same!'},
+  {cond:'',a:'2⁵',b:'5²',ans:'A',why:'2⁵=32, 5²=25. Memorizing powers of 2 makes this instant.'},
+ ],
+ mistake:'Don\'t confuse 2³ (=8) with 3² (=9). Exponents and bases matter. Also: (−3)²=9 (positive), but −(3²)=−9 (negative).'},
+{id:'geometry',icon:'📏',title:'Geometry Essentials',tag:'Concept',
+ intro:'SCAT geometry questions cover areas, perimeters, angle sums, and volume. Knowing these formulas cold lets you answer in seconds.',
+ tip:'The angle-sum formula for any polygon with n sides: (n−2)×180°. Number of diagonals: n(n−3)/2.',
+ tipList:null,
+ examples:[
+  {cond:'',a:'Sum of interior angles of a pentagon',b:'540°',ans:'C',why:'(5−2)×180=540. Applies to ANY pentagon, regular or not.'},
+  {cond:'',a:'Area of triangle, base 10, height 6',b:'30',ans:'C',why:'½×b×h=½×10×6=30.'},
+ ],
+ mistake:'Don\'t confuse area and perimeter, or radius and diameter. A circle with radius 3 has area 9π but circumference 6π.'},
+{id:'pyth',icon:'📐',title:'Pythagorean Triples',tag:'Concept',
+ intro:'Pythagorean triples are sets of whole numbers that satisfy a²+b²=c². Recognizing them instantly saves enormous calculation time on SCAT.',
+ tip:'Memorize these triples and their multiples: 3-4-5 (×2=6-8-10, ×3=9-12-15), 5-12-13, 8-15-17, 7-24-25. If you see two sides from a triple, you know the third immediately.',
+ tipList:['3-4-5 and multiples: 6-8-10, 9-12-15, 12-16-20','5-12-13 and multiples: 10-24-26','8-15-17','7-24-25','Pythagorean theorem: a²+b²=c² (c is hypotenuse)'],
+ examples:[
+  {cond:'',a:'5²+12²',b:'13²',ans:'C',why:'25+144=169=13². 5-12-13 is a Pythagorean triple!'},
+  {cond:'Right triangle, hypotenuse 17, one leg 8',a:'Other leg',b:'15',ans:'C',why:'8-15-17 is a Pythagorean triple. No calculation needed!'},
+ ],
+ mistake:'Make sure c is the HYPOTENUSE (longest side). 3-4-5 means legs of 3 and 4, hypotenuse of 5. Don\'t put 5 as a leg.'},
+{id:'percent',icon:'%',title:'Percentages & Proportions',tag:'Concept',
+ intro:'Percentage and proportion questions are common. Having key conversions memorized and knowing the commutativity trick eliminates most of the work.',
+ tip:'Percentages commute: a% of b = b% of a. So 45% of 80 = 80% of 45 = 36. Also: compound changes multiply, so 25% off then 20% off = 0.75×0.80 = 60% of original (NOT 45% off).',
+ tipList:['25%=1/4, 33⅓%=1/3, 50%=1/2, 66⅔%=2/3, 75%=3/4','12.5%=1/8, 37.5%=3/8, 62.5%=5/8, 87.5%=7/8','150%=3/2, 200%=2, 250%=5/2'],
+ examples:[
+  {cond:'',a:'35% of 140',b:'50% of 98',ans:'C',why:'35% of 140 = 35×140/100 = 49. 50% of 98 = 49. Equal!'},
+  {cond:'Markup 25%, discount 20%',a:'Final price %',b:'100%',ans:'C',why:'1.25×0.80=1.00. The two changes cancel exactly!'},
+ ],
+ mistake:'When applying two percentage changes, NEVER add them. A 25% increase followed by 20% decrease is NOT 5% net change. Always multiply the decimal factors.'},
+{id:'algebra',icon:'🔤',title:'Algebraic Identities',tag:'Concept',
+ intro:'A handful of algebraic identities appear repeatedly on the SCAT. Recognizing them lets you compare columns instantly without expanding.',
+ tip:'Difference of squares: a²−b² = (a+b)(a−b). This is the SCAT\'s most frequently tested identity. Use it in reverse: (n−1)(n+1) = n²−1.',
+ tipList:['(a+b)² = a²+2ab+b²','(a−b)² = a²−2ab+b²','(a+b)(a−b) = a²−b²','a(b+c) = ab+ac (distributive)','(a/b)² = a²/b²'],
+ examples:[
+  {cond:'',a:'99×101',b:'100²−1',ans:'C',why:'99×101=(100−1)(100+1)=100²−1=9999.'},
+  {cond:'',a:'n²+n',b:'n(n+1)',ans:'C',why:'Factor: n²+n=n(n+1). Same expression always.'},
+ ],
+ mistake:'The difference of squares only works as a²−b². You cannot factor a sum: a²+b² ≠ (a+b)². Many students confuse these.'},
+{id:'numtheory',icon:'🔍',title:'Number Theory',tag:'Concept',
+ intro:'Prime numbers, factors, GCF, LCM, and remainders appear throughout the SCAT. A strong number theory foundation gives you quick answers.',
+ tip:'Primes under 50: 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47. The ONLY even prime is 2. Number of factors formula: if n=p^a × q^b, then factors=(a+1)(b+1).',
+ tipList:['Divisibility by 3: digit sum divisible by 3','Divisibility by 9: digit sum divisible by 9','LCM×GCF = product of the two numbers (for 2 numbers)','GCF: highest power each prime factor has in COMMON','LCM: highest power each prime factor has in EITHER number'],
+ examples:[
+  {cond:'',a:'Number of factors of 36',b:'9',ans:'C',why:'36=2²×3², factors=(2+1)(2+1)=9. List: 1,2,3,4,6,9,12,18,36.'},
+  {cond:'',a:'Remainder when 1000÷7',b:'6',ans:'C',why:'1000=142×7+6. Remainder=6.'},
+ ],
+ mistake:'GCF and LCM are commonly confused. GCF (greatest common factor) is always ≤ either number. LCM (least common multiple) is always ≥ either number.'},
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const st={
+  tab:0, // 0–9 = tests, 10 = study guide
+  q:0,
+  ans:tests.map(t=>new Array(t.length).fill(null)),
+  sub:new Array(tests.length).fill(false),
+  timers:new Array(tests.length).fill(22*60),
+  ivs:new Array(tests.length).fill(null),
+  started:new Array(tests.length).fill(false),
+  lesson:null,
+};
+
+// ── RENDER TABS ───────────────────────────────────────────────────────────────
+function renderTabs(){
+  const tc=document.getElementById('tabs');
+  tc.innerHTML=tests.map((_,i)=>`<div class="tab${st.tab===i?' on':''}" onclick="setTab(${i})">Test ${i+1}</div>`).join('')
+    +`<div class="tab sg${st.tab===10?' on':''}" onclick="setTab(10)">📚 Study Guide</div>`;
+}
+
+// ── MAIN RENDER ───────────────────────────────────────────────────────────────
+function render(){
+  renderTabs();
+  const app=document.getElementById('app');
+  if(st.tab===10){app.innerHTML=renderSG();return;}
+  const t=st.tab;
+  if(!st.started[t]){app.innerHTML=renderStart(t);return;}
+  if(st.sub[t]){app.innerHTML=renderResults(t);return;}
+  app.innerHTML=renderTest(t);
+  updateGrid(t);
+  updateTimer(t);
+}
+
+function setTab(i){st.tab=i;st.q=0;render();}
+
+// ── START SCREEN ──────────────────────────────────────────────────────────────
+function renderStart(t){
+  return`<div class="start"><div class="startcard">
+    <h2>SCAT Math · Test ${t+1}</h2>
+    <p>Quantitative Comparison · 55 Questions · 22 Minutes</p>
+    <div class="rules"><strong>For each question compare Column A and Column B:</strong><br>
+    A — Column A is greater<br>B — Column B is greater<br>C — The two quantities are equal<br>D — Cannot be determined from the information given<br><br>
+    Any given condition (shown in amber) applies to both columns.</div>
+    <p style="color:var(--gy);font-size:.82rem">Timer starts when you click Begin. You can skip and return to any question.</p>
+    <button class="btn btn-p" style="width:100%;margin-top:10px;padding:13px" onclick="startTest(${t})">Begin Test ${t+1}</button>
+  </div></div>`;
+}
+
+// ── TEST SCREEN ───────────────────────────────────────────────────────────────
+function renderTest(t){
+  const q=tests[t][st.q];
+  const a=st.ans[t][st.q];
+  const done=st.ans[t].filter(x=>x!==null).length;
+  return`<div class="main">
+    <div class="sb">
+      <div class="tmr" id="tmrbox"><div class="tmr-lbl">Time Left</div><div class="tmr-val" id="tmrval">--:--</div></div>
+      <div class="pgbar"><div class="pgfill" style="width:${done/55*100}%"></div></div>
+      <div class="pglbl">${done}/55 answered</div>
+      <h3 style="margin-top:10px">Questions</h3>
+      <div class="qgrid" id="qgrid"></div>
+    </div>
+    <div class="qa">
+      <div class="qcard">
+        <div class="qnum">Question ${st.q+1} of 55</div>
+        ${q.c?`<div class="qcond">Given: ${q.c}</div>`:''}
+        <table class="ctbl">
+          <tr><th>Column A</th><th style="border:none;background:transparent;width:36px"></th><th>Column B</th></tr>
+          <tr><td class="ca">${q.a}</td><td class="vs">vs</td><td class="cb">${q.b}</td></tr>
+        </table>
+        <div class="choices">
+          ${CH.map(c=>`<button class="ch${a===c.l?' sel':''}" onclick="pick('${c.l}')">
+            <div class="chl">${c.l}</div><div>${c.t}</div></button>`).join('')}
+        </div>
+      </div>
+      <div class="navrow">
+        <button class="btn btn-o" onclick="go(${st.q-1})" ${st.q===0?'disabled':''}>← Prev</button>
+        <button class="btn btn-o" onclick="go(${st.q+1})" ${st.q===54?'disabled':''}>Next →</button>
+        <div class="sp"></div>
+        <button class="btn btn-d" onclick="confirmSub(${t})">Submit Test</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── RESULTS ───────────────────────────────────────────────────────────────────
+function renderResults(t){
+  const qs=tests[t],ans=st.ans[t];
+  let ok=0,ng=0,sk=0;
+  qs.forEach((q,i)=>{if(ans[i]===null)sk++;else if(ans[i]===q.ans)ok++;else ng++;});
+  const pct=Math.round(ok/55*100);
+  const cc=pct>=80?'var(--gr)':pct>=60?'var(--yl)':'var(--rd)';
+  const items=qs.map((q,i)=>{
+    const ua=ans[i];
+    const st2=ua===null?'sk':ua===q.ans?'ok':'ng';
+    const badge=st2==='ok'?'<span class="badge bok">✓ Correct</span>':st2==='ng'?'<span class="badge bng">✗ Wrong</span>':'<span class="badge bsk">— Skipped</span>';
+    return`<div class="ri ${st2}">
+      <div class="rihdr"><div class="riqn">Q${i+1}</div>${badge}</div>
+      ${q.c?`<div style="font-size:.78rem;color:#7c4700;font-style:italic;margin-bottom:7px">Given: ${q.c}</div>`:''}
+      <div class="ricmp">
+        <div class="rcol rca"><div class="rclbl">Column A</div>${q.a}</div>
+        <div class="rcol rcb"><div class="rclbl">Column B</div>${q.b}</div>
+      </div>
+      <div style="font-size:.8rem;margin-bottom:6px">Correct: <strong style="color:var(--gr)">${q.ans} — ${CH.find(c=>c.l===q.ans).t}</strong>${ua&&ua!==q.ans?` · Your answer: <span style="color:var(--rd)">${ua}</span>`:''}</div>
+      <div class="rexp">${q.exp}</div>
+    </div>`;
+  }).join('');
+  return`<div class="results">
+    <div class="scorecard">
+      <div class="circle" style="background:${cc}22;border:4px solid ${cc}">
+        <div class="pct" style="color:${cc}">${pct}%</div>
+        <div style="font-size:.8rem;color:${cc}">${ok}/55</div>
+      </div>
+      <h2 style="margin-bottom:4px">Test ${t+1} Complete!</h2>
+      <div class="stats">
+        <div class="stat"><div class="stn" style="color:var(--gr)">${ok}</div><div class="stl">Correct</div></div>
+        <div class="stat"><div class="stn" style="color:var(--rd)">${ng}</div><div class="stl">Wrong</div></div>
+        <div class="stat"><div class="stn" style="color:var(--yl)">${sk}</div><div class="stl">Skipped</div></div>
+      </div>
+      <button class="btn btn-o" style="margin-top:14px" onclick="retake(${t})">Retake Test</button>
+    </div>
+    <h3 style="margin-bottom:10px">Review All Questions</h3>
+    <div class="rlist">${items}</div>
+  </div>`;
+}
+
+// ── STUDY GUIDE ───────────────────────────────────────────────────────────────
+function renderSG(){
+  if(st.lesson===null){return renderSGHome();}
+  const l=lessons.find(x=>x.id===st.lesson);
+  if(!l)return renderSGHome();
+  const exHtml=l.examples.map(e=>`<div class="ex-card">
+    <div class="ex-head">Worked Example</div>
+    ${e.cond?`<div style="font-size:.8rem;color:#7c4700;font-style:italic;margin-bottom:8px">Given: ${e.cond}</div>`:''}
+    <div class="ex-cols">
+      <div class="ex-col ex-cola"><div class="ex-col-lbl">Column A</div>${e.a}</div>
+      <div class="ex-col ex-colb"><div class="ex-col-lbl">Column B</div>${e.b}</div>
+    </div>
+    <div class="ex-ans">Answer: ${e.ans} — ${CH.find(c=>c.l===e.ans).t}</div>
+    <div class="ex-why">${e.why}</div>
+  </div>`).join('');
+  const listHtml=l.tipList?'<ul>'+l.tipList.map(x=>`<li>${x}</li>`).join('')+'</ul>':'';
+  return`<div class="sg-wrap">
+    <div class="sg-nav">
+      <h3>Lessons</h3>
+      <button class="lbtn" onclick="st.lesson=null;render()"><span class="icon">🏠</span>All Lessons</button>
+      ${lessons.map(x=>`<button class="lbtn${st.lesson===x.id?' on':''}" onclick="openLesson('${x.id}')">
+        <span class="icon">${x.icon}</span>${x.title}</button>`).join('')}
+    </div>
+    <div class="sg-content">
+      <div class="lesson-card">
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7c3aed;margin-bottom:6px">${l.tag}</div>
+        <h2>${l.icon} ${l.title}</h2>
+        <p class="lesson-intro">${l.intro}</p>
+        <div class="tip-box">
+          <div class="tip-lbl">Key Rule</div>
+          <p>${l.tip}</p>
+          ${listHtml}
+        </div>
+        <h3 style="font-size:.9rem;margin-bottom:10px;color:var(--bl)">Worked Examples</h3>
+        <div class="examples-grid">${exHtml}</div>
+        <div class="mistake-box">
+          <div class="ml">⚠ Common Mistake</div>
+          <p>${l.mistake}</p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderSGHome(){
+  const cards=lessons.map(l=>`<div class="lg-card" onclick="openLesson('${l.id}')">
+    <div class="lc-icon">${l.icon}</div>
+    <h3>${l.title}</h3>
+    <p>${l.tag} — click to open</p>
+  </div>`).join('');
+  return`<div class="sg-wrap">
+    <div class="sg-nav">
+      <h3>Lessons</h3>
+      <button class="lbtn on"><span class="icon">🏠</span>All Lessons</button>
+      ${lessons.map(x=>`<button class="lbtn" onclick="openLesson('${x.id}')">
+        <span class="icon">${x.icon}</span>${x.title}</button>`).join('')}
+    </div>
+    <div class="sg-content">
+      <div class="sg-welcome">
+        <h2>📚 SCAT Math Study Guide</h2>
+        <p>12 lessons covering strategies and concepts you need to ace the quantitative section. Open any lesson to see tips, worked examples, and common mistakes to avoid.</p>
+      </div>
+      <div class="lesson-grid">${cards}</div>
+    </div>
+  </div>`;
+}
+
+function openLesson(id){st.lesson=id;render();}
+
+// ── ACTIONS ───────────────────────────────────────────────────────────────────
+function updateGrid(t){
+  const g=document.getElementById('qgrid');if(!g)return;
+  g.innerHTML=tests[t].map((_,i)=>`<div class="qb${i===st.q?' cur':''}${st.ans[t][i]!==null?' ans':''}" onclick="go(${i})">${i+1}</div>`).join('');
+}
+function updateTimer(t){
+  const d=document.getElementById('tmrval'),b=document.getElementById('tmrbox');if(!d)return;
+  const s=st.timers[t],m=Math.floor(s/60),sec=s%60;
+  d.textContent=`${m}:${String(sec).padStart(2,'0')}`;
+  if(b){b.classList.remove('warn','dng');if(s<=60)b.classList.add('dng');else if(s<=300)b.classList.add('warn');}
+}
+function startTest(t){
+  st.started[t]=true;
+  if(!st.ivs[t]){
+    st.ivs[t]=setInterval(()=>{
+      if(st.sub[t])return;
+      st.timers[t]--;
+      updateTimer(t);
+      if(st.timers[t]<=0){clearInterval(st.ivs[t]);submitTest(t);}
+    },1000);
+  }
+  render();
+}
+function go(i){if(i<0||i>54)return;st.q=i;render();}
+function pick(l){
+  const t=st.tab;
+  st.ans[t][st.q]=l;
+  render();
+  if(st.q<54)setTimeout(()=>{st.q++;render();},350);
+}
+function confirmSub(t){
+  const sk=st.ans[t].filter(x=>x===null).length;
+  if(sk>0&&!confirm(`${sk} unanswered question(s). Submit anyway?`))return;
+  submitTest(t);
+}
+function submitTest(t){st.sub[t]=true;if(st.ivs[t])clearInterval(st.ivs[t]);render();}
+function retake(t){
+  st.ans[t]=new Array(tests[t].length).fill(null);
+  st.sub[t]=false;st.timers[t]=22*60;st.q=0;st.started[t]=false;
+  if(st.ivs[t]){clearInterval(st.ivs[t]);st.ivs[t]=null;}
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
