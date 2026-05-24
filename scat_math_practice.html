@@ -4,13 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>SCAT Math Practice — 10 Tests + Study Guide</title>
+<meta name="theme-color" content="#1a4fa0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SCAT Math">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--bl:#1a4fa0;--bll:#e8f0fe;--gr:#1a7a4a;--grl:#e6f4ed;--rd:#c0392b;--rdl:#fdecea;--yl:#e67e22;--yll:#fef3e2;--gy:#6b7280;--gyl:#f3f4f6;--bd:#d1d5db;--tx:#111827;--wh:#fff;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:var(--tx);font-size:15px;}
-.hdr{background:var(--bl);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.hdr{background:var(--bl);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .hdr h1{font-size:1.1rem;font-weight:700;}
 .hdr small{font-size:.75rem;opacity:.8;display:block;margin-top:2px;}
+.upd-btn{background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.4);color:#fff;padding:7px 13px;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:background .15s;flex-shrink:0;}
+.upd-btn:hover{background:rgba(255,255,255,0.25);}
+.upd-btn .spin{display:inline-block;}
+.upd-btn.spinning .spin{animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.upd-banner{background:#16a34a;color:#fff;text-align:center;padding:8px 16px;font-size:.85rem;font-weight:600;display:none;gap:12px;align-items:center;justify-content:center;}
+.upd-banner.show{display:flex;}
+.upd-banner button{background:white;color:#16a34a;border:none;padding:5px 12px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem;}
 .tabs{background:#fff;border-bottom:2px solid var(--bd);display:flex;overflow-x:auto;padding:0 16px;gap:2px;}
 .tab{padding:12px 14px;cursor:pointer;font-weight:600;font-size:.78rem;border-bottom:3px solid transparent;color:var(--gy);white-space:nowrap;transition:all .15s;}
 .tab:hover{color:var(--bl);}
@@ -149,7 +163,13 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:var(--tx);
 <body>
 <div class="hdr">
   <div><h1>SCAT Math Practice</h1><small>Intermediate Level · Quantitative Comparison · 4th Grade CTY Prep</small></div>
-  <div style="font-size:.75rem;color:rgba(255,255,255,.8);text-align:right">10 Tests · Study Guide<br>55 Questions · 22 Min each</div>
+  <div style="font-size:.75rem;color:rgba(255,255,255,.8);text-align:right;flex:1">10 Tests · Study Guide<br>55 Questions · 22 Min each</div>
+  <button class="upd-btn" id="updBtn" onclick="checkForUpdates()">
+    <span class="spin" id="updIcon">↻</span><span id="updLabel">Update App</span>
+  </button>
+</div>
+<div class="upd-banner" id="updBanner">
+  🎉 New version available! <button onclick="applyUpdate()">Reload Now</button>
 </div>
 <div class="tabs" id="tabs"></div>
 <div id="app"></div>
@@ -1110,6 +1130,73 @@ function retake(t){
 }
 
 render();
+
+// ── SERVICE WORKER + UPDATE LOGIC ────────────────────────────────────────────
+let swReg = null;
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      swReg = reg;
+
+      // If a new SW is already waiting on first load, show the banner
+      if (reg.waiting) showUpdateBanner();
+
+      // Detect new SW found while page is open
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            showUpdateBanner();
+          }
+        });
+      });
+    }).catch(err => console.log('SW error:', err));
+
+    // When SW takes control (after skip waiting), reload
+    navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+  });
+}
+
+function showUpdateBanner() {
+  document.getElementById('updBanner').classList.add('show');
+  document.getElementById('updLabel').textContent = 'Update Ready!';
+}
+
+function applyUpdate() {
+  if (swReg && swReg.waiting) {
+    swReg.waiting.postMessage({ type: 'SKIP_WAITING' });
+  } else {
+    window.location.reload(true);
+  }
+}
+
+async function checkForUpdates() {
+  const btn = document.getElementById('updBtn');
+  const icon = document.getElementById('updIcon');
+  const label = document.getElementById('updLabel');
+  btn.classList.add('spinning');
+  label.textContent = 'Checking…';
+
+  try {
+    if (swReg) {
+      await swReg.update();
+      if (swReg.waiting) {
+        showUpdateBanner();
+        label.textContent = 'Update Ready!';
+      } else {
+        label.textContent = 'Up to date ✓';
+        setTimeout(() => { label.textContent = 'Update App'; }, 2500);
+      }
+    } else {
+      // Fallback: hard reload bypassing cache
+      window.location.reload(true);
+    }
+  } catch(e) {
+    label.textContent = 'Update App';
+  }
+  btn.classList.remove('spinning');
+}
 </script>
 </body>
 </html>

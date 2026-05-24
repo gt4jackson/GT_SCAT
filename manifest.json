@@ -1,0 +1,25 @@
+{
+  "name": "SCAT Math Practice",
+  "short_name": "SCAT Math",
+  "description": "10 SCAT quantitative comparison practice tests with Study Guide for CTY prep",
+  "start_url": "./scat_math_practice.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0f4f8",
+  "theme_color": "#1a4fa0",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
