@@ -115,6 +115,48 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:var(--tx);
 .rclbl{font-size:.65rem;font-weight:700;color:var(--gy);text-transform:uppercase;}
 .rexp{font-size:.82rem;color:#374151;line-height:1.5;background:var(--gyl);padding:9px 13px;border-radius:6px;}
 
+/* ─── Practice Mode ─── */
+.tab.pm{color:#0891b2;}.tab.pm.on{border-bottom-color:#0891b2;color:#0891b2;}
+.prac-start{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 108px);}
+.prac-card{background:#fff;border-radius:16px;padding:32px;max-width:600px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,.1);}
+.prac-card h2{color:var(--bl);font-size:1.25rem;margin-bottom:6px;}
+.prac-card p{color:var(--gy);font-size:.87rem;line-height:1.6;margin-bottom:10px;}
+.tfilt{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 18px;}
+.tchip{padding:5px 12px;border-radius:99px;font-size:.73rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .12s;white-space:nowrap;}
+.tchip.on{opacity:1;border-color:rgba(0,0,0,.25);}
+.tchip.off{opacity:.38;}
+.prac-wrap{display:flex;min-height:calc(100vh - 108px);}
+.prac-sb{width:188px;background:#fff;border-right:1px solid var(--bd);padding:14px;flex-shrink:0;overflow-y:auto;}
+.prac-sb h3{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--gy);margin-bottom:8px;}
+.pscore{background:var(--bll);border-radius:8px;padding:10px;text-align:center;margin-bottom:10px;}
+.pscore .pv{font-size:1.5rem;font-weight:700;color:var(--bl);}
+.pscore .pl{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--bl);}
+.pstreak{background:var(--yll);border-radius:8px;padding:8px 10px;text-align:center;margin-bottom:10px;}
+.pstreak .sv{font-size:1.3rem;font-weight:700;color:var(--yl);}
+.pstreak .sl{font-size:.65rem;text-transform:uppercase;color:#7c4700;}
+.acc-row{margin-bottom:5px;}
+.acc-lbl{font-size:.68rem;color:var(--gy);display:flex;justify-content:space-between;margin-bottom:2px;}
+.acc-bar{height:5px;background:var(--bd);border-radius:3px;overflow:hidden;}
+.acc-fill{height:100%;border-radius:3px;}
+.prac-qa{flex:1;padding:20px;max-width:780px;}
+.hint-area{margin-top:10px;}
+.hstep{background:var(--bll);border-left:3px solid var(--bl);padding:10px 14px;border-radius:4px;margin-bottom:6px;font-size:.85rem;color:#1e3a6e;line-height:1.5;}
+.hbtn{background:#fff;border:2px solid var(--bl);color:var(--bl);padding:7px 14px;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;margin-right:6px;margin-top:8px;transition:all .12s;}
+.hbtn:hover{background:var(--bll);}
+.hbtn:disabled{opacity:.35;cursor:default;}
+.enc-ok{background:var(--grl);border:1.5px solid #6fcf97;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:.9rem;color:var(--gr);font-weight:600;}
+.enc-ng{background:var(--rdl);border:1.5px solid #e57373;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:.9rem;color:var(--rd);font-weight:600;}
+.pexp{margin-top:12px;background:var(--gyl);border-radius:8px;padding:14px;font-size:.85rem;color:#374151;line-height:1.5;}
+.slbtn{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.slbtn:hover{opacity:.9;}
+.psum-wrap{padding:24px;max-width:780px;margin:0 auto;}
+.psum-card{background:#fff;border-radius:12px;padding:26px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.psum-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px;}
+.psum-stat{background:var(--gyl);border-radius:8px;padding:11px;text-align:center;}
+.psum-stat .psn{font-size:1.5rem;font-weight:700;}
+.psum-stat .psl{font-size:.7rem;color:var(--gy);}
+.focus-box{background:var(--bll);border-left:4px solid var(--bl);padding:13px 17px;border-radius:6px;margin-top:12px;font-size:.87rem;color:#1e3a6e;line-height:1.5;}
+
 /* ─── Study Guide ─── */
 .sg-wrap{display:flex;min-height:calc(100vh - 108px);}
 .sg-nav{width:230px;background:#fff;border-right:1px solid var(--bd);padding:16px;overflow-y:auto;flex-shrink:0;}
@@ -781,6 +823,97 @@ Q('29² − 21²','400','C','(8)(50)=400.'),
 ]
 ];
 
+// ── TOPIC INFO ───────────────────────────────────────────────────────────────
+const topicInfo={
+  AR:{name:'Arithmetic',     h1:'Compute each column step by step, then compare.',                              color:'#6366f1',lesson:'overview'},
+  FR:{name:'Fractions',      h1:'Cross-multiply: for a/b vs c/d, compare a×d with b×c.',                       color:'#0891b2',lesson:'fractions'},
+  PC:{name:'Percentages',    h1:'Convert % to decimal (÷100). Remember: a% of b = b% of a.',                   color:'#059669',lesson:'percent'},
+  AL:{name:'Algebra',        h1:'If given a value, substitute it. Otherwise, test numbers.',                    color:'#d97706',lesson:'manipulate'},
+  EX:{name:'Exponents',      h1:'Rules: aᵐ×aⁿ=aᵐ⁺ⁿ, (aᵐ)ⁿ=aᵐⁿ, (−x)²=positive.',                          color:'#7c3aed',lesson:'exponents'},
+  GE:{name:'Geometry',       h1:'Use the right formula: area, perimeter, or (n−2)×180° for angles.',            color:'#0f766e',lesson:'geometry'},
+  PY:{name:'Pythagorean',    h1:'Know your triples: 3-4-5, 5-12-13, 8-15-17, 7-24-25, 9-40-41.',              color:'#15803d',lesson:'pyth'},
+  NT:{name:'Number Theory',  h1:'Factor numbers. GCF=shared factors; LCM=all factors at highest power.',       color:'#b45309',lesson:'numtheory'},
+  PO:{name:'Order of Ops',   h1:'PEMDAS: Parentheses → Exponents → ×÷ → +− (left to right).',                 color:'#be185d',lesson:'pemdas'},
+  ID:{name:'Identities',     h1:'Look for (a+b)(a−b)=a²−b², (a+b)²=a²+2ab+b², or distributive law.',          color:'#4338ca',lesson:'algebra'},
+  PR:{name:'Prob & Stats',   h1:'P = favorable ÷ total. Mean × count = sum.',                                  color:'#0369a1',lesson:'overview'},
+  WP:{name:'Word Problems',  h1:'Translate: d=r×t, I=Prt, Work=rate×time. Set up the equation.',               color:'#9f1239',lesson:'percent'},
+  SQ:{name:'Sequences',      h1:'Find the pattern: arithmetic adds, geometric multiplies. aₙ=a₁+(n−1)d.',      color:'#6366f1',lesson:'overview'},
+};
+
+// ── QUESTION METADATA: [topicCode, h2Hint] for all 550 questions ─────────────
+const qmeta=[
+// Test 1
+[['AR','Compute each side: 3×4+2 and 4×3+2.'],['EX','2³=2×2×2 and 3²=3×3.'],['FR','LCD=6: 1/2=3/6, 1/3=2/6.'],['AL','Try n=1, n=2, n=3 — does the result change?'],['PC','0.25×80 and 0.20×100 — multiply each.'],['GE','Square: 4×side. Rectangle: 2×(l+w).'],['FR','3÷4 converts 3/4 to a decimal.'],['AL','Plug in x=3: compute 4(3)−1 and 3²+2.'],['NT','List: 2,3,5,7,11,13,17,19. Count them.'],['EX','√64=? and 2³=2×2×2=?'],
+['PO','÷ and × go left to right: 100÷4=25, then 25×5.'],['AL','a>b>0: divide both sides by b. Is a/b bigger than 1?'],['GE','Area=½×base×height=½×10×6.'],['EX','4²=4×4 and 2⁴=2×2×2×2.'],['AR','0.2×0.5: multiply the decimals.'],['FR','Cross-multiply: 7×9 vs 8×8.'],['AL','x+y=10 lets x be many values. Try x=3 and x=8.'],['EX','3⁵=243 and 5³=125 — compute each.'],['GE','Right angle=90°. 90°×2 vs straight angle (180°).'],['PC','10% of 200=20; 5% more=10. Total 15%=30.'],
+['PY','5²+12²=25+144=169. Is 13²=169?'],['ID','Factor n²+n by pulling out n: n×(n+1).'],['PC','1/5 of 75=15. So 3/5 of 75=15×3.'],['NT','LCM(4,6)=12. Factor 24 and 36 to find GCF.'],['EX','2.5×2.5 — multiply carefully.'],['WP','Boys=3/(3+2) of 30 students. Find 3/5×30.'],['EX','(−3)²=(−3)×(−3). −(3²)=−9. Different signs!'],['PR','Average=sum÷count=(10+20+30+40)÷4.'],['SQ','Formula: n(n+1)/2 = 10×11÷2.'],['FR','Cross-multiply: 4×9 vs 7×5.'],
+['PR','List {1,2,3,4,5}: median=middle value, mean=sum÷5.'],['FR','1/3=0.333… and 33/100=0.330 — compare.'],['GE','Hexagon sides=6. Cube faces=6.'],['AL','Try x=1 (gives 2) and x=2 (gives 2.5) — same result?'],['AR','7×8=56 and 9×6=54.'],['GE','Area=πr². With r=3: π×9=9π.'],['NT','Smallest prime=2. Only even prime=2.'],['EX','100−36=64. Is 8²=64?'],['FR','÷ fraction = × by reciprocal: 3/4×(2/1).'],['AL','x is negative: x<0. x² is always positive.'],
+['WP','60 min/hr × 2.5 hr = ? minutes.'],['FR','LCD of 3 and 4 is 12. 2/3=8/12, 3/4=9/12.'],['AL','n+(n+1)+(n+2)=18. Solve for n; largest is n+2.'],['NT','5!=5×4×3×2×1 — compute step by step.'],['EX','0.01²=0.01×0.01. Count decimal places: 2+2=4.'],['GE','P=24 doesn\'t fix shape. Try 1×11 and 6×6.'],['EX','(1/2)³=1/2×1/2×1/2.'],['GE','All 3 angles equal: 180°÷3=60°.'],['ID','Distributive: 4×(3+5)=4×3+4×5.'],['NT','17÷5: 5×3=15, so remainder=17−15.'],
+['EX','√(16×9)=√144. Also 4×3=12.'],['AL','Divide both sides by n² (positive). Left side = n.'],['PC','0.40×150 and 0.60×100 — multiply each.'],['PR','P(red)=red÷total=3÷(3+5).'],['GE','(n−2)×180° with n=4 sides.']],
+// Test 2
+[['AR','6×7 and 7×6 — is multiplication commutative?'],['EX','5³=5×5×5=125. 15²=225.'],['FR','LCD=10: 2/5=4/10, then 4/10+3/10.'],['AL','Substitute y=4: 3(4)+1 and 4²−3.'],['PC','10% of 90=9. So 30% of 90=9×3.'],['GE','Equilateral: 3 equal sides. 3×8=?'],['FR','2÷5 to convert 2/5 to decimal.'],['GE','Cube: 4 top + 4 bottom + 4 connecting edges = 12.'],['PO','Left: exponent first → 3+16. Right: parentheses first → 7².'],['EX','√100+√49=10+7=17. √149≈12.2. Not the same!'],
+['FR','1/3×1/3=1/9. Is 1/9 bigger or smaller than 1/6?'],['AL','m<0: m²=positive, m³=negative.'],['GE','Area=s²=7²=?'],['EX','2⁵=32 and 5²=25.'],['AR','0.3×0.03: 3×3=9, then count 3 decimal places.'],['FR','Cross-multiply: 5×7 vs 6×6.'],['AL','Add equations: (x+y)+(x−y)=2x. Solve.'],['EX','Rewrite 4=2²: so 4³=(2²)³=2⁶.'],['GE','Triangle angles always sum to 180°.'],['PC','75%=3/4. 3/4×80=?'],
+['PY','8²+15²=64+225=289. Is 17²=289?'],['ID','Factor k²+k: pull out k to get k×(k+1).'],['FR','1/3 of 90=30. So 2/3 of 90=30×2.'],['NT','LCM(6,8)=24. GCF(48,72): factor both numbers.'],['EX','1.5×1.5=2.25.'],['PR','Sum=average×count=12×5.'],['AR','|−15|=15 and |15|=15.'],['PR','Average=sum÷5. With {5,10,15,20,25}, sum=75.'],['EX','1²+2²+3²+4²=1+4+9+16.'],['FR','Cross-multiply: 3×11 vs 8×4.'],
+['PR','List {2,4,6,8,10}: median=6, mean=sum÷5.'],['FR','2/3=0.667 and 66/100=0.660 — compare.'],['GE','Pentagon: 5 vertices. Rectangle: 2 diagonals.'],['AL','0<x<1: what happens when you square a fraction less than 1?'],['AR','13×7=91 and 10×9+1+5=90+6=96.'],['GE','Circumference=2πr. With r=5: 2π×5.'],['NT','Only even prime number is 2. Smallest prime is also 2.'],['EX','169−25=144. Is 12²=144?'],['FR','÷ fraction = × reciprocal: 5/6×(3/5).'],['AL','x<−1: x²>0 and −x>0. But is x²>−x?'],
+['WP','3 minutes × 60 sec/min = ? seconds.'],['FR','LCD=12: 3/4=9/12, 1/6=2/12.'],['AL','Two consecutive evens: try 6×8=48. Larger=8.'],['NT','6!÷5!=6×5!÷5!=6.'],['EX','0.1³=0.1×0.1×0.1. Count 3 decimal places.'],['PY','Right triangle legs 3 and 4. 3²+4²=? Is it 5²?'],['EX','(2/3)²=4/9.'],['GE','(n−2)×180° with n=5 sides.'],['ID','Distributive: 3×(8−2)+4 = 3×8−3×2+4.'],['NT','23÷7: 7×3=21. Remainder=23−21.'],
+['EX','√(25×36)=√900. Also √25×√36=5×6.'],['AL','0<n<1: n⁴=n²×n². Since n<1, n⁴ vs n².'],['PC','60%×75=45. 45%×100=45.'],['PR','Flip coin twice: HH,HT,TH,TT. Count one-head outcomes.'],['NT','Primes between 20 and 40: 23,29,31,37.']],
+// Test 3
+[['AR','9×8 and 6×12 — multiply each.'],['EX','Rewrite 4=2²: 4⁴=(2²)⁴=2⁸.'],['FR','LCD=8: 3/8 stays, 1/4=2/8.'],['AL','Substitute z=−2: (−2)³=−8, then −8−(−2).'],['PC','10% of 60=6. So 45% of 60=6×4.5.'],['GE','Area=l×w=9×4 and s²=6².'],['FR','5÷8 to convert 5/8 to decimal.'],['GE','Diagonals=n(n−3)/2 for n=6 sides.'],['PO','Exponent first: 3²=9. Then 2+9×4.'],['EX','√0.25=? (What number squared gives 0.25?)'],
+['FR','2/7+3/7: same denominator, add numerators.'],['ID','p²−4=(p−2)(p+2). Factor the difference of squares.'],['GE','Regular hexagon: 6 sides. 6×4=?'],['EX','3⁴=3×3×3×3=81. 4³=4×4×4=64.'],['AR','0.06×0.6: 6×6=36, count 3 decimal places.'],['FR','Cross-multiply: 7×5 vs 9×4.'],['AL','2x−3=11: add 3 to both sides, then ÷2.'],['ID','(ab)²=a²b²: so 2²×3²=(2×3)²=6².'],['GE','Regular hexagon: (6−2)×180÷6=?'],['PC','10% of 120=12. 80% of 120=12×8.'],
+['PY','6²+8²=36+64=100. Is 10²=100? 6-8-10 triple!'],['NT','GCF(18,24,36): 18=2×3², 24=2³×3, 36=2²×3².'],['FR','5/6×3/5=15/30. Simplify.'],['NT','LCM(3,4,6)=12.'],['EX','1.2×1.2=1.44.'],['WP','Distance=speed×time=60×2.5.'],['AR','|−8+3|=|−5|=5. |3−8|=|−5|=5.'],['PR','Sort {3,7,7,9,14}: median=middle, mode=most frequent.'],['SQ','2+4+6+8+10: sum of first 5 even numbers.'],['FR','Cross-multiply: 5×17 vs 12×7.'],
+['PR','Range=max−min=20−4=16.'],['FR','Cross-multiply: 3×100 vs 7×43.'],['GE','Triangle=180°. 3 hours×60=180 minutes.'],['AL','0<x<0.5: 2x<2×0.5=1.'],['AR','12×13=156 and 150+6=156.'],['GE','Area=πr². Diameter=6, so r=3. π×9=9π.'],['NT','LCM(5,7)=35 (both prime, so product).'],['EX','225−81=144. Is 12²=144?'],['FR','÷ fraction = × reciprocal: 7/8×(4/7).'],['AL','0<n<1: n³=n²×n. Since n<1, n³ vs n².'],
+['WP','5 days × 24 hours/day = ? hours.'],['FR','LCD=8: 5/8+6/8=11/8.'],['AL','Two nums: x+y=30, x−y=6. Add equations: 2x=36.'],['NT','4!=24, 3!=6. 24+6=30.'],['EX','0.2³=0.2×0.2×0.2. Count 3 decimal places.'],['GE','Area=48, one side=6: other side=48÷6=8. Perimeter=2(6+8).'],['EX','(3/4)³=27/64.'],['GE','Hexagon: (6−2)×180=720°.'],['ID','Distributive: 5(2+8)−10=5×2+5×8−10.'],['NT','50÷8: 8×6=48. Remainder=50−48.'],
+['EX','√(49×81)=√(49)×√(81)=7×9.'],['AL','Try n=3,4,5: does 2ⁿ vs n² stay consistent?'],['PC','35%×200=70. 25%×280=70.'],['PR','P(>4)=P(5 or 6)=2 out of 6.'],['NT','Primes less than 30: 2,3,5,7,11,13,17,19,23,29.']],
+// Test 4
+[['ID','Distributive on A: 2(3+4)=14. B: 2×3+4=10.'],['EX','Even exponent makes negative positive: (−2)⁴=(+2)⁴.'],['FR','LCD=8: 5/8−2/8=3/8.'],['AL','Substitute k=5: k²−2k+1 and (k−1)².'],['PC','35%×140=49. 50%×98=49.'],['GE','Area=½×leg₁×leg₂=½×6×8.'],['FR','1÷8 to convert 1/8 to decimal.'],['GE','Cube has 8 vertices. Triangle has 3 edges.'],['ID','a²−b²=(a+b)(a−b): 4²−3²=(4+3)(4−3).'],['EX','√(144/36)=√4=2.'],
+['FR','LCD=12: 7/12−3/12=4/12.'],['AL','x<0<y: their sum could be negative, zero, or positive.'],['GE','Volume=s³=3³=27.'],['EX','6³=6×6×6=216.'],['AR','0.04×25=1. (1/25)×25=1.'],['FR','Cross-multiply: 9×12 vs 11×10.'],['AL','3x+5=20: subtract 5, then ÷3.'],['EX','4⁰=1, 4¹=4, 4²=16. Sum=21.'],['GE','(n−2)×180° with n=7 sides.'],['PC','120%=1.2. 1.2×50=60.'],
+['EX','3²+4²+5²=9+16+25=50.'],['NT','36=2²×3². Factors=(2+1)(2+1)=9.'],['FR','7/10×5/7=35/70. Simplify.'],['NT','LCM(8,12)=24.'],['EX','Squaring a square root: (√5)²=5.'],['WP','Distance=speed×time=45×4.'],['AR','|−7+2|=|−5|=5. |2−7|=|−5|=5.'],['PR','List {2,5,8,11,14}: median=8, mean=40÷5.'],['SQ','3+6+9+12+15: arithmetic sum.'],['FR','Cross-multiply: 6×15 vs 13×7.'],
+['PR','Range=max−min=30−5=25.'],['FR','44/99 simplifies: divide both by 11.'],['NT','Sum of digits: 9+9+9=27. 7+2+9=18.'],['AL','Try x=1.5, x=2, x=3: does x+2 vs 2x change?'],['ID','11×9=(10+1)(10−1)=10²−1. Diff of squares!'],['GE','Area=πr² with r=2: π×4=4π.'],['NT','12=2²×3. Factors=(2+1)(1+1)=6.'],['ID','256−196=16²−14²=(16−14)(16+14).'],['FR','÷ fraction = × reciprocal: 4/5×(5/2).'],['AL','−1<x<0: x²=positive, x³=negative.'],
+['WP','4 weeks × 7 days/week = ? days.'],['FR','7/9+2/9: same denominator, add numerators.'],['AL','4 consecutive ints summing to 22: n+(n+1)+(n+2)+(n+3)=22.'],['NT','3!=6, 2!=2. 6×2=12.'],['EX','(0.5)⁴=0.5×0.5×0.5×0.5=1/16.'],['GE','Diagonal=s√2. If diagonal=10, then s=10/√2=5√2.'],['EX','(4/5)²=16/25.'],['GE','(n−2)×180° with n=8 sides.'],['ID','Factor: (6−2)×(7+3)=4×10=40.'],['NT','100÷9: 9×11=99. Remainder=100−99.'],
+['EX','√(16+9)=√25=5. √16+√9=4+3=7. NOT equal!'],['AL','Try n=2 (gives 1 vs 1) and n=4 (gives 2 vs 3).'],['PC','0.8×0.8×100=64.'],['PR','P(not red)=5 non-red ÷ 9 total marbles.'],['GE','Exterior angle=360°÷n. So n=360°÷45°.']],
+// Test 5
+[['AL','a=2k, b=3k. Substitute: 3(2k) vs 2(3k).'],['EX','3⁰=1. 0³=0×0×0=0.'],['FR','LCD=6: 2/3=4/6, 1/6=1/6. Subtract.'],['AL','Substitute m=−3: m²+2m+1 and (m+1)².'],['PC','55%×200=110.'],['GE','Area=d²/2 for square with diagonal d. d=10: 100/2.'],['FR','8÷1000 to convert 8/1000 to decimal.'],['GE','Triangular prism: 2 triangle faces + 3 rectangle faces.'],['ID','(ab)²=a²b²: (2×3)²=2²×3²=36.'],['EX','√121: what number squared = 121?'],
+['FR','LCD=6: 5/6−4/6=1/6.'],['AL','x>0, y<0: positive × negative = negative.'],['GE','Surface area of cube=6s²=6×2²=24.'],['EX','7³=7×7×7=343.'],['EX','(0.25)²=0.0625.'],['FR','Cross-multiply: 11×14 vs 13×12.'],['AL','5x−2=3x+8: subtract 3x from both sides.'],['EX','1+2+4+8+16=31. (Sum of powers of 2: 2⁵−1.)'],['GE','(n−2)×180° with n=9 sides.'],['PC','150%=3/2. 3/2×40=60.'],
+['PY','9²+40²=81+1600=1681. Is 41²=1681?'],['NT','24=2³×3. Factors=(3+1)(1+1)=8.'],['FR','Multiply across: (3×8)/(4×9)=24/36.'],['NT','42=2×3×7. 70=2×5×7. GCF=2×7.'],['EX','(√3)⁴=(3^½)⁴=3²=9.'],['WP','1.25×0.80=1.00. The two changes cancel out!'],['AR','|3−8|=5. |8−3|=5. 5+5=10.'],['PR','Sort {1,3,5,7,9,11}: median=middle two avg, mean=36÷6.'],['SQ','Sum of arithmetic sequence: use (n/2)×(first+last).'],['FR','Cross-multiply: 8×17 vs 15×9.'],
+['NT','Count integers from −3 to 3: −3,−2,−1,0,1,2,3.'],['FR','Cross-multiply: 5×100 vs 6×84.'],['NT','60=2²×3×5. Count prime factors with repeats.'],['AL','x²=25 means x=5 OR x=−5.'],['ID','23×17=(20+3)(20−3)=20²−9=391. 24×16=(20+4)(20−4)=20²−16=384.'],['GE','C=2πr=2π, so r=1. Area=πr²=π×1²=π.'],['NT','Primes between 40 and 60: 41,43,47,53,59.'],['PO','Left: 2+5×10=2+50=52. Right: 7×10−18=52.'],['FR','÷ fraction = × reciprocal: 9/10×(5/3).'],['AL','Try x=0 (gives 0=0) and x=0.5 (gives 0.25<0.5).'],
+['WP','2 meters × 100 cm/meter = ? cm.'],['FR','Same denominator: 3/7+4/7+5/7=12/7.'],['WP','Arithmetic sequence: a₁=6, common difference=1. avg×n=8.5×6.'],['NT','0!=1. So 4!×0!=24×1=24.'],['EX','(0.25)²=0.0625=1/16.'],['GE','Area=25π, so r=5. C=2πr=2π×5=10π.'],['EX','(5/6)²=25/36.'],['GE','Sum of exterior angles of any convex polygon=360°.'],['ID','(a+b)²=a²+2ab+b². So (a+b)²−2ab=a²+b².'],['NT','1000÷7=142 remainder 6.'],
+['EX','√(a²)=|a|. With a=−4: |−4|=4.'],['AL','n=2: n+1=3, which is prime (not composite). Try n=3.'],['PC','0.25×0.25×400=25.'],['PR','Equal red and blue: same probability for each.'],['GE','Interior angle=150°. (n−2)×180/n=150. Solve for n.']],
+// Test 6
+[['ID','(a+b)²=a²+2ab+b². So (2+3)²−2²−3²=2×2×3=2ab.'],['EX','(−1)¹⁰⁰: even power of −1=+1.'],['FR','LCD=36: 7/12=21/36, 5/18=10/36.'],['AL','Substitute a=2, b=4: 2⁴ and 4².'],['PC','66.7%≈2/3. 2/3×300=200.'],['GE','Trapezoid area=½×(b₁+b₂)×h=½×(6+10)×4.'],['FR','7÷8 to convert 7/8 to decimal.'],['GE','Tetrahedron: 4 faces × 3 edges ÷ 2 shared = 6 edges.'],['ID','(a+b)²=a²+2ab+b²: (3+4)²=9+24+16=49.'],['EX','√(100/25)=√4=2.'],
+['FR','LCD=12: 11/12−10/12=1/12.'],['AL','xy>0 means same sign. x could be positive or negative.'],['GE','Volume=l×w×h=3×4×5.'],['EX','9=(3²), so 9⁴=(3²)⁴=3⁸.'],['EX','1.5³=1.5×1.5×1.5=3.375.'],['FR','Cross-multiply: 13×16 vs 15×14.'],['AL','4x−4=2x+6: collect x terms on one side.'],['EX','3¹+3²+3³=3+9+27=39.'],['GE','Pentagon diagonals=n(n−3)/2=5×2/2=5.'],['PC','200%=2. 2×60=120.'],
+['PY','10²+b²=26². b²=676−100=576. Is 24²=576?'],['NT','48=2⁴×3. Factors=(4+1)(1+1)=10.'],['FR','÷ fraction = × reciprocal: 2/3×(9/4).'],['NT','LCM(9,15)=45. 9=3², 15=3×5. LCM=3²×5.'],['EX','Squaring a square root: (√7)²=7.'],['WP','Sale price=(1−0.40)×original=0.60×original.'],['ID','|a²−b²|=|(a+b)(a−b)|=|4+3|×|4−3|.'],['PR','Evenly spaced: mean=median=(10+60)÷2.'],['SQ','Sum of first n odd numbers = n². For n=5: 5²=25.'],['FR','Cross-multiply: 10×21 vs 19×11.'],
+['NT','Count integers 10 to 20: 20−10+1=11.'],['FR','Cross-multiply: 7×100 vs 8×87.'],['NT','1024: sum of digits 1+0+2+4=7.'],['AL','x integer, x²<10: x can be −3,−2,−1,0,1,2,3. Which ≥ 3?'],['ID','25²=(25−1)(25+1)+1=(24)(26)+1=624+1=625.'],['GE','Circle area=πr²=πr². Square area=r². π>1 so circle wins.'],['NT','Primes 50 to 70: 53,59,61,67.'],['ID','Distributive: 7(8+9)=7×8+7×9.'],['FR','÷ fraction = × reciprocal: 5/8×(16/10).'],['AL','Substitute x=−4: (−4)³+(−4)=−64−4.'],
+['WP','52 complete weeks in a year (365÷7=52 r1).'],['FR','5/11+6/11: same denominator, add numerators.'],['AL','xy=36, x+y=13. Think: what two numbers multiply to 36 and add to 13?'],['NT','(3!)²=(6)²=36.'],['EX','(0.4)³=0.4×0.4×0.4=0.064.'],['GE','30°+90°+x=180°. Solve for x.'],['EX','(6/4)²=(3/2)²=9/4.'],['GE','(n−2)×180° with n=10 sides.'],['ID','(x+y)²−(x−y)²=4xy. Verify with x=3, y=2.'],['NT','5⁴=625. 625÷4: 4×156=624. Remainder=1.'],
+['EX','√(3²+4²)=√(9+16)=√25=5. And 3+4=7.'],['FR','1/2+1/3+1/6=3/6+2/6+1/6=6/6=1.'],['PR','Primes on 1–8 spinner: 2,3,5,7 = 4 out of 8.'],['ID','11²−9²=(11+9)(11−9)=20×2=40.'],['NT','LCM(5,8)=40 (5 and 8 share no common factors).']],
+// Test 7
+[['ID','Distributive: 4(6−2)+3 = 4×6−4×2+3.'],['EX','(−3)³=(−3)×(−3)×(−3). Odd power keeps negative sign.'],['FR','LCD=6: 5/6+2/6=7/6.'],['ID','t²/4=(t/2)². Both equal (t/2) squared.'],['PC','45%×80=36. 80%×45=36. Percentages commute!'],['SQ','Arithmetic seq a₁=2, d=3. aₙ=2+(n−1)×3. n=10.'],['FR','1/3=0.3333… as a repeating decimal.'],['GE','Triangular prism: 2 triangular + 3 rectangular faces.'],['ID','10²−9×11=100−99=1. Compare to (10−1)(10+1)+1.'],['EX','√(9/16)=3/4 (since (3/4)²=9/16).'],
+['FR','LCD=12: 3/4=9/12, 5/12=5/12.'],['AL','a>0, b<0: a−b=a+|b| and a+b=a−|b|.'],['GE','Cylinder volume=πr²h=π×9×1=9π.'],['EX','2¹⁰=1024.'],['AR','0.125=1/8. 0.8=4/5. 1/8×4/5=4/40=1/10=0.1.'],['FR','Cross-multiply: 15×18 vs 17×16.'],['AL','x/3+5=9: subtract 5, then multiply by 3.'],['SQ','Geometric series: 1+2+4+…+32=2⁶−1=63.'],['GE','Exterior angle of regular polygon=360°÷n. n=5.'],['PC','250%=5/2. 5/2×16=40.'],
+['EX','3⁷+3⁸=3⁷(1+3)=3⁷×4. Factor out 3⁷.'],['NT','100=2²×5². Factors=(2+1)(2+1)=9.'],['FR','Multiply across: (7×16)/(8×21)=112/168.'],['NT','LCM(4,6,10): factor all three and take highest powers.'],['EX','(√11)²=11.'],['WP','Interest=P×r×t=200×0.05×2.'],['AR','|−6|×|7|=6×7=42. |−6×7|=|−42|=42.'],['PR','Evenly spaced: median=mean=(12+27)÷2=19.5.'],['SQ','Sum of first n odd numbers = n². For n=7: 7².'],['FR','Cross-multiply: 11×22 vs 20×12.'],
+['FR','Cross-multiply: 5×100 vs 9×56.'],['NT','Odd numbers 1–20: 1,3,5,…,19. Count. Even: 2,4,…,20.'],['AL','x>y>0: cross-multiply x/y vs (x+1)/(y+1).'],['ID','99×101=(100−1)(100+1)=100²−1. Diff of squares!'],['PY','Hyp=13, leg=5. 5²+?²=13². Other leg=12. Area=½×5×12.'],['NT','Primes up to 50: 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47.'],['ID','3(x+4)=3x+12. Distributive law.'],['FR','÷ fraction = × reciprocal: 8/9×(3/4).'],['AL','x negative integer: |x|=−x by definition (since x<0).'],['WP','24 hours/day × 60 min/hour=1440 min/day.'],
+['FR','LCD=6: 2/3+1/6+1/6=4/6+1/6+1/6.'],['AL','3x−8=22: add 8, then ÷3.'],['NT','5!/3!=5×4×3!/3!=5×4=20.'],['EX','(0.3)⁴=0.3×0.3×0.3×0.3=0.0081.'],['GE','Circle inscribed in square(side=6): radius=6÷2=3. Area=π×3².'],['EX','(3/8)²=9/64.'],['GE','(n−2)×180/n=108. Solve for n.'],['ID','(a²−b²)/(a+b)=(a+b)(a−b)/(a+b)=a−b.'],['NT','3⁴=81. 81÷5: 5×16=80. Remainder=1.'],['EX','√(5²+12²)=√(25+144)=√169=13. And 5+12=17.'],
+['NT','Digit sum=9 → divisible by 9 → remainder=0.'],['PC','12.5%=1/8. 1/8×96=12.'],['PR','P(sum=7): (1,6),(2,5),(3,4),(4,3),(5,2),(6,1)=6 out of 36.'],['ID','17²−13²=(17+13)(17−13)=30×4=120.'],['ID','If I\'ve counted 54, the pattern holds for Q55: verify answer D.']],
+// Test 8
+[['ID','(a−b)³ ≠ a³−b³. Compute: (5−3)³=2³=8 and 5³−3³=98.'],['EX','(−4)²=(−4)×(−4). −(4²)=−16.'],['FR','7/8+1/8: same denominator, add numerators.'],['AL','Substitute p=7: p²−p and p(p−1).'],['PC','12.5%=1/8. 1/8×160=20.'],['GE','Pentagon: 5 sides. 5×8=40.'],['FR','4÷25=0.16.'],['GE','Octahedron: 6 vertices, 8 faces, 12 edges.'],['ID','Distributive: 4×(3²+2)=4×3²+4×2.'],['EX','√256: what number squared = 256?'],
+['FR','LCD=10: 7/10−4/10=3/10.'],['AL','x²=y² and x≠y means x=−y.'],['GE','Volume=s³=4³=64.'],['EX','(1/2)⁸=1/2⁸=1/256.'],['AR','0.7×0.07: 7×7=49, count 3 decimal places.'],['FR','Cross-multiply: 17×21 vs 20×18.'],['AL','(x−3)(x+5)=0 means x=3 or x=−5. Then x+1=4 or x+1=−4.'],['EX','4²+5²+6²=16+25+36=77.'],['GE','Regular octagon: (8−2)×180÷8=135°.'],['PC','175%=7/4. 7/4×48=84.'],
+['PY','7²+24²=49+576=625. Is 25²=625? 7-24-25 triple!'],['NT','72=2³×3². Factors=(3+1)(2+1)=12.'],['FR','÷ fraction = × reciprocal: 5/6×(36/25).'],['NT','LCM(12,18)=36. 12=2²×3, 18=2×3².'],['EX','(√13)²=13 and (√7)²=7. Add them.'],['WP','Length=3×width. Perimeter=2(l+w)=2(3w+w)=8w=48. Solve.'],['AR','Same signs: |−3+(−4)|=7 and |−3|+|−4|=3+4=7.'],['PR','Sort {2,6,8,10,14}: median=8, mean=40÷5=8.'],['SQ','Geometric: 2+4+8+…+64=2(2⁶−1)=126.'],['FR','Cross-multiply: 7×15 vs 13×8.'],
+['NT','Multiples of 7: 7,14,21,28,35,42,49,56,63,70. Count.'],['FR','Cross-multiply: 8×100 vs 9×89.'],['SQ','Sum of even integers 2 to 20: 2+4+…+20=2(1+2+…+10).'],['AL','n is a 2-digit number: could be 10, 50, or 99.'],['ID','49×51=(50−1)(50+1)=50²−1. Diff of squares!'],['GE','Equilateral triangle area=√3/4×s²=√3/4×36=9√3.'],['NT','Primes 70 to 90: 71,73,79,83,89.'],['ID','Distributive: 5×(4+6)=5×4+5×6=50.'],['FR','÷ fraction = × reciprocal: 9/10×(4/3).'],['AL','x=0: 0ⁿ=0 for any positive n.'],
+['WP','1 hour=60 min. 60×60=3600 seconds.'],['FR','LCD=10: 8/10−3/10+5/10=10/10=1.'],['PR','Sum=average×count=9×7=63.'],['NT','8!/7!=8×7!/7!=8.'],['EX','(0.6)⁴=0.6×0.6×0.6×0.6=0.1296.'],['GE','Isosceles: base angles equal. (180−40)÷2=70°.'],['EX','(7/9)²=49/81.'],['GE','(n−2)×180° with n=12 sides.'],['ID','(x−y)²=x²−2xy+y². Verify with x=8,y=5.'],['NT','2⁸=256. 256÷5: 5×51=255. Remainder=1.'],
+['GE','Square diagonal=s√2. If s=5, diagonal=5√2.'],['AL','p/q=3 and p>0,q>0: cross-multiply to get p=3q.'],['PC','37.5%=3/8. 3/8×64=24.'],['GE','A regular hexagon divides into 6 equilateral triangles.'],['ID','21²−19²=(21+19)(21−19)=40×2=80.']],
+// Test 9
+[['ID','Distributive: 3(4×5+2)=3×4×5+3×2.'],['EX','(−5)³×(−1): negative×negative=positive.'],['FR','LCD=12: 11/12−7/12=4/12.'],['AL','Substitute s=6: 6²/3=36/3=12 and 2×6=12.'],['PC','66%×150=0.66×150=99<100.'],['GE','Square P=4×6=24. Hexagon P=6×4=24.'],['FR','1÷16=0.0625.'],['GE','Rectangular prism: 4+4+4=12 edges.'],['PO','Exponent first: 2²=4. Then 6−4×3=6−12.'],['EX','√0.01: what number squared = 0.01?'],
+['FR','4/9+5/9: same denominator, add numerators.'],['AL','0<a<1: a³=a²×a. Since a<1, what happens to a³ vs a²?'],['GE','Volume=l×w×h=2×3×10=60.'],['EX','aᵐ×aⁿ=aᵐ⁺ⁿ: 3³×3³=3⁶.'],['AR','0.2×0.02×5=0.004×5=0.02.'],['FR','Cross-multiply: 19×22 vs 21×20.'],['AL','6x+3=21: subtract 3, then ÷6.'],['EX','1²+2²+3²+4²+5²=1+4+9+16+25=55.'],['GE','Exterior angle=360°÷n. n=8.'],['PC','0.5%=0.005. 0.005×2000=10.'],
+['PY','17²−8²=289−64=225. Is 15²=225? 8-15-17 triple!'],['NT','90=2×3²×5. Factors=(1+1)(2+1)(1+1)=12.'],['FR','Multiply across: (3×8×5)/(4×15×4)=120/240.'],['NT','84=2²×3×7. 126=2×3²×7. GCF=2×3×7=42.'],['EX','(√6)⁴=(6^½)⁴=6²=36.'],['WP','1.25×0.80=1.00. Markup and discount cancel!'],['AR','|3−7|=4. |7−3|=4. 4×4=16=(7−3)²=16.'],['PR','Sequence 1 to 99: symmetric around 50. Median=mean=50.'],['SQ','n(n+1)/2 with n=12: 12×13÷2=78.'],['FR','Cross-multiply: 12×27 vs 25×13.'],
+['NT','Two-digit primes <30: 11,13,17,19,23,29.'],['FR','Telescoping: 2/3×3/4×4/5×5/6=2/6=1/3.'],['NT','2024: 2+0+2+4=8.'],['AL','Positive perfect squares <50: 1,4,9,16,25,36,49. Is 25 always the answer?'],['ID','48×52=(50−2)(50+2)=50²−4. Diff of squares!'],['GE','Circle area=π(d/2)²=πr². Same formula, just showing d.'],['NT','Check: 97 prime? Try dividing by 2,3,5,7. None divide evenly.'],['NT','4!=24. 4×3×2×1=24.'],['FR','÷ fraction = × reciprocal: 3/7×(14/9).'],['AL','x positive integer, x²<16: x can be 1,2,3. Largest=3.'],
+['WP','4 decades × 10 years/decade = ? years.'],['FR','LCD=16: 8/16+4/16+2/16+1/16.'],['WP','One worker takes 3× as long: 3×4=12 hours.'],['NT','10!/8!=10×9=90.'],['EX','(0.9)⁵=0.9×0.9×0.9×0.9×0.9≈0.59049.'],['GE','45-45-90: legs equal, hyp=leg×√2. Ratio=1/√2.'],['ID','(a+b)(a−b)=a²−b². Verify with a=10,b=7.'],['GE','Decagon diagonals=10×7/2=35.'],['ID','2(x+y)−2(x−y)=2x+2y−2x+2y=4y.'],['NT','5⁴=625. 625÷4: 4×156=624. Remainder=1.'],
+['EX','√(1²+2²+2²)=√(1+4+4)=√9=3.'],['AL','Try n=1 (gives 2=2) and n=2 (gives 2.5>2). Changes!'],['PC','1/8×400=50. 12.5%×400=0.125×400=50.'],['PR','P(ace)=4 aces÷52 cards=4/52=1/13.'],['ID','23²−22²=(23+22)(23−22)=45×1=45.']],
+// Test 10
+[['AL','Substitute a=5,b=−3: (5+(−3))²=4, (5−(−3))²=64.'],['FR','Dividing by 1/4 = multiplying by 4.'],['FR','LCD=12: 5/6=10/12, 7/12=7/12.'],['AL','x²=9: x=3 or x=−3. Both are solutions.'],['PC','87.5%=7/8. 7/8×48=42.'],['GE','Rhombus area=d₁×d₂÷2=10×8÷2.'],['FR','4÷11=0.3636… (repeating).'],['GE','Cube: 6 faces+8 vertices=14 vs 12 edges.'],['PO','Exponents first: 2³=8 and (2+3)²=25. Then 8×3−25.'],['EX','√0.0009: what number squared = 0.0009?'],
+['FR','Telescoping: 1×2×3×4/(2×3×4×5)=1/5.'],['AL','x/y=2: cross-multiply to get x=2y.'],['GE','Sphere volume=4/3×π×r³=4/3×π×27=36π.'],['EX','aᵐ×aⁿ=aᵐ⁺ⁿ: 2⁵×2¹⁰=2¹⁵.'],['AR','0.8=4/5, 1.25=5/4. Product=4/5×5/4=1.'],['FR','Cross-multiply: 21×24 vs 23×22.'],['AL','|2x−6|=4 means 2x−6=4 or 2x−6=−4. Two solutions!'],['SQ','Sum evens 2–20=2+4+…+20=110. Sum odds 1–19=1+3+…+19=100.'],['GE','Exterior angle=360°÷n. n=10.'],['PC','333.3…%=10/3. 10/3×60=200.'],
+['PY','Rectangle diagonal: 12²+5²=144+25=169=13². 5-12-13 triple!'],['NT','360=2³×3²×5. Factors=(3+1)(2+1)(1+1)=24.'],['FR','Numerator: 2/5+3/10=4/10+3/10=7/10. Then ÷7/10=1.'],['NT','LCM(15,20,25)=300. 15=3×5, 20=2²×5, 25=5². LCM=2²×3×5².'],['EX','(√2)⁸=(2^½)⁸=2⁴=16.'],['WP','$500×(1.1)²=$500×1.21=$605.'],['AR','Same sign: |−7+(−8)|=15 and |−7|+|−8|=7+8=15.'],['PR','Evenly spaced {n,n+2,…,n+8}: mean=median=middle term=n+4.'],['SQ','Symmetric: −10 to 10. Each negative cancels its positive.'],['FR','Cross-multiply: 15×30 vs 28×16.'],
+['NT','Perfect squares 1–100: 1,4,9,…,100. Count: √100=10.'],['FR','LCD=24: 7/8=21/24, 1/3=8/24.'],['ID','(a+b)(a−b)=a²−b². Verify with a=7,b=3.'],['AL','Multiples of both 5 and 8 = multiples of LCM(5,8)=40.'],['ID','101×99=(100+1)(100−1)=100²−1. Diff of squares!'],['GE','Triangle with legs on axes: area=½×base×height=½×4×3.'],['NT','Primes 90–110: 97,101,103,107,109.'],['NT','5!+5!=120+120=240. 2×5!=2×120=240.'],['FR','÷ fraction = × reciprocal: 6/7×(14/3).'],['AL','x²+y²=25, x=3: y²=25−9=16. y=4 or y=−4.'],
+['WP','7 years × 12 months/year = ? months.'],['FR','LCD=16: 8/16+4/16+2/16+1/16=15/16.'],['WP','1 worker: 3 workers×4 hours total work=12 person-hours.'],['NT','7!/(4!×3!)=C(7,3)=35.'],['EX','(0.7)⁵≈0.16807.'],['GE','30-60-90: shorter leg=hyp/2. Hyp=10, shorter leg=5.'],['ID','a²b/(ab²)=a/b. Simplify by canceling ab.'],['GE','12-gon diagonals=12×9/2=54.'],['ID','(x+y)²+(x−y)²=2x²+2y²=2(x²+y²).'],['NT','7⁴=2401. Units digit of powers of 7: 7,9,3,1. 7⁴ ends in 1.'],
+['EX','√(5²+12²+0²)=√(25+144+0)=√169=13.'],['AL','x>y>0: (x+y)/(x−y). Both pos. Is numerator > denominator?'],['PC','62.5%=5/8. 5/8×64=40.'],['PR','P(both 6)=P(first 6)×P(second 6)=1/6×1/6=1/36.'],['ID','29²−21²=(29+21)(29−21)=50×8=400.']]
+];
+
 // ── STUDY GUIDE DATA ─────────────────────────────────────────────────────────
 const lessons=[
 {id:'overview',icon:'🎯',title:'How SCAT Math Works',tag:'Strategy',
@@ -903,12 +1036,18 @@ const st={
   ivs:new Array(tests.length).fill(null),
   started:new Array(tests.length).fill(false),
   lesson:null,
+  prac:{
+    active:false, topicFilter:Object.keys(topicInfo),
+    queue:[], pos:0, hintsShown:0, answered:false, chosen:null, stopped:false,
+    sess:{total:0, correct:0, wrong:0, hintsNeeded:0, streak:0, bestStreak:0, byTopic:{}}
+  }
 };
 
 // ── RENDER TABS ───────────────────────────────────────────────────────────────
 function renderTabs(){
   const tc=document.getElementById('tabs');
   tc.innerHTML=tests.map((_,i)=>`<div class="tab${st.tab===i?' on':''}" onclick="setTab(${i})">Test ${i+1}</div>`).join('')
+    +`<div class="tab pm${st.tab===11?' on':''}" onclick="setTab(11)">🎯 Practice</div>`
     +`<div class="tab sg${st.tab===10?' on':''}" onclick="setTab(10)">📚 Study Guide</div>`;
 }
 
@@ -917,6 +1056,7 @@ function render(){
   renderTabs();
   const app=document.getElementById('app');
   if(st.tab===10){app.innerHTML=renderSG();return;}
+  if(st.tab===11){app.innerHTML=renderPractice();return;}
   const t=st.tab;
   if(!st.started[t]){app.innerHTML=renderStart(t);return;}
   if(st.sub[t]){app.innerHTML=renderResults(t);return;}
@@ -1127,6 +1267,273 @@ function retake(t){
   st.sub[t]=false;st.timers[t]=22*60;st.q=0;st.started[t]=false;
   if(st.ivs[t]){clearInterval(st.ivs[t]);st.ivs[t]=null;}
   render();
+}
+
+// ── PRACTICE MODE ─────────────────────────────────────────────────────────────
+const ENC_OK=[
+  '🌟 Excellent! You got it!','✅ That\'s right — great thinking!',
+  '💪 Correct! Keep the streak going!','🎯 Spot on! You nailed it!',
+  '🔥 Right! You\'re on fire!','⭐ Perfect! That\'s the way!',
+];
+const ENC_OK_HINT=[
+  '✅ Correct — the hint helped!','👍 Got it with a hint — now you know the trick!',
+  '💡 Right! Remember that strategy for next time.',
+];
+const ENC_NG=[
+  '💡 Not quite — check the explanation below!','📖 Good try! Read the solution to learn the trick.',
+  '🔄 Not this time — let\'s see how it works.',
+];
+function randEnc(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+function buildQueue(){
+  const f=st.prac.topicFilter;
+  const q=[];
+  tests.forEach((t,ti)=>t.forEach((qo,qi)=>{
+    if(f.includes(qmeta[ti][qi][0]))q.push({ti,qi});
+  }));
+  // Fisher-Yates shuffle
+  for(let i=q.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q[i],q[j]]=[q[j],q[i]];}
+  return q;
+}
+
+function startPractice(){
+  const p=st.prac;
+  p.queue=buildQueue();
+  if(!p.queue.length){alert('Select at least one topic to practice!');return;}
+  p.pos=0;p.hintsShown=0;p.answered=false;p.chosen=null;p.stopped=false;
+  p.sess={total:0,correct:0,wrong:0,hintsNeeded:0,streak:0,bestStreak:0,byTopic:{}};
+  p.active=true;
+  render();
+}
+
+function toggleTopic(code){
+  const f=st.prac.topicFilter;
+  const idx=f.indexOf(code);
+  if(idx>=0){if(f.length>1)f.splice(idx,1);}
+  else f.push(code);
+  render();
+}
+
+function pracPick(letter){
+  const p=st.prac;
+  if(p.answered)return;
+  const {ti,qi}=p.queue[p.pos];
+  const q=tests[ti][qi];
+  p.chosen=letter;
+  p.answered=true;
+  const correct=(letter===q.ans);
+  const s=p.sess;
+  s.total++;
+  if(correct){s.correct++;s.streak++;if(s.streak>s.bestStreak)s.bestStreak=s.streak;}
+  else{s.wrong++;s.streak=0;}
+  if(p.hintsShown>0)s.hintsNeeded++;
+  const code=qmeta[ti][qi][0];
+  if(!s.byTopic[code])s.byTopic[code]={c:0,t:0};
+  s.byTopic[code].t++;
+  if(correct)s.byTopic[code].c++;
+  render();
+}
+
+function showHint(){
+  st.prac.hintsShown++;
+  render();
+}
+
+function nextPracQ(){
+  const p=st.prac;
+  p.pos=(p.pos+1)%p.queue.length;
+  p.hintsShown=0;p.answered=false;p.chosen=null;
+  render();
+}
+
+function stopPractice(){
+  st.prac.stopped=true;
+  render();
+}
+
+function resetPractice(){
+  st.prac.active=false;st.prac.stopped=false;
+  render();
+}
+
+// ── PRACTICE RENDERING ────────────────────────────────────────────────────────
+function renderPractice(){
+  const p=st.prac;
+  if(p.stopped)return renderPracSummary();
+  if(!p.active)return renderPracStart();
+  return renderPracQuestion();
+}
+
+function renderPracStart(){
+  const p=st.prac;
+  const chips=Object.entries(topicInfo).map(([code,info])=>{
+    const on=p.topicFilter.includes(code);
+    return`<span class="tchip${on?' on':' off'}" style="background:${info.color}22;color:${info.color};border-color:${on?info.color:'transparent'}" onclick="toggleTopic('${code}')">${info.name}</span>`;
+  }).join('');
+  return`<div class="prac-start"><div class="prac-card">
+    <h2>🎯 Practice Mode</h2>
+    <p>Work through questions at your own pace. Get up to 3 hints per question, then see the full explanation after you answer. No timer — just learning!</p>
+    <strong style="font-size:.82rem;color:var(--tx)">Choose topics to practice (tap to toggle):</strong>
+    <div class="tfilt">${chips}</div>
+    <div style="background:var(--gyl);border-radius:8px;padding:12px 14px;font-size:.82rem;margin-bottom:16px;line-height:1.7">
+      <strong>📌 Answer choices are always:</strong><br>
+      A — Column A is greater &nbsp; B — Column B is greater<br>
+      C — Equal &nbsp; D — Cannot be determined
+    </div>
+    <button class="btn btn-p" style="width:100%;padding:13px" onclick="startPractice()">Start Practice Session</button>
+  </div></div>`;
+}
+
+function renderPracQuestion(){
+  const p=st.prac;
+  const {ti,qi}=p.queue[p.pos];
+  const q=tests[ti][qi];
+  const meta=qmeta[ti][qi];
+  const code=meta[0],h2=meta[1];
+  const info=topicInfo[code];
+  const s=p.sess;
+  const pct=s.total?Math.round(s.correct/s.total*100):0;
+  const cc=pct>=80?'var(--gr)':pct>=60?'var(--yl)':'var(--rd)';
+
+  // Sidebar by-topic accuracy bars
+  const topicBars=Object.entries(s.byTopic).map(([c,v])=>{
+    const pctT=v.t?Math.round(v.c/v.t*100):0;
+    const ti2=topicInfo[c];
+    return`<div class="acc-row">
+      <div class="acc-lbl"><span>${ti2?ti2.name:c}</span><span>${pctT}%</span></div>
+      <div class="acc-bar"><div class="acc-fill" style="width:${pctT}%;background:${ti2?ti2.color:'var(--bl)'}"></div></div>
+    </div>`;
+  }).join('');
+
+  // Build hints
+  const h1=info.h1;
+  const h3=q.exp;
+  const hints=[h1,h2,h3];
+  let hintHtml='';
+  for(let i=0;i<p.hintsShown;i++){
+    hintHtml+=`<div class="hstep"><strong>Hint ${i+1}:</strong> ${hints[i]}</div>`;
+  }
+  const canHint=!p.answered&&p.hintsShown<3;
+
+  // Choices
+  const chosen=p.chosen;
+  const correct=p.answered?(chosen===q.ans):null;
+  const choicesHtml=CH.map(c=>{
+    let cls='ch';
+    if(p.answered){
+      if(c.l===q.ans)cls='ch ok';
+      else if(c.l===chosen)cls='ch ng';
+    } else if(c.l===chosen)cls='ch sel';
+    const disabled=p.answered?'disabled':'';
+    return`<button class="${cls}" onclick="pracPick('${c.l}')" ${disabled}>
+      <div class="chl">${c.l}</div><div>${c.t}</div></button>`;
+  }).join('');
+
+  // Encouragement
+  let encHtml='';
+  if(p.answered){
+    if(correct){
+      const msg=p.hintsShown>0?randEnc(ENC_OK_HINT):randEnc(ENC_OK);
+      encHtml=`<div class="enc-ok">${msg}</div>`;
+    } else {
+      encHtml=`<div class="enc-ng">${randEnc(ENC_NG)}<br><small>Correct answer: <strong>${q.ans}</strong> — ${CH.find(c=>c.l===q.ans).t}</small></div>`;
+    }
+    encHtml+=`<div class="pexp"><strong>Explanation:</strong> ${q.exp}`;
+    const lessonId=info.lesson;
+    const les=lessons.find(x=>x.id===lessonId);
+    if(les)encHtml+=`<br><button class="slbtn" onclick="openLesson('${lessonId}');setTab(10)">📚 See the ${les.title} lesson</button>`;
+    encHtml+='</div>';
+  }
+
+  return`<div class="prac-wrap">
+    <div class="prac-sb">
+      <div class="pscore">
+        <div class="pv">${s.total?pct+'%':'—'}</div>
+        <div class="pl">${s.correct}/${s.total} correct</div>
+      </div>
+      ${s.streak>=2?`<div class="pstreak"><div class="sv">🔥${s.streak}</div><div class="sl">streak</div></div>`:''}
+      ${topicBars?`<h3 style="margin-top:8px">By Topic</h3>${topicBars}`:''}
+      <div style="margin-top:14px">
+        <button class="btn btn-d" style="width:100%;font-size:.78rem;padding:8px" onclick="stopPractice()">⏹ Stop Practice</button>
+      </div>
+    </div>
+    <div class="prac-qa">
+      <div class="qcard">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:${info.color}22;color:${info.color};padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:700">${info.name}</span>
+          <span class="qnum" style="margin:0">Q from Test ${ti+1} · #{${qi+1}}</span>
+        </div>
+        ${q.c?`<div class="qcond">Given: ${q.c}</div>`:''}
+        <table class="ctbl">
+          <tr><th>Column A</th><th style="border:none;background:transparent;width:36px"></th><th>Column B</th></tr>
+          <tr><td class="ca">${q.a}</td><td class="vs">vs</td><td class="cb">${q.b}</td></tr>
+        </table>
+        <div class="hint-area">${hintHtml}</div>
+        ${!p.answered?`<div style="margin-top:8px">
+          <button class="hbtn" onclick="showHint()" ${!canHint||p.hintsShown>=1?'disabled':''}>💡 Hint 1</button>
+          <button class="hbtn" onclick="showHint()" ${!canHint||p.hintsShown>=2||p.hintsShown<1?'disabled':''}>💡 Hint 2</button>
+          <button class="hbtn" onclick="showHint()" ${!canHint||p.hintsShown>=3||p.hintsShown<2?'disabled':''}>💡 Hint 3</button>
+        </div>`:''}
+        <div class="choices" style="margin-top:12px">${choicesHtml}</div>
+        ${encHtml}
+      </div>
+      <div class="navrow" style="margin-top:12px">
+        ${p.answered?`<button class="btn btn-p" onclick="nextPracQ()">Next Question →</button>`:''}
+        <div class="sp"></div>
+        <span style="font-size:.8rem;color:var(--gy)">${p.pos+1} / ${p.queue.length} in queue</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderPracSummary(){
+  const s=st.prac.sess;
+  const pct=s.total?Math.round(s.correct/s.total*100):0;
+  const cc=pct>=80?'var(--gr)':pct>=60?'var(--yl)':'var(--rd)';
+
+  // Find weakest topic
+  let weakTopic='',weakPct=101;
+  Object.entries(s.byTopic).forEach(([c,v])=>{
+    const p=v.t?v.c/v.t*100:0;
+    if(v.t>=2&&p<weakPct){weakPct=p;weakTopic=c;}
+  });
+  const topicRows=Object.entries(s.byTopic).sort((a,b)=>b[1].t-a[1].t).map(([c,v])=>{
+    const p=v.t?Math.round(v.c/v.t*100):0;
+    const inf=topicInfo[c];
+    return`<div class="acc-row">
+      <div class="acc-lbl"><span style="color:${inf?inf.color:'var(--bl)'}"><strong>${inf?inf.name:c}</strong></span><span>${v.c}/${v.t} (${p}%)</span></div>
+      <div class="acc-bar"><div class="acc-fill" style="width:${p}%;background:${inf?inf.color:'var(--bl)'}"></div></div>
+    </div>`;
+  }).join('');
+
+  const focusBox=weakTopic&&topicInfo[weakTopic]?`<div class="focus-box">
+    💡 <strong>Suggested focus:</strong> Try reviewing <em>${topicInfo[weakTopic].name}</em> — you got ${Math.round(weakPct)}% right in that topic.
+    ${topicInfo[weakTopic].lesson?`<br><button class="slbtn" style="margin-top:8px" onclick="openLesson('${topicInfo[weakTopic].lesson}');setTab(10)">📚 Open that lesson</button>`:''}
+  </div>`:'';
+
+  return`<div class="psum-wrap">
+    <div class="psum-card">
+      <div style="text-align:center;margin-bottom:14px">
+        <div class="circle" style="background:${cc}22;border:4px solid ${cc}">
+          <div class="pct" style="color:${cc}">${pct}%</div>
+          <div style="font-size:.8rem;color:${cc}">${s.correct}/${s.total}</div>
+        </div>
+        <h2 style="margin-top:10px">Practice Session Complete!</h2>
+      </div>
+      <div class="psum-grid">
+        <div class="psum-stat"><div class="psn" style="color:var(--gr)">${s.correct}</div><div class="psl">Correct</div></div>
+        <div class="psum-stat"><div class="psn" style="color:var(--rd)">${s.wrong}</div><div class="psl">Incorrect</div></div>
+        <div class="psum-stat"><div class="psn" style="color:var(--yl)">${s.hintsNeeded}</div><div class="psl">Used Hints</div></div>
+        <div class="psum-stat"><div class="psn" style="color:var(--bl)">${s.bestStreak}</div><div class="psl">Best Streak</div></div>
+      </div>
+      ${focusBox}
+    </div>
+    ${topicRows?`<div class="psum-card"><h3 style="margin-bottom:12px">Accuracy by Topic</h3>${topicRows}</div>`:''}
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-p" onclick="resetPractice()">↩ New Session</button>
+      <button class="btn btn-o" onclick="setTab(10)">📚 Open Study Guide</button>
+    </div>
+  </div>`;
 }
 
 render();

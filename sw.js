@@ -1,4 +1,4 @@
-const CACHE = 'scat-math-v1';
+const CACHE = 'scat-math-v2';
 const ASSETS = [
   './scat_math_practice.html',
   './manifest.json',
