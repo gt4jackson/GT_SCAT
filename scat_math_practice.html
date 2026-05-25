@@ -156,6 +156,36 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:var(--tx);
 .psum-stat .psn{font-size:1.5rem;font-weight:700;}
 .psum-stat .psl{font-size:.7rem;color:var(--gy);}
 .focus-box{background:var(--bll);border-left:4px solid var(--bl);padding:13px 17px;border-radius:6px;margin-top:12px;font-size:.87rem;color:#1e3a6e;line-height:1.5;}
+/* XP bar + level badge */
+.lv-badge{display:flex;align-items:center;gap:8px;padding:9px 11px;background:linear-gradient(135deg,#7c3aed22,#4f46e522);border:1.5px solid #7c3aed44;border-radius:9px;margin-bottom:10px;}
+.lv-icon{font-size:1.3rem;}
+.lv-info{flex:1;min-width:0;}
+.lv-name{font-size:.75rem;font-weight:700;color:#4338ca;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lv-xprow{font-size:.63rem;color:var(--gy);margin-top:1px;}
+.xp-wrap{background:var(--bd);border-radius:99px;height:6px;margin-top:4px;overflow:hidden;}
+.xp-fill{height:100%;border-radius:99px;background:#7c3aed;transition:width .5s;}
+/* Badges */
+.bdg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px;}
+.bdg{padding:7px 4px;border-radius:7px;text-align:center;border:1.5px solid var(--bd);background:#fff;cursor:default;position:relative;}
+.bdg.unlocked{border-color:#7c3aed;background:#7c3aed0d;}
+.bdg.locked{opacity:.28;filter:grayscale(1);}
+.bdg-ic{font-size:1.2rem;line-height:1;}
+.bdg-nm{font-size:.55rem;font-weight:700;color:var(--tx);margin-top:2px;line-height:1.2;}
+/* Level-up overlay */
+.lvup-ov{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;display:flex;align-items:center;justify-content:center;animation:fIn .25s;}
+.lvup-card{background:#fff;border-radius:20px;padding:38px 32px;text-align:center;max-width:320px;width:90%;animation:popIn .35s;}
+.lvup-ic{font-size:3.5rem;margin-bottom:8px;}
+.lvup-h{font-size:1.4rem;font-weight:700;color:#4338ca;margin-bottom:4px;}
+.lvup-s{font-size:.9rem;color:var(--gy);margin-bottom:18px;line-height:1.5;}
+/* Badge toast */
+.bdg-toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#fff;padding:9px 20px;border-radius:99px;font-size:.83rem;font-weight:700;z-index:9998;pointer-events:none;white-space:nowrap;animation:toastPop .35s,toastFade .35s 2.65s forwards;}
+/* Streak banner */
+.streak-banner{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:10px;padding:12px 16px;text-align:center;font-size:1rem;font-weight:700;margin-bottom:12px;animation:popIn .3s;}
+@keyframes fIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{from{transform:scale(.75);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes toastPop{from{opacity:0;transform:translateX(-50%) translateY(14px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes toastFade{to{opacity:0}}
+#ccanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;}
 
 /* ─── Study Guide ─── */
 .sg-wrap{display:flex;min-height:calc(100vh - 108px);}
@@ -1272,18 +1302,131 @@ function retake(t){
 // ── PRACTICE MODE ─────────────────────────────────────────────────────────────
 const ENC_OK=[
   '🌟 Excellent! You got it!','✅ That\'s right — great thinking!',
-  '💪 Correct! Keep the streak going!','🎯 Spot on! You nailed it!',
-  '🔥 Right! You\'re on fire!','⭐ Perfect! That\'s the way!',
+  '💪 Correct! Keep that streak going!','🎯 Spot on! You nailed it, Graham!',
+  '🔥 Right! Graham is on fire!','⭐ Perfect! That\'s the way, Graham!',
+  '🧠 Big brain move right there!','🎮 Game-level math, Graham!',
+  '👏 YES! Graham knows his stuff!','⚡ Lightning fast thinking, Graham!',
 ];
 const ENC_OK_HINT=[
-  '✅ Correct — the hint helped!','👍 Got it with a hint — now you know the trick!',
-  '💡 Right! Remember that strategy for next time.',
+  '✅ Correct — the hint helped, Graham! Now you know the trick.',
+  '👍 Got it with a hint. Remember that strategy!',
+  '💡 Right, Graham! Next time you\'ll catch it without a hint.',
 ];
 const ENC_NG=[
-  '💡 Not quite — check the explanation below!','📖 Good try! Read the solution to learn the trick.',
-  '🔄 Not this time — let\'s see how it works.',
+  '💡 Not quite, Graham — check the explanation below!',
+  '📖 Good try! The solution shows a great trick to learn.',
+  '🔄 Not this time — let\'s see how it works, Graham.',
+  '💪 Mistakes are how we learn! Check the explanation.',
 ];
+const STREAK_MSGS={5:'🔥 5 in a row, Graham! You\'re on fire!',10:'💥 10 STREAK! Incredible, Graham!',15:'🌟 15 in a row! Are you even human, Graham?!',20:'👑 20 STREAK! LEGENDARY, GRAHAM!'};
 function randEnc(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+// ── XP + LEVELS + BADGES ──────────────────────────────────────────────────────
+const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch{return d;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}};
+
+const LEVELS=[
+  {min:0,    name:'Number Novice',      icon:'🔢'},
+  {min:75,   name:'Calculation Cadet',  icon:'🧮'},
+  {min:200,  name:'Algebra Apprentice', icon:'📐'},
+  {min:400,  name:'Fraction Fighter',   icon:'⚔️'},
+  {min:650,  name:'Equation Explorer',  icon:'🔍'},
+  {min:950,  name:'Math Mastermind',    icon:'🧠'},
+  {min:1300, name:'SCAT Specialist',    icon:'🎯'},
+  {min:1750, name:'Problem-Solving Pro',icon:'⚙️'},
+  {min:2300, name:'Math Legend',        icon:'👑'},
+  {min:3000, name:'SCAT Champion',      icon:'🏆'},
+];
+const BADGE_DEFS=[
+  {id:'first',   icon:'⭐',name:'First Win',       desc:'First correct answer'},
+  {id:'streak5', icon:'🔥',name:'On a Roll',        desc:'5 correct in a row'},
+  {id:'streak10',icon:'💥',name:'Unstoppable',      desc:'10 correct in a row'},
+  {id:'nohints', icon:'🎯',name:'Hint-Free Hero',   desc:'10 in a row with zero hints'},
+  {id:'comeback',icon:'💪',name:'Comeback Kid',     desc:'5 in a row after a wrong answer'},
+  {id:'q50',     icon:'✅',name:'Half Century',     desc:'50 questions answered'},
+  {id:'q100',    icon:'💯',name:'Century Club',     desc:'100 questions answered'},
+  {id:'q250',    icon:'🏃',name:'Marathon Solver',  desc:'250 questions answered'},
+  {id:'pyth',    icon:'📐',name:'Pythagorean Pro',  desc:'80%+ on 5+ Pythagorean questions'},
+  {id:'frac',    icon:'½', name:'Fraction Ninja',   desc:'80%+ on 5+ Fraction questions'},
+  {id:'alg',     icon:'🔤',name:'Algebra Ace',      desc:'80%+ on 5+ Algebra questions'},
+  {id:'geo',     icon:'📏',name:'Geometry Guru',    desc:'80%+ on 5+ Geometry questions'},
+  {id:'exp',     icon:'🔋',name:'Exponent Expert',  desc:'80%+ on 5+ Exponent questions'},
+  {id:'perfect', icon:'🌟',name:'Perfect Session',  desc:'100% correct in a session (10+ questions)'},
+  {id:'legend',  icon:'👑',name:'Math Legend',      desc:'Reach 2000 XP'},
+];
+
+function getLevel(xp){let lv=LEVELS[0];for(const l of LEVELS){if(xp>=l.min)lv=l;}return lv;}
+function getNextLevel(xp){for(const l of LEVELS){if(l.min>xp)return l;}return null;}
+
+function launchConfetti(n=100,dur=2200){
+  let c=document.getElementById('ccanvas');
+  if(!c){c=document.createElement('canvas');c.id='ccanvas';document.body.appendChild(c);}
+  c.width=innerWidth;c.height=innerHeight;
+  const ctx=c.getContext('2d');
+  const cols=['#7c3aed','#4f46e5','#059669','#d97706','#0891b2','#e11d48','#f59e0b'];
+  const ps=Array.from({length:n},()=>({
+    x:Math.random()*c.width,y:Math.random()*-c.height*0.5-10,
+    w:7+Math.random()*7,h:4+Math.random()*5,col:cols[Math.floor(Math.random()*cols.length)],
+    rot:Math.random()*360,vy:2.5+Math.random()*4,vx:(Math.random()-.5)*3,vr:Math.random()*8-4
+  }));
+  const t0=Date.now();
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    ps.forEach(p=>{
+      ctx.save();ctx.translate(p.x+p.w/2,p.y+p.h/2);ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.col;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.vy+=0.05;
+    });
+    if(Date.now()-t0<dur)requestAnimationFrame(draw);else ctx.clearRect(0,0,c.width,c.height);
+  }
+  draw();
+}
+
+function showLevelUp(lv){
+  const el=document.createElement('div');el.className='lvup-ov';
+  el.innerHTML=`<div class="lvup-card">
+    <div class="lvup-ic">${lv.icon}</div>
+    <div class="lvup-h">LEVEL UP, Graham!</div>
+    <div class="lvup-s">You're now a<br><strong style="color:#4338ca;font-size:1.05rem">${lv.name}</strong></div>
+    <button class="btn btn-p" style="width:100%;padding:11px" onclick="this.closest('.lvup-ov').remove()">Let's keep going! 🚀</button>
+  </div>`;
+  document.body.appendChild(el);
+  launchConfetti(150,3500);
+}
+
+function showBadgeToast(badge){
+  const el=document.createElement('div');el.className='bdg-toast';
+  el.textContent=`${badge.icon} Badge unlocked: ${badge.name}!`;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),3200);
+}
+
+function awardXP(earned){
+  const prev=lsGet('scat_xp',0);const next=prev+earned;
+  const wasLv=getLevel(prev);const nowLv=getLevel(next);
+  lsSet('scat_xp',next);
+  if(nowLv.min!==wasLv.min)setTimeout(()=>showLevelUp(nowLv),500);
+  return next;
+}
+
+function checkAndAwardBadges(sess,totalQ,totalCorrect,xp){
+  const badges=lsGet('scat_badges',[]);const newOnes=[];
+  const chk=(id,cond)=>{if(cond&&!badges.includes(id)){badges.push(id);newOnes.push(id);}};
+  const ta=(code,min,pct)=>{const b=sess.byTopic[code];return b&&b.t>=min&&b.c/b.t>=pct;};
+  chk('first',  totalCorrect>=1);
+  chk('streak5',sess.bestStreak>=5||sess.streak>=5);
+  chk('streak10',sess.bestStreak>=10||sess.streak>=10);
+  chk('nohints',sess.noHintStreak>=10);
+  chk('comeback',sess.postWrongStreak>=5);
+  chk('q50',    totalQ>=50);  chk('q100',totalQ>=100);  chk('q250',totalQ>=250);
+  chk('pyth',ta('PY',5,.8));chk('frac',ta('FR',5,.8));chk('alg',ta('AL',5,.8));
+  chk('geo',ta('GE',5,.8));chk('exp',ta('EX',5,.8));
+  chk('perfect',sess.total>=10&&sess.correct===sess.total);
+  chk('legend',xp>=2000);
+  if(newOnes.length){
+    lsSet('scat_badges',badges);
+    newOnes.forEach((id,i)=>{const def=BADGE_DEFS.find(b=>b.id===id);if(def)setTimeout(()=>showBadgeToast(def),600+i*900);});
+  }
+}
 
 function buildQueue(){
   const f=st.prac.topicFilter;
@@ -1301,7 +1444,7 @@ function startPractice(){
   p.queue=buildQueue();
   if(!p.queue.length){alert('Select at least one topic to practice!');return;}
   p.pos=0;p.hintsShown=0;p.answered=false;p.chosen=null;p.stopped=false;
-  p.sess={total:0,correct:0,wrong:0,hintsNeeded:0,streak:0,bestStreak:0,byTopic:{}};
+  p.sess={total:0,correct:0,wrong:0,hintsNeeded:0,streak:0,bestStreak:0,byTopic:{},noHintStreak:0,postWrongStreak:0,lastWasWrong:false,xpEarned:0};
   p.active=true;
   render();
 }
@@ -1324,13 +1467,41 @@ function pracPick(letter){
   const correct=(letter===q.ans);
   const s=p.sess;
   s.total++;
-  if(correct){s.correct++;s.streak++;if(s.streak>s.bestStreak)s.bestStreak=s.streak;}
-  else{s.wrong++;s.streak=0;}
+
+  if(correct){
+    s.correct++;s.streak++;
+    if(s.streak>s.bestStreak)s.bestStreak=s.streak;
+    // no-hint streak: consecutive correct with zero hints
+    if(p.hintsShown===0)s.noHintStreak++;else s.noHintStreak=0;
+    // comeback streak: consecutive correct after a wrong answer
+    if(s.lastWasWrong||s.postWrongStreak>0)s.postWrongStreak++;
+    s.lastWasWrong=false;
+  } else {
+    s.wrong++;s.streak=0;s.noHintStreak=0;s.postWrongStreak=0;s.lastWasWrong=true;
+  }
   if(p.hintsShown>0)s.hintsNeeded++;
+
   const code=qmeta[ti][qi][0];
   if(!s.byTopic[code])s.byTopic[code]={c:0,t:0};
   s.byTopic[code].t++;
   if(correct)s.byTopic[code].c++;
+
+  // ── XP + badges + confetti ────────────────────────────────────────────────
+  const totalQ=lsGet('scat_total_q',0)+1;
+  lsSet('scat_total_q',totalQ);
+  if(correct){
+    let xpEarned=10;                               // base correct
+    if(p.hintsShown===0)xpEarned+=5;              // no-hint bonus
+    if(s.streak>=10)xpEarned+=3;                  // hot-streak bonus
+    else if(s.streak>=5)xpEarned+=3;
+    s.xpEarned+=xpEarned;
+    const totalC=lsGet('scat_total_c',0)+1;
+    lsSet('scat_total_c',totalC);
+    const totalXP=awardXP(xpEarned);
+    // streak-milestone confetti 🎉
+    if(STREAK_MSGS[s.streak])launchConfetti(80,2000);
+    checkAndAwardBadges(s,totalQ,totalC,totalXP);
+  }
   render();
 }
 
@@ -1370,9 +1541,47 @@ function renderPracStart(){
     const on=p.topicFilter.includes(code);
     return`<span class="tchip${on?' on':' off'}" style="background:${info.color}22;color:${info.color};border-color:${on?info.color:'transparent'}" onclick="toggleTopic('${code}')">${info.name}</span>`;
   }).join('');
+
+  // Level/XP display
+  const xp=lsGet('scat_xp',0);
+  const lv=getLevel(xp);const nx=getNextLevel(xp);
+  const xpPct=nx?Math.min(100,Math.round((xp-lv.min)/(nx.min-lv.min)*100)):100;
+  const xpLabel=nx?`${xp} / ${nx.min} XP → ${nx.name}`:`${xp} XP — MAX LEVEL!`;
+  const lvHtml=`<div class="lv-badge">
+    <div class="lv-icon">${lv.icon}</div>
+    <div class="lv-info">
+      <div class="lv-name">${lv.name}</div>
+      <div class="xp-wrap"><div class="xp-fill" style="width:${xpPct}%"></div></div>
+      <div class="lv-xprow">${xpLabel}</div>
+    </div>
+  </div>`;
+
+  // Badges display
+  const unlockedBadges=lsGet('scat_badges',[]);
+  const bdgHtml=`<div class="bdg-grid">${BADGE_DEFS.map(b=>{
+    const on=unlockedBadges.includes(b.id);
+    return`<div class="bdg ${on?'unlocked':'locked'}" title="${b.desc}">
+      <div class="bdg-ic">${b.icon}</div>
+      <div class="bdg-nm">${b.name}</div>
+    </div>`;
+  }).join('')}</div>`;
+
+  const totalQ=lsGet('scat_total_q',0);
+  const totalC=lsGet('scat_total_c',0);
+  const lifetimeAcc=totalQ?Math.round(totalC/totalQ*100):0;
+  const statsHtml=totalQ?`<div style="display:flex;gap:8px;margin-bottom:12px">
+    <div class="psum-stat" style="flex:1"><div class="psn" style="font-size:1.2rem;color:var(--bl)">${totalQ}</div><div class="psl">Total Answered</div></div>
+    <div class="psum-stat" style="flex:1"><div class="psn" style="font-size:1.2rem;color:${lifetimeAcc>=80?'var(--gr)':lifetimeAcc>=60?'var(--yl)':'var(--rd)'}">${lifetimeAcc}%</div><div class="psl">Lifetime Acc.</div></div>
+    <div class="psum-stat" style="flex:1"><div class="psn" style="font-size:1.2rem;color:#7c3aed">${unlockedBadges.length}/${BADGE_DEFS.length}</div><div class="psl">Badges</div></div>
+  </div>`:'';
+
   return`<div class="prac-start"><div class="prac-card">
     <h2>🎯 Practice Mode</h2>
-    <p>Work through questions at your own pace. Get up to 3 hints per question, then see the full explanation after you answer. No timer — just learning!</p>
+    ${lvHtml}
+    ${statsHtml}
+    <h3 style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--gy);margin-bottom:6px">Your Badges</h3>
+    ${bdgHtml}
+    <p style="margin-top:14px">Work through questions at your own pace. Get up to 3 hints per question, then see the full explanation. Earn XP for every correct answer!</p>
     <strong style="font-size:.82rem;color:var(--tx)">Choose topics to practice (tap to toggle):</strong>
     <div class="tfilt">${chips}</div>
     <div style="background:var(--gyl);border-radius:8px;padding:12px 14px;font-size:.82rem;margin-bottom:16px;line-height:1.7">
@@ -1380,7 +1589,7 @@ function renderPracStart(){
       A — Column A is greater &nbsp; B — Column B is greater<br>
       C — Equal &nbsp; D — Cannot be determined
     </div>
-    <button class="btn btn-p" style="width:100%;padding:13px" onclick="startPractice()">Start Practice Session</button>
+    <button class="btn btn-p" style="width:100%;padding:13px" onclick="startPractice()">Start Practice Session ⚡</button>
   </div></div>`;
 }
 
@@ -1445,8 +1654,29 @@ function renderPracQuestion(){
     encHtml+='</div>';
   }
 
+  // Level badge for sidebar
+  const xp=lsGet('scat_xp',0);
+  const lv=getLevel(xp);const nx=getNextLevel(xp);
+  const xpPct=nx?Math.min(100,Math.round((xp-lv.min)/(nx.min-lv.min)*100)):100;
+  const sbLvHtml=`<div class="lv-badge" style="margin-bottom:10px">
+    <div class="lv-icon" style="font-size:1.1rem">${lv.icon}</div>
+    <div class="lv-info">
+      <div class="lv-name" style="font-size:.68rem">${lv.name}</div>
+      <div class="xp-wrap"><div class="xp-fill" style="width:${xpPct}%"></div></div>
+      <div class="lv-xprow">${xp} XP${nx?' → '+nx.min:''}</div>
+    </div>
+  </div>`;
+
+  // Session XP so far
+  const sessXpHtml=s.xpEarned?`<div style="text-align:center;font-size:.7rem;color:#7c3aed;font-weight:700;margin-bottom:8px">+${s.xpEarned} XP this session</div>`:'';
+
+  // Streak milestone banner
+  const streakBanner=STREAK_MSGS[s.streak]&&p.answered?`<div class="streak-banner">${STREAK_MSGS[s.streak]}</div>`:'';
+
   return`<div class="prac-wrap">
     <div class="prac-sb">
+      ${sbLvHtml}
+      ${sessXpHtml}
       <div class="pscore">
         <div class="pv">${s.total?pct+'%':'—'}</div>
         <div class="pl">${s.correct}/${s.total} correct</div>
@@ -1458,6 +1688,7 @@ function renderPracQuestion(){
       </div>
     </div>
     <div class="prac-qa">
+      ${streakBanner}
       <div class="qcard">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
           <span style="background:${info.color}22;color:${info.color};padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:700">${info.name}</span>
@@ -1491,6 +1722,19 @@ function renderPracSummary(){
   const pct=s.total?Math.round(s.correct/s.total*100):0;
   const cc=pct>=80?'var(--gr)':pct>=60?'var(--yl)':'var(--rd)';
 
+  // Current level after session
+  const xp=lsGet('scat_xp',0);
+  const lv=getLevel(xp);const nx=getNextLevel(xp);
+  const xpPct=nx?Math.min(100,Math.round((xp-lv.min)/(nx.min-lv.min)*100)):100;
+  const lvSumHtml=`<div class="lv-badge" style="margin-bottom:14px;max-width:320px;margin-left:auto;margin-right:auto">
+    <div class="lv-icon">${lv.icon}</div>
+    <div class="lv-info">
+      <div class="lv-name">${lv.name}</div>
+      <div class="xp-wrap"><div class="xp-fill" style="width:${xpPct}%"></div></div>
+      <div class="lv-xprow">${xp} XP total${nx?' · '+Math.max(0,nx.min-xp)+' to next level':' · MAX!'}</div>
+    </div>
+  </div>`;
+
   // Find weakest topic
   let weakTopic='',weakPct=101;
   Object.entries(s.byTopic).forEach(([c,v])=>{
@@ -1511,20 +1755,33 @@ function renderPracSummary(){
     ${topicInfo[weakTopic].lesson?`<br><button class="slbtn" style="margin-top:8px" onclick="openLesson('${topicInfo[weakTopic].lesson}');setTab(10)">📚 Open that lesson</button>`:''}
   </div>`:'';
 
+  // Motivational message based on score
+  const motiveMsgs={
+    100:'🏆 Perfect score! You crushed it, Graham! You are unstoppable!',
+    80:'🌟 Outstanding session, Graham! That\'s SCAT-level thinking!',
+    60:'💪 Solid work, Graham! Keep pushing — you\'re getting better every session.',
+    0:'🔄 Tough session, but that\'s how we learn! Check the Study Guide for any tricky topics.'
+  };
+  const motiveMsg=Object.entries(motiveMsgs).reverse().find(([t])=>pct>=Number(t));
+  const motiveHtml=s.total>=3?`<div style="font-size:.95rem;font-weight:600;text-align:center;margin-bottom:12px;color:#4338ca">${motiveMsg?motiveMsg[1]:''}</div>`:'';
+
   return`<div class="psum-wrap">
     <div class="psum-card">
+      ${motiveHtml}
       <div style="text-align:center;margin-bottom:14px">
         <div class="circle" style="background:${cc}22;border:4px solid ${cc}">
           <div class="pct" style="color:${cc}">${pct}%</div>
           <div style="font-size:.8rem;color:${cc}">${s.correct}/${s.total}</div>
         </div>
-        <h2 style="margin-top:10px">Practice Session Complete!</h2>
+        <h2 style="margin-top:10px">Session Complete!</h2>
       </div>
+      ${lvSumHtml}
       <div class="psum-grid">
         <div class="psum-stat"><div class="psn" style="color:var(--gr)">${s.correct}</div><div class="psl">Correct</div></div>
         <div class="psum-stat"><div class="psn" style="color:var(--rd)">${s.wrong}</div><div class="psl">Incorrect</div></div>
         <div class="psum-stat"><div class="psn" style="color:var(--yl)">${s.hintsNeeded}</div><div class="psl">Used Hints</div></div>
         <div class="psum-stat"><div class="psn" style="color:var(--bl)">${s.bestStreak}</div><div class="psl">Best Streak</div></div>
+        ${s.xpEarned?`<div class="psum-stat"><div class="psn" style="color:#7c3aed">+${s.xpEarned}</div><div class="psl">XP Earned</div></div>`:''}
       </div>
       ${focusBox}
     </div>
