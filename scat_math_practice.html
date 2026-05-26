@@ -234,7 +234,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:var(--tx);
 </head>
 <body>
 <div class="hdr">
-  <div><h1>SCAT Math Practice</h1><small>Intermediate Level · Quantitative Comparison · 4th Grade CTY Prep</small></div>
+  <div><h1>SCAT Math Practice</h1><small>Practice for the SCAT Math Test · 4th Grade CTY</small></div>
   <div style="font-size:.75rem;color:rgba(255,255,255,.8);text-align:right;flex:1">10 Tests · Study Guide<br>55 Questions · 22 Min each</div>
   <button class="upd-btn" id="updBtn" onclick="checkForUpdates()">
     <span class="spin" id="updIcon">↻</span><span id="updLabel">Update App</span>
@@ -856,18 +856,18 @@ Q('29² − 21²','400','C','(8)(50)=400.'),
 // ── TOPIC INFO ───────────────────────────────────────────────────────────────
 const topicInfo={
   AR:{name:'Arithmetic',     h1:'Compute each column step by step, then compare.',                              color:'#6366f1',lesson:'overview'},
-  FR:{name:'Fractions',      h1:'Cross-multiply: for a/b vs c/d, compare a×d with b×c.',                       color:'#0891b2',lesson:'fractions'},
+  FR:{name:'Fractions',      h1:'Cross-multiply to compare fractions! For a/b vs c/d: multiply a×d and b×c (diagonals). The bigger product wins!',                       color:'#0891b2',lesson:'fractions'},
   PC:{name:'Percentages',    h1:'Convert % to decimal (÷100). Remember: a% of b = b% of a.',                   color:'#059669',lesson:'percent'},
   AL:{name:'Algebra',        h1:'If given a value, substitute it. Otherwise, test numbers.',                    color:'#d97706',lesson:'manipulate'},
-  EX:{name:'Exponents',      h1:'Rules: aᵐ×aⁿ=aᵐ⁺ⁿ, (aᵐ)ⁿ=aᵐⁿ, (−x)²=positive.',                          color:'#7c3aed',lesson:'exponents'},
+    EX:{name:'Exponents',      h1:'Use your memorized powers: 2,4,8,16,32... and 3,9,27,81... Remember: (−3)²=9 — a negative number SQUARED is always positive!',                          color:'#7c3aed',lesson:'exponents'},
   GE:{name:'Geometry',       h1:'Use the right formula: area, perimeter, or (n−2)×180° for angles.',            color:'#0f766e',lesson:'geometry'},
   PY:{name:'Pythagorean',    h1:'Know your triples: 3-4-5, 5-12-13, 8-15-17, 7-24-25, 9-40-41.',              color:'#15803d',lesson:'pyth'},
-  NT:{name:'Number Theory',  h1:'Factor numbers. GCF=shared factors; LCM=all factors at highest power.',       color:'#b45309',lesson:'numtheory'},
+  NT:{name:'Number Theory',  h1:'GCF = the biggest number that goes into BOTH evenly. LCM = the smallest number that BOTH go into evenly.',       color:'#b45309',lesson:'numtheory'},
   PO:{name:'Order of Ops',   h1:'PEMDAS: Parentheses → Exponents → ×÷ → +− (left to right).',                 color:'#be185d',lesson:'pemdas'},
-  ID:{name:'Identities',     h1:'Look for (a+b)(a−b)=a²−b², (a+b)²=a²+2ab+b², or distributive law.',          color:'#4338ca',lesson:'algebra'},
+  ID:{name:'Identities',     h1:'Look for patterns! Is n²+n the same as n×(n+1)? Can you pull out a common factor? Look for (a+b)(a−b) = a²−b².',          color:'#4338ca',lesson:'algebra'},
   PR:{name:'Prob & Stats',   h1:'P = favorable ÷ total. Mean × count = sum.',                                  color:'#0369a1',lesson:'overview'},
-  WP:{name:'Word Problems',  h1:'Translate: d=r×t, I=Prt, Work=rate×time. Set up the equation.',               color:'#9f1239',lesson:'percent'},
-  SQ:{name:'Sequences',      h1:'Find the pattern: arithmetic adds, geometric multiplies. aₙ=a₁+(n−1)d.',      color:'#6366f1',lesson:'overview'},
+  WP:{name:'Word Problems',  h1:'Set up a math equation! Distance = speed × time. Work = rate × time. Read carefully and write out what you know.',               color:'#9f1239',lesson:'percent'},
+  SQ:{name:'Sequences',      h1:'Find the pattern! Does the sequence add the same number each time? Or multiply? List the next few terms to see the pattern.',      color:'#6366f1',lesson:'overview'},
 };
 
 // ── QUESTION METADATA: [topicCode, h2Hint] for all 550 questions ─────────────
@@ -947,113 +947,113 @@ const qmeta=[
 // ── STUDY GUIDE DATA ─────────────────────────────────────────────────────────
 const lessons=[
 {id:'overview',icon:'🎯',title:'How SCAT Math Works',tag:'Strategy',
- intro:'The SCAT Quantitative section compares two columns. You never need to find an exact answer — just decide which side is bigger, or whether it\'s impossible to tell. The four choices are always identical on every question.',
- tip:'Key insight: Questions where you can\'t determine the answer because the result <em>changes</em> depending on unknown values → answer is <strong>D</strong>. Questions where you can work out a definite comparison → A, B, or C.',
- tipList:['A: Column A is greater','B: Column B is greater','C: The two quantities are equal','D: The relationship cannot be determined'],
+ intro:'Each question shows two boxes — Column A and Column B. Your job is NOT to find the exact answer. Just figure out which column is BIGGER, if they are the SAME, or if you simply cannot tell!',
+ tip:'The four answer choices are the same for every single question:',
+ tipList:['A: Column A is greater (bigger)','B: Column B is greater (bigger)','C: The two quantities are equal (the same!)','D: Cannot be determined — the answer changes depending on the unknown, so we cannot tell'],
  examples:[
-  {cond:'',a:'3 × 4 + 2',b:'4 × 3 + 2',ans:'C',why:'Both = 14. Multiplication is commutative, so 3×4=4×3. You can see this without calculating.'},
-  {cond:'x + y = 10',a:'x',b:'5',ans:'D',why:'x could be 3 (B wins), 5 (equal), or 8 (A wins). The condition doesn\'t pin down x, so the relationship cannot be determined.'},
+  {cond:'',a:'3 × 4 + 2',b:'4 × 3 + 2',ans:'C',why:'Both equal 14! Swapping the numbers in a multiplication does not change the answer. 3×4 and 4×3 both equal 12. So both columns equal 14!'},
+  {cond:'x + y = 10',a:'x',b:'5',ans:'D',why:'We do not know what x is! x could be 3 (then B wins), x could be 5 (then they are equal), or x could be 8 (then A wins). The answer changes, so we pick D.'},
  ],
- mistake:'Don\'t rush to D just because there\'s a variable. If the condition fully determines the variable (e.g., "x = 3"), you can compute exactly.'},
-{id:'manipulate',icon:'⚖️',title:'The Manipulation Rules',tag:'Strategy',
- intro:'You can do math to BOTH columns equally without changing which side is bigger — as long as you follow the rules. This often simplifies the comparison dramatically.',
- tip:'You may: (1) Add or subtract the same value to both sides. (2) Multiply or divide both sides by the same <em>positive</em> number. You may NOT: multiply or divide by a negative (flips the sign!), or multiply by a variable unless you know its sign.',
+ mistake:'Do not rush to pick D just because you see a letter like x or n. If the problem tells you exactly what the letter equals (like "x = 3"), you CAN figure out the answer — it will not be D!'},
+{id:'manipulate',icon:'⚖️',title:'Do the Same Thing to Both Sides',tag:'Strategy',
+ intro:'Here is a cool trick: if you do the same math to BOTH columns, the comparison stays the same! This can make a hard-looking problem much easier.',
+ tip:'You CAN safely: (1) Add or subtract the same number from both sides. (2) Multiply or divide both sides by the same POSITIVE number. Be careful: multiplying by a negative number FLIPS the answer!',
  tipList:null,
  examples:[
-  {cond:'',a:'2x + 7',b:'x + 10 (given x = 2)',ans:'B',why:'Subtract x from both sides: x+7 vs 10. Subtract 7: x vs 3. With x=2, Column B wins.'},
-  {cond:'',a:'a² + a',b:'a(a+1)',ans:'C',why:'Factor Column A: a²+a = a(a+1). Now both columns are identical — always equal.'},
+  {cond:'x = 2',a:'2x + 7',b:'x + 10',ans:'B',why:'Subtract x from both sides: (x+7) vs 10. Subtract 7: x vs 3. Since x=2, we compare 2 vs 3. Column B wins!'},
+  {cond:'',a:'a² + a',b:'a(a+1)',ans:'C',why:'Pull out the a from Column A: a×a + a×1 = a(a+1). Now both sides say the exact same thing — they are always equal!'},
  ],
- mistake:'Never multiply both columns by an expression that could be positive or negative (like a variable) unless you\'ve confirmed its sign. That would change which answer is correct.'},
-{id:'pluggin',icon:'🔢',title:'The "D" Strategy — Plug In Numbers',tag:'Strategy',
- intro:'Answer D means the relationship changes depending on the value of an unknown. The fastest way to check is to test two numbers that might give different results.',
- tip:'Magic test numbers: try 0, 1, 2, −1, and 1/2. If you get TWO DIFFERENT outcomes (A wins sometimes, B wins other times, or equal vs not equal), the answer is D.',
- tipList:['Test 1: a simple positive integer like n=1 or n=2','Test 2: a different case like n=0 or a fraction','If outcomes differ → D. If always the same → A, B, or C.'],
+ mistake:'Never multiply both sides by a letter (like x or n) unless you KNOW it is positive. If it could be negative, that flips which side is bigger and gives the wrong answer!'},
+{id:'pluggin',icon:'🔢',title:'Testing Numbers to Find "D"',tag:'Strategy',
+ intro:'"D" means the answer CHANGES depending on what the unknown number is. The fastest way to check: try two different numbers. If you get two different results, pick D!',
+ tip:'Good test numbers to try: 1, 2, 0, and −1. They often give different results! If you try two numbers and always get the same result both times, the answer is NOT D.',
+ tipList:['Step 1: Try a small number first, like n=1 or n=2, and see who wins','Step 2: Try a different number, like n=0 or n=3, and see who wins again','If the winner changed → the answer is D. If it is always the same → pick A, B, or C.'],
  examples:[
-  {cond:'n is a positive integer',a:'n²',b:'2n',ans:'D',why:'n=1: 1<2 (B). n=2: 4=4 (C). n=3: 9>6 (A). Three different outcomes → D.'},
-  {cond:'x > 1',a:'x + 2',b:'2x',ans:'D',why:'x=1.5: 3.5>3 (A). x=2: 4=4 (C). x=3: 5<6 (B). Changes → D.'},
+  {cond:'n is a positive integer',a:'n²',b:'2n',ans:'D',why:'Try n=1: 1 vs 2 → B wins. Try n=2: 4 vs 4 → tied! Try n=3: 9 vs 6 → A wins. Three different results → D!'},
+  {cond:'x > 1',a:'x + 2',b:'2x',ans:'D',why:'Try x=1.5: 3.5 vs 3 → A wins. Try x=3: 5 vs 6 → B wins. The winner changes → D!'},
  ],
- mistake:'A common mistake: seeing a variable and immediately guessing D without testing. Many variable questions have a definite answer — always test first!'},
-{id:'estimation',icon:'💡',title:'Don\'t Calculate — Estimate & Compare',tag:'Strategy',
- intro:'Many SCAT questions are designed so you can compare without fully computing. Look for shortcuts before reaching for pencil and paper.',
- tip:'Shortcuts that often work without full calculation: (1) Pythagorean triples — spot a triple and you know the third side instantly. (2) Difference of squares: (a+b)(a−b) = a²−b². (3) Percentage tricks — convert to fractions first.',
- tipList:['3-4-5, 5-12-13, 8-15-17, 7-24-25, 9-40-41 are triples to memorize','(n−1)(n+1) = n²−1 is always slightly less than n²','ab% of c = ac% of b (percentages commute!)'],
+ mistake:'Big mistake: seeing a letter and immediately guessing D without testing. Many questions with letters have a definite answer! Always try two numbers before you choose D.'},
+{id:'estimation',icon:'💡',title:'Look for Shortcuts First!',tag:'Strategy',
+ intro:'Before you do a lot of math, stop and look for a shortcut! Many SCAT questions are set up so you can get the answer quickly if you spot the right pattern.',
+ tip:'Shortcuts to look for: (1) Pythagorean triples — if you see 3-4-5, 5-12-13, or 8-15-17, you know the answer right away! (2) Percentages can be swapped: A% of B always equals B% of A. (3) Look for the same expression hiding on both sides.',
+ tipList:['Pythagorean triples to memorize: 3-4-5, 5-12-13, 8-15-17, 7-24-25','Swapping trick: 45% of 80 is the same as 80% of 45 (both = 36!)','Look carefully — are both columns actually the same thing in disguise?'],
  examples:[
-  {cond:'',a:'23×17',b:'24×16',ans:'A',why:'Think of it as (20+3)(20−3) vs (20+4)(20−4) = 400−9 vs 400−16. No multiplication needed!'},
-  {cond:'',a:'45% of 80',b:'80% of 45',ans:'C',why:'Percentages commute! a% of b always equals b% of a. Both = 36.'},
+  {cond:'',a:'23×17',b:'24×16',ans:'A',why:'Think of it as (20+3)(20−3) vs (20+4)(20−4). The first equals 400−9=391. The second equals 400−16=384. No big multiplication needed!'},
+  {cond:'',a:'45% of 80',b:'80% of 45',ans:'C',why:'They are the same! A% of B always equals B% of A. Both equal 36. Spot this trick and you are done instantly!'},
  ],
- mistake:'Don\'t blindly compute large multiplications. First ask: is there a pattern, a shortcut, or a factoring trick that makes this obvious?'},
+ mistake:'Do not jump straight into big calculations! First ask: is there a shortcut, a pattern, or a trick here that makes this obvious? Always look before you calculate.'},
 {id:'pemdas',icon:'📐',title:'Order of Operations (PEMDAS)',tag:'Concept',
- intro:'SCAT often tests whether you apply the order of operations correctly. Many wrong answers come from adding before multiplying, or ignoring parentheses.',
- tip:'PEMDAS: Parentheses → Exponents → Multiply/Divide (left to right) → Add/Subtract (left to right). Exponents come BEFORE multiplication!',
- tipList:['3+4² = 3+16 = 19 (NOT 7²=49)','(3+4)² = 7² = 49','2×3² = 2×9 = 18 (NOT 6²=36)'],
+ intro:'When a problem has lots of different math operations mixed together, you have to do them in the RIGHT order. Getting the order wrong is one of the most common mistakes on the SCAT!',
+ tip:'PEMDAS tells you the order to follow: Parentheses first → then Exponents → then Multiply and Divide (go left to right) → then Add and Subtract (go left to right). A fun way to remember: "Please Excuse My Dear Aunt Sally!"',
+ tipList:['3+4² = 3+16 = 19 — do the exponent FIRST, then add','(3+4)² = 7² = 49 — parentheses come FIRST here','2×3² = 2×9 = 18 — do the exponent before multiplying!'],
  examples:[
-  {cond:'',a:'3 + 4²',b:'(3 + 4)²',ans:'B',why:'Left: 3+16=19. Right: 7²=49. Always do exponents before adding.'},
-  {cond:'',a:'6 − 2² × 3',b:'−6',why:'Left: 6−4×3=6−12=−6. Right: −6. Equal! Order: exponent first, then multiply, then subtract.',ans:'C'},
+  {cond:'',a:'3 + 4²',b:'(3 + 4)²',ans:'B',why:'Left side: exponent first! 4²=16, then 3+16=19. Right side: parentheses first! (3+4)=7, then 7²=49. So 19 vs 49 — Column B wins!'},
+  {cond:'',a:'6 − 2² × 3',b:'−6',ans:'C',why:'Left side: exponent first (2²=4), then multiply (4×3=12), then subtract (6−12=−6). Both sides equal −6!'},
  ],
- mistake:'The most common PEMDAS trap: forgetting that 3+4² ≠ 7². The exponent only applies to the base (4), not to the sum.'},
+ mistake:'The #1 PEMDAS trap: thinking 3+4² is the same as (3+4)². It is NOT! The exponent only applies to the 4, not to the whole sum. Always do exponents before adding or subtracting.'},
 {id:'fractions',icon:'½',title:'Comparing Fractions Fast',tag:'Concept',
- intro:'Fraction comparison questions appear throughout the SCAT. Having a fast comparison method is essential when the fractions don\'t share an obvious relationship.',
- tip:'Cross-multiply to compare: for a/b vs c/d, compare a×d with b×c. If a×d > b×c, then a/b > c/d. Only works when b and d are positive!',
- tipList:['Benchmark fractions: 1/4=0.25, 1/3≈0.33, 1/2=0.5, 2/3≈0.67, 3/4=0.75','If numerators are equal, the smaller denominator makes the bigger fraction','If denominators are equal, the bigger numerator makes the bigger fraction'],
+ intro:'Fraction questions show up a lot on the SCAT. Here is the fastest way to compare two fractions — no need to find a common denominator or convert to decimals!',
+ tip:'Cross-multiply to compare fractions! For a/b vs c/d: multiply across the diagonals — compare a×d with b×c. The bigger product tells you which fraction is bigger!',
+ tipList:['Handy fractions to remember: 1/4=0.25, 1/3≈0.33, 1/2=0.5, 2/3≈0.67, 3/4=0.75','Same top number? The fraction with the SMALLER bottom number is bigger. (1/3 > 1/4)','Same bottom number? The fraction with the BIGGER top number is bigger. (3/5 > 2/5)'],
  examples:[
-  {cond:'',a:'7/8',b:'8/9',ans:'B',why:'Cross-multiply: 7×9=63 vs 8×8=64. 63<64 so 7/8 < 8/9.'},
-  {cond:'',a:'4/7',b:'5/9',ans:'A',why:'Cross-multiply: 4×9=36 vs 7×5=35. 36>35 so 4/7 > 5/9.'},
+  {cond:'',a:'7/8',b:'8/9',ans:'B',why:'Cross-multiply: 7×9=63 vs 8×8=64. Since 63 is less than 64, Column B (8/9) is bigger!'},
+  {cond:'',a:'4/7',b:'5/9',ans:'A',why:'Cross-multiply: 4×9=36 vs 7×5=35. Since 36 is greater than 35, Column A (4/7) is bigger!'},
  ],
- mistake:'When cross-multiplying, be careful: the product a×d goes with fraction a/b (multiply across the diagonal). A mnematch means a wrong answer.'},
-{id:'exponents',icon:'🔋',title:'Exponents & Powers',tag:'Concept',
- intro:'Exponent questions test both your memorized values and your ability to apply the rules of exponents to simplify before comparing.',
- tip:'Key rules: aᵐ×aⁿ = aᵐ⁺ⁿ · (aᵐ)ⁿ = aᵐⁿ · (ab)ⁿ = aⁿbⁿ · a⁰ = 1 · (√a)² = a · a^(1/2) = √a',
- tipList:['Powers of 2: 2,4,8,16,32,64,128,256,512,1024','Powers of 3: 3,9,27,81,243','Squares: 1,4,9,16,25,36,49,64,81,100,121,144,169,196,225','(−x)² is always positive; (−x)³ is always negative'],
+ mistake:'When cross-multiplying, make sure you multiply the right way: the top of the first fraction times the bottom of the second. Getting the diagonals mixed up gives the wrong answer.'},
+{id:'exponents',icon:'🔋',title:'Exponents and Powers',tag:'Concept',
+ intro:'An exponent tells you how many times to multiply a number by itself. For example, 3² = 3×3 = 9, and 2³ = 2×2×2 = 8. Memorizing common powers will save you a LOT of time on the SCAT!',
+ tip:'Key rules: When you multiply powers with the SAME base, add the exponents (2³×2⁴=2⁷). Anything to the 0th power equals 1 (even 99⁰=1!). A negative number squared is always positive: (−3)²=9.',
+ tipList:['Powers of 2: 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024','Powers of 3: 3, 9, 27, 81, 243','Perfect squares: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144','(−x)² is always POSITIVE. (−x)³ is always NEGATIVE.'],
  examples:[
-  {cond:'',a:'9⁴',b:'3⁸',ans:'C',why:'9=(3²), so 9⁴=(3²)⁴=3⁸. They\'re the same!'},
-  {cond:'',a:'2⁵',b:'5²',ans:'A',why:'2⁵=32, 5²=25. Memorizing powers of 2 makes this instant.'},
+  {cond:'',a:'9⁴',b:'3⁸',ans:'C',why:'Since 9 = 3×3 = 3², we can write 9⁴ = (3²)⁴ = 3⁸. They are the exact same number! Spot the connection to avoid calculating.'},
+  {cond:'',a:'2⁵',b:'5²',ans:'A',why:'2⁵ = 32. 5² = 25. If you know your powers of 2, this is instant: 32 > 25, so Column A wins!'},
  ],
- mistake:'Don\'t confuse 2³ (=8) with 3² (=9). Exponents and bases matter. Also: (−3)²=9 (positive), but −(3²)=−9 (negative).'},
-{id:'geometry',icon:'📏',title:'Geometry Essentials',tag:'Concept',
- intro:'SCAT geometry questions cover areas, perimeters, angle sums, and volume. Knowing these formulas cold lets you answer in seconds.',
- tip:'The angle-sum formula for any polygon with n sides: (n−2)×180°. Number of diagonals: n(n−3)/2.',
- tipList:null,
+ mistake:'Do not mix up 2³ (=8) and 3² (=9) — the base and the exponent both matter! Also: (−3)² = 9 (positive), but −(3²) = −9 (negative). Where you put the parentheses changes everything!'},
+{id:'geometry',icon:'📏',title:'Geometry Formulas',tag:'Concept',
+ intro:'SCAT geometry questions are about areas, perimeters, and angles. If you know your formulas by heart, you can answer these in just a few seconds!',
+ tip:'For any shape with n sides, the angles inside always add up to (n−2)×180°. So: a triangle (3 sides) = 180°. A square (4 sides) = 360°. A pentagon (5 sides) = 540°. A hexagon (6 sides) = 720°.',
+ tipList:['Triangle area = ½ × base × height','Rectangle area = length × width','Circle area = π × radius²','Perimeter = total distance all the way around the outside','Angles inside any triangle always add up to 180°'],
  examples:[
-  {cond:'',a:'Sum of interior angles of a pentagon',b:'540°',ans:'C',why:'(5−2)×180=540. Applies to ANY pentagon, regular or not.'},
-  {cond:'',a:'Area of triangle, base 10, height 6',b:'30',ans:'C',why:'½×b×h=½×10×6=30.'},
+  {cond:'',a:'Sum of interior angles of a pentagon',b:'540°',ans:'C',why:'A pentagon has 5 sides: (5−2)×180 = 3×180 = 540. This works for ANY pentagon, no matter the shape!'},
+  {cond:'',a:'Area of triangle, base 10, height 6',b:'30',ans:'C',why:'Triangle area = ½ × base × height = ½ × 10 × 6 = 30. Equal!'},
  ],
- mistake:'Don\'t confuse area and perimeter, or radius and diameter. A circle with radius 3 has area 9π but circumference 6π.'},
+ mistake:'Do not mix up area and perimeter! Area is the space INSIDE the shape (measured in square units). Perimeter is the distance around the OUTSIDE. Also: radius is HALF the diameter.'},
 {id:'pyth',icon:'📐',title:'Pythagorean Triples',tag:'Concept',
- intro:'Pythagorean triples are sets of whole numbers that satisfy a²+b²=c². Recognizing them instantly saves enormous calculation time on SCAT.',
- tip:'Memorize these triples and their multiples: 3-4-5 (×2=6-8-10, ×3=9-12-15), 5-12-13, 8-15-17, 7-24-25. If you see two sides from a triple, you know the third immediately.',
- tipList:['3-4-5 and multiples: 6-8-10, 9-12-15, 12-16-20','5-12-13 and multiples: 10-24-26','8-15-17','7-24-25','Pythagorean theorem: a²+b²=c² (c is hypotenuse)'],
+ intro:'A Pythagorean triple is a group of three whole numbers that fit perfectly in a right triangle. If you spot two sides from a triple, you instantly know the third side — no math needed!',
+ tip:'Memorize these magic triples and their doubles! The Pythagorean theorem says: (short leg)² + (long leg)² = (hypotenuse)². The hypotenuse is always the LONGEST side.',
+ tipList:['3-4-5 and doubles: 6-8-10, 9-12-15, 12-16-20','5-12-13 and doubles: 10-24-26','8-15-17','7-24-25','The hypotenuse is the longest side, across from the right angle'],
  examples:[
-  {cond:'',a:'5²+12²',b:'13²',ans:'C',why:'25+144=169=13². 5-12-13 is a Pythagorean triple!'},
-  {cond:'Right triangle, hypotenuse 17, one leg 8',a:'Other leg',b:'15',ans:'C',why:'8-15-17 is a Pythagorean triple. No calculation needed!'},
+  {cond:'',a:'5²+12²',b:'13²',ans:'C',why:'5²+12²=25+144=169, and 13²=169. This is the 5-12-13 triple! Once you know the triple, you recognize it instantly.'},
+  {cond:'Right triangle, hypotenuse 17, one leg 8',a:'Other leg',b:'15',ans:'C',why:'8-15-17 is a Pythagorean triple! The other leg must be 15. No calculation needed if you have memorized the triples!'},
  ],
- mistake:'Make sure c is the HYPOTENUSE (longest side). 3-4-5 means legs of 3 and 4, hypotenuse of 5. Don\'t put 5 as a leg.'},
-{id:'percent',icon:'%',title:'Percentages & Proportions',tag:'Concept',
- intro:'Percentage and proportion questions are common. Having key conversions memorized and knowing the commutativity trick eliminates most of the work.',
- tip:'Percentages commute: a% of b = b% of a. So 45% of 80 = 80% of 45 = 36. Also: compound changes multiply, so 25% off then 20% off = 0.75×0.80 = 60% of original (NOT 45% off).',
- tipList:['25%=1/4, 33⅓%=1/3, 50%=1/2, 66⅔%=2/3, 75%=3/4','12.5%=1/8, 37.5%=3/8, 62.5%=5/8, 87.5%=7/8','150%=3/2, 200%=2, 250%=5/2'],
+ mistake:'The hypotenuse (the longest side) is always ACROSS from the right angle. In 3-4-5, the 5 is the hypotenuse. Do not put 5 as one of the shorter sides — that would be wrong!'},
+{id:'percent',icon:'%',title:'Percentages',tag:'Concept',
+ intro:'"Percent" means "out of 100." The SCAT loves percentage questions! Here is a handy trick: you can swap the percent and the number and always get the same answer.',
+ tip:'Swapping trick: a% of b = b% of a. So 45% of 80 is the same as 80% of 45! To convert percent to decimal, divide by 100: 25% = 0.25, then multiply.',
+ tipList:['25% = 1/4, 33% ≈ 1/3, 50% = 1/2, 66% ≈ 2/3, 75% = 3/4','To find 10%, just move the decimal one place left: 10% of 80 = 8','To find 5%, first find 10%, then cut it in half: 5% of 80 = 4'],
  examples:[
-  {cond:'',a:'35% of 140',b:'50% of 98',ans:'C',why:'35% of 140 = 35×140/100 = 49. 50% of 98 = 49. Equal!'},
-  {cond:'Markup 25%, discount 20%',a:'Final price %',b:'100%',ans:'C',why:'1.25×0.80=1.00. The two changes cancel exactly!'},
+  {cond:'',a:'35% of 140',b:'50% of 98',ans:'C',why:'35% of 140: 35×140÷100=49. 50% of 98: half of 98=49. Both equal 49!'},
+  {cond:'',a:'25% of 80',b:'20% of 100',ans:'C',why:'25% of 80 = 0.25×80 = 20. 20% of 100 = 0.20×100 = 20. Both equal 20!'},
  ],
- mistake:'When applying two percentage changes, NEVER add them. A 25% increase followed by 20% decrease is NOT 5% net change. Always multiply the decimal factors.'},
-{id:'algebra',icon:'🔤',title:'Algebraic Identities',tag:'Concept',
- intro:'A handful of algebraic identities appear repeatedly on the SCAT. Recognizing them lets you compare columns instantly without expanding.',
- tip:'Difference of squares: a²−b² = (a+b)(a−b). This is the SCAT\'s most frequently tested identity. Use it in reverse: (n−1)(n+1) = n²−1.',
- tipList:['(a+b)² = a²+2ab+b²','(a−b)² = a²−2ab+b²','(a+b)(a−b) = a²−b²','a(b+c) = ab+ac (distributive)','(a/b)² = a²/b²'],
+ mistake:'Watch out with two percentage changes in a row: you cannot just add them! A 10% increase followed by a 10% decrease does NOT get you back to where you started. Calculate each step one at a time.'},
+{id:'algebra',icon:'🔤',title:'Algebra Shortcuts',tag:'Concept',
+ intro:'Some algebra expressions look really hard, but they are actually equal to something much simpler! Learning to spot these patterns lets you answer quickly.',
+ tip:'Key pattern: n² + n always equals n × (n+1). Why? Pull out the n: n×n + n×1 = n(n+1). Also: (a+b)(a−b) = a²−b². This one shows up a LOT on the SCAT!',
+ tipList:['n²+n = n(n+1) — always equal! Pull out the n.','(a+b)² = a²+2ab+b²','(a−b)² = a²−2ab+b²','(a+b)(a−b) = a²−b²','a(b+c) = ab+ac — the distributive property'],
  examples:[
-  {cond:'',a:'99×101',b:'100²−1',ans:'C',why:'99×101=(100−1)(100+1)=100²−1=9999.'},
-  {cond:'',a:'n²+n',b:'n(n+1)',ans:'C',why:'Factor: n²+n=n(n+1). Same expression always.'},
+  {cond:'',a:'99×101',b:'10000−1',ans:'C',why:'99×101 = (100−1)(100+1) = 100²−1 = 10000−1 = 9999. Spot the pattern and you do not need to multiply the hard way!'},
+  {cond:'',a:'n²+n',b:'n(n+1)',ans:'C',why:'Pull out n from Column A: n²+n = n(n+1). Both sides say the exact same thing — always equal, no matter what n is!'},
  ],
- mistake:'The difference of squares only works as a²−b². You cannot factor a sum: a²+b² ≠ (a+b)². Many students confuse these.'},
-{id:'numtheory',icon:'🔍',title:'Number Theory',tag:'Concept',
- intro:'Prime numbers, factors, GCF, LCM, and remainders appear throughout the SCAT. A strong number theory foundation gives you quick answers.',
- tip:'Primes under 50: 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47. The ONLY even prime is 2. Number of factors formula: if n=p^a × q^b, then factors=(a+1)(b+1).',
- tipList:['Divisibility by 3: digit sum divisible by 3','Divisibility by 9: digit sum divisible by 9','LCM×GCF = product of the two numbers (for 2 numbers)','GCF: highest power each prime factor has in COMMON','LCM: highest power each prime factor has in EITHER number'],
+ mistake:'Watch out! a²+b² does NOT equal (a+b)². Test it: if a=3, b=4, then 3²+4²=9+16=25, but (3+4)²=49. Very different! Do not mix these up.'},
+{id:'numtheory',icon:'🔍',title:'Number Theory: Factors and Primes',tag:'Concept',
+ intro:'Number theory is all about how numbers are built from smaller pieces. Knowing about primes, factors, GCF, and LCM will help you solve lots of SCAT questions quickly!',
+ tip:'Prime numbers under 50: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47. A prime number can only be divided evenly by 1 and itself. The number 1 is NOT prime. The number 2 is the ONLY even prime!',
+ tipList:['GCF (Greatest Common Factor): the BIGGEST number that divides into both numbers evenly','LCM (Least Common Multiple): the SMALLEST number that both numbers divide into evenly','Divisibility by 3: add up the digits — if the sum is divisible by 3, so is the number!','LCM × GCF = the two original numbers multiplied together'],
  examples:[
-  {cond:'',a:'Number of factors of 36',b:'9',ans:'C',why:'36=2²×3², factors=(2+1)(2+1)=9. List: 1,2,3,4,6,9,12,18,36.'},
-  {cond:'',a:'Remainder when 1000÷7',b:'6',ans:'C',why:'1000=142×7+6. Remainder=6.'},
+  {cond:'',a:'Number of factors of 36',b:'9',ans:'C',why:'List the factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36. Count them — that is 9 factors!'},
+  {cond:'',a:'LCM of 4 and 6',b:'GCF of 24 and 36',ans:'C',why:'LCM of 4 and 6: the smallest number both 4 and 6 divide into is 12. GCF of 24 and 36: the biggest number that divides into both is 12. Equal!'},
  ],
- mistake:'GCF and LCM are commonly confused. GCF (greatest common factor) is always ≤ either number. LCM (least common multiple) is always ≥ either number.'},
+ mistake:'GCF and LCM are often mixed up. Easy way to remember: GCF is always SMALLER than or equal to the numbers (it is a factor). LCM is always BIGGER than or equal to the numbers (it is a multiple).'},
 ];
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -1101,11 +1101,11 @@ function setTab(i){st.tab=i;st.q=0;render();}
 function renderStart(t){
   return`<div class="start"><div class="startcard">
     <h2>SCAT Math · Test ${t+1}</h2>
-    <p>Quantitative Comparison · 55 Questions · 22 Minutes</p>
-    <div class="rules"><strong>For each question compare Column A and Column B:</strong><br>
-    A — Column A is greater<br>B — Column B is greater<br>C — The two quantities are equal<br>D — Cannot be determined from the information given<br><br>
-    Any given condition (shown in amber) applies to both columns.</div>
-    <p style="color:var(--gy);font-size:.82rem">Timer starts when you click Begin. You can skip and return to any question.</p>
+    <p>Compare two columns and pick the right answer! &nbsp;55 Questions · 22 Minutes</p>
+    <div class="rules"><strong>For each question, compare Column A and Column B:</strong><br>
+    A — Column A is greater (bigger)<br>B — Column B is greater (bigger)<br>C — The two quantities are equal (the same)<br>D — Cannot be determined from the information given<br><br>
+    📌 The yellow box shows extra info that helps with the question. It applies to both columns.</div>
+    <p style="color:var(--gy);font-size:.82rem">The clock starts when you tap Begin. You can skip a question and come back to it later.</p>
     <button class="btn btn-p" style="width:100%;margin-top:10px;padding:13px" onclick="startTest(${t})">Begin Test ${t+1}</button>
   </div></div>`;
 }
@@ -1180,9 +1180,9 @@ function renderResults(t){
         <div class="stat"><div class="stn" style="color:var(--rd)">${ng}</div><div class="stl">Wrong</div></div>
         <div class="stat"><div class="stn" style="color:var(--yl)">${sk}</div><div class="stl">Skipped</div></div>
       </div>
-      <button class="btn btn-o" style="margin-top:14px" onclick="retake(${t})">Retake Test</button>
+      <button class="btn btn-o" style="margin-top:14px" onclick="retake(${t})">Try This Test Again</button>
     </div>
-    <h3 style="margin-bottom:10px">Review All Questions</h3>
+    <h3 style="margin-bottom:10px">Check Every Question</h3>
     <div class="rlist">${items}</div>
   </div>`;
 }
@@ -1193,7 +1193,7 @@ function renderSG(){
   const l=lessons.find(x=>x.id===st.lesson);
   if(!l)return renderSGHome();
   const exHtml=l.examples.map(e=>`<div class="ex-card">
-    <div class="ex-head">Worked Example</div>
+    <div class="ex-head">✏️ Let's Try One!</div>
     ${e.cond?`<div style="font-size:.8rem;color:#7c4700;font-style:italic;margin-bottom:8px">Given: ${e.cond}</div>`:''}
     <div class="ex-cols">
       <div class="ex-col ex-cola"><div class="ex-col-lbl">Column A</div>${e.a}</div>
@@ -1216,14 +1216,14 @@ function renderSG(){
         <h2>${l.icon} ${l.title}</h2>
         <p class="lesson-intro">${l.intro}</p>
         <div class="tip-box">
-          <div class="tip-lbl">Key Rule</div>
+          <div class="tip-lbl">⭐ Key Rule</div>
           <p>${l.tip}</p>
           ${listHtml}
         </div>
-        <h3 style="font-size:.9rem;margin-bottom:10px;color:var(--bl)">Worked Examples</h3>
+        <h3 style="font-size:.9rem;margin-bottom:10px;color:var(--bl)">Examples — See How It's Done!</h3>
         <div class="examples-grid">${exHtml}</div>
         <div class="mistake-box">
-          <div class="ml">⚠ Common Mistake</div>
+          <div class="ml">⚠️ Watch Out For This!</div>
           <p>${l.mistake}</p>
         </div>
       </div>
@@ -1235,7 +1235,7 @@ function renderSGHome(){
   const cards=lessons.map(l=>`<div class="lg-card" onclick="openLesson('${l.id}')">
     <div class="lc-icon">${l.icon}</div>
     <h3>${l.title}</h3>
-    <p>${l.tag} — click to open</p>
+    <p>Tap to open this lesson!</p>
   </div>`).join('');
   return`<div class="sg-wrap">
     <div class="sg-nav">
@@ -1247,7 +1247,7 @@ function renderSGHome(){
     <div class="sg-content">
       <div class="sg-welcome">
         <h2>📚 SCAT Math Study Guide</h2>
-        <p>12 lessons covering strategies and concepts you need to ace the quantitative section. Open any lesson to see tips, worked examples, and common mistakes to avoid.</p>
+        <p>12 lessons with tips, worked examples, and tricks to help you ace the SCAT math test! Tap any lesson card below to open it.</p>
       </div>
       <div class="lesson-grid">${cards}</div>
     </div>
@@ -1288,7 +1288,7 @@ function pick(l){
 }
 function confirmSub(t){
   const sk=st.ans[t].filter(x=>x===null).length;
-  if(sk>0&&!confirm(`${sk} unanswered question(s). Submit anyway?`))return;
+  if(sk>0&&!confirm(`You have ${sk} question(s) you didn't answer yet. Do you want to submit anyway?`))return;
   submitTest(t);
 }
 function submitTest(t){st.sub[t]=true;if(st.ivs[t])clearInterval(st.ivs[t]);render();}
@@ -1442,7 +1442,7 @@ function buildQueue(){
 function startPractice(){
   const p=st.prac;
   p.queue=buildQueue();
-  if(!p.queue.length){alert('Select at least one topic to practice!');return;}
+  if(!p.queue.length){alert('Pick at least one topic to practice first!');return;}
   p.pos=0;p.hintsShown=0;p.answered=false;p.chosen=null;p.stopped=false;
   p.sess={total:0,correct:0,wrong:0,hintsNeeded:0,streak:0,bestStreak:0,byTopic:{},noHintStreak:0,postWrongStreak:0,lastWasWrong:false,xpEarned:0};
   p.active=true;
@@ -1586,7 +1586,7 @@ function renderPracStart(){
     <div class="tfilt">${chips}</div>
     <div style="background:var(--gyl);border-radius:8px;padding:12px 14px;font-size:.82rem;margin-bottom:16px;line-height:1.7">
       <strong>📌 Answer choices are always:</strong><br>
-      A — Column A is greater &nbsp; B — Column B is greater<br>
+      A — Column A is greater &nbsp;&nbsp; B — Column B is greater<br>
       C — Equal &nbsp; D — Cannot be determined
     </div>
     <button class="btn btn-p" style="width:100%;padding:13px" onclick="startPractice()">Start Practice Session ⚡</button>
